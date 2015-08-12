@@ -1,0 +1,54 @@
+
+//http://www.programcreek.com/2013/12/edit-distance-in-java/
+//http://fisherlei.blogspot.com/2012/12/leetcode-edit-distance.html
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println(minDistance("sunday","saturday"));
+    }
+    public static int minDistance(String word1, String word2) {
+        int l1 = word1.length();
+        int l2 = word2.length();
+        int[][] dp = new int [l1+1][l2+1];
+        for(int i=0; i <= l1; i++) {
+            dp[i][0] = i;
+        }
+        for(int j=0; j <= l2; j++) {
+            dp[0][j] = j;// to convert empty "A" string to j length "B" string
+        }
+        for(int i=1; i <= l1; i++) {
+            char c1 = word1.charAt(i-1);
+
+            for(int j=1; j <= l2; j++) {
+                char c2 = word2.charAt(j-1);
+                if(c1 == c2) {
+                    dp[i][j] = dp[i-1][j-1];
+                } else {
+                    /*
+                    sunday
+                    saturday
+                    a = su
+                    b = s
+
+                    a[i] == b[i]
+                    dp[0][0] = 0
+                    dp[1][1] = dp[0][0];
+                    dp[2][1] =Min( dp[1][0] (replace u with a),  = 1
+                                dp[2,0] (add s so A=“s u s” and B) = 2
+                                dp[1][1](delete curr char)   =0)
+                                    + 1
+                            here the best option is to delete “u”
+                     */
+                    int replaceCost = dp[i-1][j-1];
+                    int addCost = dp[i][j-1];
+                    int deleteCost = dp[i-1][j];
+                    dp[i][j] = Math.min(Math.min(replaceCost,addCost),deleteCost)+1;
+                }
+            }
+        }
+        return  dp[l1][l2];
+    }
+}
+
