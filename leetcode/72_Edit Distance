@@ -1,6 +1,7 @@
-
+Using DP
+=========
 //http://www.programcreek.com/2013/12/edit-distance-in-java/
-//http://fisherlei.blogspot.com/2012/12/leetcode-edit-distance.html
+//http://fisherlei.blogspot.com/2012/12/leetcode-edit-distance.html(java : http://ideone.com/Mf76NV)
 import java.io.*;
 import java.util.*;
 
@@ -49,6 +50,48 @@ public class Solution {
             }
         }
         return  dp[l1][l2];
+    }
+}
+
+Using Recursive 
+================
+//http://www.geeksforgeeks.org/dynamic-programming-set-5-edit-distance/
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println(minDistance("sunday", "saturday"));
+    }
+    public static int minDistance(String word1, String word2) {
+        int l1 = word1.length();
+        int l2 = word2.length();
+        int[][] dp = new int[l1+1][l2+1];
+        for(int i=0; i <= l1; i++)
+            for(int j=0; j <=l2; j++)
+                dp[i][j] = -1;
+        return recurse(word1, word2,l1,l2,dp);
+    }
+    public static int recurse(String word1, String word2, int l1, int l2, int[][] dp) {
+        if(dp[l1][l2] != -1)
+            return dp[l1][l2];
+        if(l1 == 0)
+            return l2;
+        if(l2 ==0)
+            return l1;
+        int currValue;
+        if(word1.charAt(l1-1) == word2.charAt(l2-1))
+            currValue = recurse(word1,word2,l1-1,l2-1,dp);
+        else {
+            int replaceCost = recurse(word1,word2,l1-1,l2-1,dp);
+            int addCost = recurse(word1,word2,l1,l2-1,dp);
+            int deleteCost = recurse(word1,word2,l1-1,l2,dp);
+            currValue = Math.min(Math.min(replaceCost,addCost),deleteCost)+1;
+        }
+        dp[l1][l2] = currValue;
+        return dp[l1][l2];
     }
 }
 
