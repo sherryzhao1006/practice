@@ -1,0 +1,138 @@
+With Memoization
+=================
+    /*
+public static List<String> wordBreak(String s, Set<String> dict) {
+        Map<String,Boolean> map = new HashMap<String,Boolean>();
+        List<String> res = new ArrayList<String>();
+        helper(s,dict,0,map,"",res);
+        return res;
+    }
+    public static boolean helper(String s,Set<String> dict,int index,Map<String,Boolean> map,String finalstr,List<String> res) {
+
+        if(index == s.length())
+            return true;
+        if(map.containsKey(s.substring(index)) && map.get(s.substring(index)) == false)
+            return false;
+        for(int i=index+1; i <= s.length(); i++) {
+            String substr = s.substring(index,i);
+            if(dict.contains(substr)){
+
+                String temp = finalstr;
+                if(helper(s,dict,i,map,temp+" "+substr,res)){
+                    if(i != s.length()){
+                        String newStr = temp + " " + substr+ " " + s.substring(i,s.length());
+                        map.put(s.substring(index), true);<< it will get in here for last recursive call
+                        res.add(newStr.trim());
+                    } else {
+                        String newStr = temp + " " + substr;
+                        map.put(s.substring(index), true); << it will get in here for last recursive call
+                        res.add(newStr.trim());
+                    }
+
+                }
+            }
+        }
+        if(!map.containsKey(s.substring(index))) << Error<< it will get in here for last recursive call
+            map.put(s.substring(index),false);
+        return false;
+    }
+    */
+    
+    import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Set<String> dict = new HashSet<String>();
+        dict.add("aaaa");
+        dict.add("aa");
+        dict.add("a");
+
+
+
+
+
+
+        String s= new String("aaaaaaa");
+
+        wordBreak(s,dict);
+    }
+    
+    
+    
+    
+    public List<String> wordBreak(String s, Set<String> dict) {
+        Map<String,Boolean> map = new HashMap<String,Boolean>();
+        List<String> res = new ArrayList<String>();
+        helper(s,dict,0,map,"",res);
+        return res;
+    }
+    public boolean helper(String s,Set<String> dict,int index,Map<String,Boolean> map,String finalstr,List<String> res) {
+
+        if(index == s.length())
+            return true;
+        if(map.containsKey(s.substring(index)) && map.get(s.substring(index)) == false)
+            return false;
+        int before = res.size();
+        for(int i=index+1; i <= s.length(); i++) {
+            String substr = s.substring(index,i);
+            if(dict.contains(substr)){
+
+                String temp = finalstr;
+                if(helper(s,dict,i,map,temp+" "+substr,res)){
+                    if(i != s.length()){
+                        String newStr = temp + " " + substr+ " " + s.substring(i,s.length());
+                        res.add(newStr.trim());
+                    } else {
+                        String newStr = temp + " " + substr;
+                        res.add(newStr.trim());
+                    }
+
+                }
+            }
+        }
+        if(before == res.size()){
+            if(!map.containsKey(s.substring(index)))
+                map.put(s.substring(index),false);
+        }
+        return false;
+    }
+
+}
+
+Before Memoization
+==================
+/*
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> dict) {
+        Map<String,Boolean> map = new HashMap<String,Boolean>();
+        List<String> res = new ArrayList<String>();
+        helper(s,dict,0,map,"",res);
+        return res;
+    }
+    public static boolean helper(String s,Set<String> dict,int index,Map<String,Boolean> map,String finalstr,List<String> res) {
+
+                if(index == s.length())
+                        return true;
+
+                for(int i=index; i <= s.length(); i++) {
+                        String substr = s.substring(index,i);
+                        if(dict.contains(substr)){
+
+                                String temp = finalstr;
+                                if(helper(s,dict,i,map,temp+" "+substr,res)){
+                                        if(i != s.length()){
+                                            String newStr = temp + " " + substr+ " " + s.substring(i,s.length());
+                                            res.add(newStr.trim());
+                                        } else {
+                                            String newStr = temp + " " + substr;
+                                            res.add(newStr.trim());
+                                        }
+
+                                }
+                        }
+                }
+                return false;
+        }
+    
+}
+*/
