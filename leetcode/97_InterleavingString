@@ -1,0 +1,57 @@
+s1 = "aabcc",
+s2 = "dbbca", 
+
+
+When s3 = "aadbbcbcac", return true.
+When s3 = "aadbbbaccc", return false. 
+
+
+
+[i][j]记录的是用了两个str的前i,j ？？ 不懂
+
+
+嗯，I mean the DP matrix. matrix[i][j] record: using str1 0~i-1  and str1 0~j-1, if they can represent str3 0~i+j-1
+initialization ?
+haha
+u r lazy. just kidding.
+how come transition function is [i-1] j and [i] [j-1]
+
+but there is some problem with my code. is the code below yours?
+
+
+it can not return right answer in some case
+
+transition function: ma[j][i]==(ma[j-1][i]&&s2[j-1]==s3[i+j-1]) << i'm confused with this.
+                                    u check whether last char of s2 is the same as last char of s3? ->yes
+                                    
+                                    
+                                    and why you do || ? -> because the character may be from str1 or str2
+                                    can u explain a little bit on ur transition function?
+                                    got it. 吾该 ＝＝ 谢谢？ ：）->right
+
+||(ma[j][i-1]&&s1[i-1]==s3[i+j-1]);
+
+
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        if((s2.size()+s1.size())!=s3.size())return false;
+        bool ma[s2.size()+1][s1.size()+1];
+         
+        ma[0][0]=true;
+        for(int i=1;i<=s1.size();i++){
+            if(ma[0][i-1]&&s1[i-1]==s3[i-1]){ma[0][i]=true;}
+        }
+        for(int i=1;i<=s2.size();i++){
+             if(ma[i-1][0]&&s2[i-1]==s3[i-1]){ma[i][0]=true;}
+            
+        }
+        for(int i=1;i<=s1.size();i++){
+            for(int j=1;j<=s2.size();j++){
+                ma[j][i]=(ma[j-1][i]&&s2[j-1]==s3[i+j-1])||(ma[j][i-1]&&s1[i-1]==s3[i+j-1]);
+            }
+            
+        }
+        return ma[s2.size()][s1.size()];
+    }
+};
