@@ -1,0 +1,313 @@
+public class Solution {
+    public String minWindow(String S, String T) {
+        Map<Character, Integer> mapT = new HashMap<Character, Integer>();
+        int sSize = S.length();
+        int tSize = T.length();
+        if (tSize > sSize)
+            return "";
+        int count =tSize;
+        for(int i=0; i < tSize; i++) {
+            if(mapT.containsKey(T.charAt(i)))
+                mapT.put(T.charAt(i),mapT.get(T.charAt(i))+1);
+            else
+                mapT.put(T.charAt(i),1);
+        }
+        int start = 0;
+        int end = -1;
+        LinkedList<Integer> indexes = new LinkedList<Integer>();
+
+        for(int i=0; i < sSize; i++) {
+            if(mapT.containsKey(S.charAt(i))) {
+                char currChar = S.charAt(i);
+                int currCharCount = mapT.get(currChar);
+                mapT.put(currChar,currCharCount-1);
+                if(currCharCount > 0)
+                    count--;
+                indexes.add(i);
+                if(count == 0) {
+                    int firstIndex = indexes.getFirst();
+                    if((i - firstIndex)  < (end-start) || (start == 0 && end == -1)) {
+                        start = firstIndex;
+                        end = i;
+                    }
+                    indexes.removeFirst();
+                    int firstIndexCount = mapT.get(S.charAt(firstIndex));
+                    if(firstIndexCount >=0) {
+                        count++;
+                    } else {
+                        mapT.put(S.charAt(i), mapT.get(S.charAt(i))+1);
+                        if(mapT.get(S.charAt(i)) >=0)// << this is redundant. i added just for understanding
+                            count++;
+                        indexes.removeLast();
+                        i--;
+                       
+                    }
+                    mapT.put(S.charAt(firstIndex),firstIndexCount+1);
+
+                }
+            }
+        }
+        return S.substring(start,end+1);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+YiFei Solution : 
+
+public class Solution {
+    public String minWindow(String s, String t) {
+        HashMap<Character, Integer> mapT = new HashMap<Character,Integer>();
+        int len1 = s.length();
+        int len2 = t.length();
+        if(len1<len2){
+            return "";
+        }
+        int count = 0;
+        for(int i=0;i<len2;i++){
+            if(mapT.containsKey(t.charAt(i))){
+                mapT.put(t.charAt(i),mapT.get(t.charAt(i))+1);
+            }else{
+                mapT.put(t.charAt(i),1);
+            }
+            count+=1;
+        }
+        LinkedList<Integer> indexes = new LinkedList<Integer>();
+        int i=0;
+        for(i=0;i<s.length();i++){//Find the first start place
+            if(mapT.containsKey(s.charAt(i))){
+                break;
+            }
+        }
+        if(i==s.length() || s.substring(i).length()<t.length()){
+            return "";//See if the latter substring could contain t
+        }
+        int start = 0,end = -1;
+        for(int j=i;j<s.length();j++){
+            if(mapT.containsKey(s.charAt(j))){
+                int count2 = mapT.get(s.charAt(j));
+                mapT.put(s.charAt(j),count2-1);
+                if(count2>0){
+                    count--;
+                }
+                indexes.add(j);
+                if(count==0){//If we got every chars
+                    int idx = indexes.getFirst();//Start idx
+                    if(j-indexes.getFirst() < end-start || (end-start<0)){//Update
+                        start = idx;
+                        end = j;
+                    }
+                    indexes.removeFirst();
+                    int count3 = mapT.get(s.charAt(idx));
+                    if(count3>=0){
+                        count++;
+                    }else{
+                        int count4 = mapT.get(s.charAt(j));
+                        mapT.put(s.charAt(j), count4+1);
+                        if(count4>=0){
+                            count++;
+                        }
+                        j--;
+                        indexes.removeLast();
+                    }
+                    mapT.put(s.charAt(idx),mapT.get(s.charAt(idx))+1);//put it back to mapT
+                }
+            }
+        }
+        return s.substring(start,end+1);
+    }
+}
+
+
+
+
+Discussion :http://collabedit.com/jv24b
+
+S = "ADOBECODEBANC"
+T = "ABC"
+see
+
+mapT A-1 
+     B-1
+     C-1
+     
+     ADOBEC
+     |    |
+     st   end agree?
+     
+     然后继续遍历S。
+     
+    ADOBECODEB
+             | 
+             B become -1 so try to find whether the first char we met is B or not if not keep traversing << 卡住
+             
+    ADOBECODEBA
+              | become -1 so try to find whether the first char we met is A or not if so move the start pointer forward.         
+
+
+
+那你怎么keep arraylist呢？用linkedlist比较好
+删除增加比较快
+头尾的增删
+
+
+A    D    O    B    E    C    O    D    E    B    A
+                                             | 
+                                             here
+              
+              ArrayList: 0(a), 3(b), 5(c) right? -----> all hashmap=0 ya? 
+              en
+              keep going
+              我在碰到B
+              arraylist : 0(a), 3(b), 5(c), 9(b)
+              again A
+              arraylist : 0(a) <<remove, 3(b), 5(c), 9(b)----->hashmap   b:-1, a:1 (yep)
+              here we have 2 b. 
+              so, for each update you need also update the hashmap
+              
+              
+               
+              
+
+你怎么知道t剩下0？ 你要遍历t不是吗？
+    
+
+S = "ADOBECODEBANC"
+T = "ABC"i j
+
+first get hashmap for t, mapT
+
+mapT (keep going)
+A=1,
+B=1
+C=1 
+
+then we iterate s
+matS
+for(int i=0;i<s.len;i++){
+    if(mapT.containsKey(s.charAt(i)){
+        if(mapS.containsKey(s.charAt(i))){
+            mapS.put(s.charAt(i), mapS.get(s.charAt(i))+1);
+        }else{
+            mapS.put(s.charAt(i),1);
+        }
+    }
+}
+
+
+see you don't need to add 1 to mapS.
+i think this will work
+S = "ADOBECODEBANC"
+T = "ABC"
+
+mapT = A->1
+       B->1
+       C->1
+       loop through S
+       for(int i=0; i < S.length(); i++) {
+           if(mapT.containsKey(S.charAt(i)) {
+               if(mapT.get(S.charAt(i)) >0)
+                   mapT.put(S.charAt(i),mapT.get(S.charAt(i))); //how about this?
+               //if mapT.get(S.charAt(i) ==0 . i think we still need to loop through T to find out whether we match all chars in T?
+           }
+       }
+
+
+
+mybad. ignore. let me give you example instead.
+
+
+S = "ADOBECODEBANC"
+T = "ABC"
+
+
+first put T into map : mapT  : A-1=> A-0
+                               B-1=> B-0
+                               C-1
+                               
+S = "ADOBECODEBANC"
+     |<< Start Pointer
+     we are here so we decrement A by 1. agree?                  
+      |
+      D is not in mapT so ignore
+       |
+       O ignore
+        |
+        B is in mapT so decrement by 1
+         E ignore
+          |
+          C in mapT so decrement by 1(now go through everything in mapT make sure they are all 0 or less than 0. so the distance is
+                   <<End Pointer   
+           O ignore
+            D ignore
+             E ignore
+            
+Remember, we need return the string, not whether or not it contains T.
+I think we can iterate s and make a mapS<Character, List<Integer>>,store the idx of each occurence then we iterate S
+ya we can keep a pointer at index 0 until we find all chars in T
+so our start pointer is at index0 and our end pointer is everything mapT becomes 0. 
+             
+so s.substring(start,end+1);
+i am stuck on what is next step.any hint?when we reach 0 in mapT, we should change our start point
+
+ya。how？I think we can book keep a point that stores the last idx of occurence of character in T. e.g
+
+A, B, C, D, A, B, A, B, E
+0, 1, 2, 3, 4, 5, 6, 7, 8 
+
+A, B, E 
+1, 2, 3
+when we reach the second A(idx==4), mapT.get(A)==0, then, start point change to first B
+
+if we have
+AAAAAAAAAABE, for the second A, mapT.get(A)==0, then start point should be the second A
+ Just a guess, not sure..
+ ya i'm here。继续
+int lastIdx = 0;
+HashMap mapT_Copy// don't touch mapT, we decrease value in mapT_Copy
+for(int i=0;i<s.len;i++){
+    if(mapT.containsKey(s.charAt(i)){
+        
+        if(mapT_Copy.get(s.charAt(i)==0){
+            if(s.charAt(i)==s.charAt(lastIdx)){
+                lastIdx = i;
+                startIdx = lastIdx;
+            //Also upate mapT_copy
+            }else{
+                startIdx = lastIdx;
+            }
+            lastIdx = i;
+        }
+    }
+}
+ Sort of like this, we need modify mapT_copy  
+                   
+HashMap<Charcater, Integer> mapT = new HashMap<Character, Integer>();
+for(int i=0;i<t.lsnegh();i++){
+    if(mapT.containsKey(t.charAt(i))){
+    ....
+    }
+    ...
+}
+
+for(int i=0;i<s.length();i++){
+
+}
+
+
+
+
+
+HashMap mapForS
+
+1. 先遍历t,得到一个hashmap
+2. 遍历s，得到关于t的字母的hashmap， 遍历的同时同时可以把t给的值逐一减掉（类似 anagram那样）
+如果t还剩值不为0，就说明s不包含？
+3.再根据s的hashmap来找最短。。。
