@@ -1,0 +1,43 @@
+//My Solution 
+public class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> res = new ArrayList<Integer>();
+        int wordLen = words[0].length();
+        int totalLen = words.length*wordLen;
+        int sLen = s.length();
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        for(int i=0; i < words.length; i++) {
+            if (map.containsKey(words[i])) {
+                map.put(words[i], map.get(words[i])+1);
+            } else {
+                map.put(words[i], 1);
+            }
+        }
+        for(int i=0; i <= (sLen-totalLen); i++) {
+            int matchCount = 0;
+            int j = i;
+
+            HashMap<String, Integer> mapTmp = (HashMap<String, Integer>)map.clone();
+
+            while ( (j <= (sLen - wordLen)) && (matchCount < words.length)  ) {
+                String currWord = s.substring(j, j+wordLen);
+                if(mapTmp.containsKey(currWord) && mapTmp.get(currWord) >0 ) {
+                    mapTmp.put(currWord, mapTmp.get(currWord)-1);
+                    matchCount++;
+                    j += wordLen;
+                } else {
+                    break;
+                }
+            }
+            if(matchCount == words.length)
+                res.add(i);
+
+        }
+        return res;
+    }
+}
+
+
+YiFei Solution 
+
+
