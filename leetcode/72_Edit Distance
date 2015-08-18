@@ -36,7 +36,8 @@ public class Solution {
                     a[i] == b[i]
                     dp[0][0] = 0
                     dp[1][1] = dp[0][0];
-                    dp[2][1] =Min( dp[1][0] (replace u with a),  = 1
+                    dp[2][1] =Min( dp[1][0] (replace u with s),  = 1  => a = ss , b = s, dp[1][0] a=s becomes b="" =1(delete s)
+                                                                            and replace will change "u" to "s"
                                 dp[2,0] (add s so A=“s u s” and B) = 2
                                 dp[1][1](delete curr char)   =0)
                                     + 1
