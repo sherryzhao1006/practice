@@ -1,6 +1,7 @@
 //https://code.google.com/codejam/contest/6224486/dashboard#s=p1
 //http://stackoverflow.com/questions/29585210/infinite-house-of-pancakes
 //Brute Force
+//i was checking wether i need to divide or  just continue diners to eat every mins,  so 2 possible choices every minute
 import java.util.*;
 import java.io.*;
 public class Solution {
