@@ -1,3 +1,5 @@
+这一题应该可以用类似 min Window的揭发吧
+
 //My Solution 
 public class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
@@ -40,4 +42,47 @@ public class Solution {
 
 YiFei Solution 
 
-
+public class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        int wordLen = words[0].length();
+        int totalLen = wordLen*words.length;
+       HashMap<String, Integer> map = new HashMap<String, Integer>();
+        List<Integer> result = new ArrayList<Integer>();
+        for(int i=0;i<words.length;i++){
+            if(map.containsKey(words[i])){
+                map.put(words[i],map.get(words[i])+1);
+            }else{
+                map.put(words[i],1);
+            }
+        }
+        int totalCount = words.length;
+        HashMap<String, Integer> mapTmp = (HashMap<String, Integer>)map.clone();
+        for(int i=0;i<=s.length()-totalLen;i++){
+            String str  = s.substring(i,i+wordLen);
+            if(mapTmp.containsKey(str)){
+                int start = i;
+                int idx = i;
+                while(mapTmp.containsKey(str) && idx<=(s.length()-wordLen)){
+                    int count = mapTmp.get(str);
+                    if(count<=0){
+                        break;
+                    }
+                    mapTmp.put(str,count-1);
+                    totalCount--;
+                    if(totalCount==0){
+                        result.add(start);
+                        break;
+                    }else{
+                        idx = idx+wordLen;
+                        if(idx<=s.length()-wordLen){
+                            str = s.substring(idx,idx+wordLen);
+                        }
+                    }
+                }
+                mapTmp = (HashMap<String, Integer>)map.clone();
+                totalCount = words.length;
+            }
+        }
+        return result;
+    }
+}
