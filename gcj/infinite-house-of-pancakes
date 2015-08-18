@@ -1,0 +1,47 @@
+//https://code.google.com/codejam/contest/6224486/dashboard#s=p1
+//http://stackoverflow.com/questions/29585210/infinite-house-of-pancakes
+//Brute Force
+import java.util.*;
+import java.io.*;
+public class Solution {
+    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
+    public static void main (String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File(INPUT_FILE));
+        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
+        int t = in.nextInt();
+        for(int i=0; i < t; i++) {
+            int n = in.nextInt();
+            PriorityQueue<Integer> pq = new PriorityQueue<Integer>(n, Collections.reverseOrder());
+            for(int j=0; j < n; j++) {
+                pq.add(in.nextInt());
+            }
+            out.println(String.format("Case #%d: %d", (i + 1), recurse(pq)));
+        }
+        System.out.println("DONE");
+    }
+    public static int recurse(PriorityQueue<Integer> pq) {
+        int split = Integer.MAX_VALUE;
+        int max = pq.peek();
+        if(max <= 3)   //base case
+            return max;
+
+        for(int i=1; i <= max/2; i++) {
+            PriorityQueue<Integer> pq1 =  new PriorityQueue<Integer>(pq.size(),Collections.reverseOrder());
+            pq1.addAll(pq);
+            int currMax = pq1.remove();
+            int secondValue = currMax-i;
+            pq1.add(secondValue);
+            pq1.add(i);
+            split = Math.min(split, 1+recurse(pq1));
+        }
+
+
+        PriorityQueue<Integer> pq2 =  new PriorityQueue<Integer>(pq.size(), Collections.reverseOrder());
+        for(Integer curr : pq) {
+            pq2.add(curr-1);
+        }
+        int eat = 1+recurse(pq2);
+
+        return Math.min(split, eat);
+    }
+}
