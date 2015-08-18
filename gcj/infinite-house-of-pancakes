@@ -24,11 +24,20 @@ public class Solution {
         int max = pq.peek();
         if(max <= 3)   //base case
             return max;
-
+        // split : this is maximum if i want all the num to get split
+        
         for(int i=1; i <= max/2; i++) {
             PriorityQueue<Integer> pq1 =  new PriorityQueue<Integer>(pq.size(),Collections.reverseOrder());
             pq1.addAll(pq);
             int currMax = pq1.remove();
+            // will break currMax in all possible combinations here and add in q1
+            /*
+                i currMax-i
+                1 8
+                2 7
+                3 6
+                ....
+            */
             int secondValue = currMax-i;
             pq1.add(secondValue);
             pq1.add(i);
