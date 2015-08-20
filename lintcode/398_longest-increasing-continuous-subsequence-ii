@@ -1,0 +1,93 @@
+import java.util.*;
+import java.io.*;
+public class Solution {
+    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
+    public static void main (String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File(INPUT_FILE));
+        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
+        /*
+        int[][] A = {
+                {1 ,2 ,3 ,4 ,5},
+                {16,17,24,23,6},
+                {15,18,25,22,7},
+                {14,19,20,21,8},
+                {13,12,11,10,9}
+        };
+        */
+        int[][] A = {
+                    {1,2,3,4,5,6},
+                    {14,15,16,17,18,8},
+                    {12,13,11,10,9,7}};
+        System.out.println(longestIncreasingContinuousSubsequenceII(A));
+
+    }
+    public static int longestIncreasingContinuousSubsequenceII(int[][] A) {
+        if(A == null || A.length == 0)
+            return 0;
+        int n = A.length;
+        int m= A[0].length;
+        boolean[][] visited = new boolean[n][m];
+        int[][] dp = new int[n][m];
+        for(int i=0; i <n ; i++) {
+            for(int j=0; j <m; j++){
+                dp[i][j] = -1;
+            }
+        }
+        //dir = 0 means increasing
+        //dir = 1 means decreasing
+        int increasing=0;
+        for(int i=0; i < n; i++)
+            for(int j=0;j < m; j++)
+                increasing = helper(n,m, A, visited,i,j,dp,0);
+        for(int i=0; i <n ; i++) {
+            for(int j=0; j <m; j++){
+                dp[i][j] = -1;
+            }
+        }
+        visited = new boolean[n][m];
+
+        int decreasing =0;
+
+        for(int i=0; i < n; i++)
+            for(int j=0;j < m; j++)
+                decreasing= Math.max(decreasing,helper(n,m,A,visited,i,j,dp,1));
+
+        return Math.max(increasing,decreasing);
+
+    }
+    public static boolean valid(int n, int m,int x, int y){
+        if(x <0 || x >=n || y <0 || y >=m)
+            return false;
+        return true;
+    }
+    public static int helper(int n, int m,int[][] A, boolean[][] visited,int x, int y,int[][] dp,int dir) {
+
+        if(dp[x][y] != -1)
+            return dp[x][y];
+        visited[x][y] = true;
+
+
+        int left=1;
+        if(valid(n,m,x,y-1) && visited[x][y-1] == false) {
+            if( (dir == 0 && A[x][y-1] > A[x][y]) || (dir ==1 && A[x][y-1] < A[x][y]))
+                left = 1+helper(n,m, A, visited, x, y - 1, dp,dir);
+
+        }
+        int right=1;
+        if(valid(n,m,x,y+1) && visited[x][y+1] == false)
+            if( (dir == 0 && A[x][y+1] > A[x][y]) || (dir ==1 && A[x][y+1] < A[x][y]))
+            right = 1+helper(n,m,A,visited,x,y+1,dp,dir);
+        int top=1;
+        if(valid(n,m,x-1,y) && visited[x-1][y] == false)
+            if( (dir == 0 && A[x-1][y] > A[x][y]) || (dir ==1 && A[x-1][y] < A[x][y]))
+                top = 1+helper(n,m,A,visited,x-1,y,dp,dir);
+        int down=1;
+        if(valid(n,m,x+1,y) && visited[x+1][y] == false)
+            if( (dir == 0 && A[x+1][y] > A[x][y]) || (dir ==1 && A[x+1][y] < A[x][y]))
+                down = 1+helper(n,m,A,visited,x+1,y,dp,dir);
+        dp[x][y] = Math.max(Math.max(left,right),Math.max(top,down));
+        visited[x][y] = false;
+        return dp[x][y];
+    }
+
+}
