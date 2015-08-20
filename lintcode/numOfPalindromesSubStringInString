@@ -1,3 +1,16 @@
+DP (O(n^2) time and O(n^2) Space)
+
+idea:
+for any index, l to left and r to right
+
+if( input[l] == input[r] && dp[l+1][r-1] == true) {
+                    dp[l][r] = true;
+                }
+
+
+
+
+
 import java.util.*;
 import java.io.*;
 public class Solution {
