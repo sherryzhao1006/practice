@@ -1,0 +1,66 @@
+import java.util.*;
+import java.io.*;
+public class Solution {
+    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
+    public static void main (String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File(INPUT_FILE));
+        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
+        int[] A = {5,4,2,1,3};
+        System.out.println(longestIncreasingContinuousSubsequence(A));
+    }
+    public static int longestIncreasingContinuousSubsequence(int[] A) {
+        if(A == null || A.length == 0)
+            return 0;
+        int n = A.length;
+
+        int[] dpA = new int[n];
+        int[] dpB = new int[n];
+
+        for(int i=0; i < n; i++) {
+            dpA[i] = 1;
+            dpB[i] = 1;
+        }
+        int maxValue = 1;
+        for(int i=1; i < n; i++) {
+            if(A[i] > A[i-1])
+                dpA[i] = dpA[i-1] + 1;
+            maxValue = Math.max(dpA[i],maxValue);
+        }
+        for(int i=n-2; i>=0; i--) {
+            if (A[i] > A[i + 1])
+                dpB[i] = dpB[i + 1] + 1;
+            maxValue = Math.max(dpB[i],maxValue);
+        }
+        return maxValue;
+    }
+}
+
+
+
+two dp array. reduce to one :
+
+    public static int longestIncreasingContinuousSubsequence(int[] A) {
+        if(A == null || A.length == 0)
+            return 0;
+        int n = A.length;
+
+        int[] dpA = new int[n];
+
+        for(int i=0; i < n; i++) {
+            dpA[i] = 1;
+        }
+        int maxValue = 1;
+        for(int i=1; i < n; i++) {
+            if(A[i] > A[i-1])
+                dpA[i] = dpA[i-1] + 1;
+            maxValue = Math.max(dpA[i],maxValue);
+        }
+        for(int i=1; i < n; i++) {
+            if (A[i] < A[i - 1])
+                dpA[i] = dpA[i -1] + 1;
+            else
+                dpA[i] =1; // This is where i miss
+            maxValue = Math.max(dpA[i],maxValue);
+        }
+        return maxValue;
+    }
