@@ -1,3 +1,72 @@
+BFS:
+
+
+import java.util.*;
+import java.io.*;
+class Point {
+    int x;
+    int y;
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+public class Solution {
+    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
+    public static void main (String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File(INPUT_FILE));
+        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
+
+        boolean[][] grid = {{true,true}};
+        System.out.println(numIslands(grid));
+    }
+    public static int numIslands(boolean[][] grid) {
+
+        if(grid.length ==0)
+            return 0;
+        int n = grid.length;
+        int m = grid[0].length;
+        int count = 0;
+        for(int i=0; i < n; i++) {
+            for(int j=0; j <m ;j++) {
+                if(grid[i][j] == true) {
+                    bfs(grid, i, j, n, m);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public static boolean isValid(int x, int y, int n, int m, boolean[][] grid) {
+        if(x < 0 || x >= n || y < 0 || y >=m || grid[x][y] == false) {
+            return false;
+        }
+        return true;
+    }
+    public static void bfs(boolean[][] grid, int x, int y, int n, int m) {
+
+        Queue<Point> q = new LinkedList<Point>();
+        int[][] dir = {
+                {-1,1,0,0},
+                {0,0,-1,1}
+        };
+        q.add(new Point(x,y));
+        while(!q.isEmpty()) {
+            Point currPoint = q.poll();
+            grid[currPoint.x][currPoint.y] = false;
+            for(int i=0; i < 4; i++) {
+                if(isValid(currPoint.x+dir[0][i],currPoint.y+dir[1][i], n,m, grid))
+                    q.add(new Point(currPoint.x+dir[0][i],currPoint.y+dir[1][i]));
+            }
+        }
+    }
+}
+
+
+
+DFS:
+
+
 public class Solution {
     /**
      * @param grid a boolean 2D matrix
