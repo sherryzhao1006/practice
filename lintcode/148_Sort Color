@@ -1,0 +1,51 @@
+import java.util.*;
+import java.io.*;
+
+
+class TreeNode {
+        public int val;
+        public TreeNode left, right;
+          public TreeNode(int val) {
+            this.val = val;
+            this.left = this.right = null;
+        }
+    }
+
+public class Solution {
+    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File(INPUT_FILE));
+        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
+        //int[] A = {1,0,1,2};
+        int[] A = {2,0,0,1,2,0,2};
+        sortColors(A);
+    }
+    public static void sortColors(int[] nums) {
+        int n = nums.length-1;
+        int i=0,j=0;
+        int k=n;
+        while( j <=k) {
+            //need equal because of this testcase :
+            //[0,2,2,2,2,1,0,1,0,0,0,1,0,2,0] : input
+            //[0,0,0,0,0,0,1,1,1,0,2,2,2,2,2]: output
+            //                  (j,k)
+            if(nums[j] == 0) {
+                int temp = nums[j];
+                nums[j] = nums[i];
+                nums[i] = temp;
+                j++;
+                i++;
+            } else if (nums[j] == 1) {
+                j++;
+            } else if(nums[j] == 2) {
+                int temp = nums[j];
+                nums[j] = nums[k];
+                nums[k] = temp;
+                k--;
+            }
+        }
+    }
+
+}
+
