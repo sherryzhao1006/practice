@@ -1,0 +1,75 @@
+Brute Force (Doesn't AC large Test case)
+http://www.lintcode.com/en/problem/max-tree/
+
+import java.util.*;
+import java.io.*;
+
+
+class TreeNode {
+        public int val;
+        public TreeNode left, right;
+          public TreeNode(int val) {
+            this.val = val;
+            this.left = this.right = null;
+        }
+    }
+
+public class Solution {
+    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File(INPUT_FILE));
+        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
+        int[] A = {2, 5, 6, 0, 3, 1};
+        TreeNode root = maxTree(A);
+
+    }
+
+    public static TreeNode maxTree(int[] A) {
+        //find max and set it as root
+        int rootVal = Integer.MIN_VALUE;
+        int rootIndex = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] > rootVal) {
+                rootVal = A[i];
+                rootIndex = i;
+            }
+        }
+        TreeNode root = new TreeNode(A[rootIndex]);
+        insert(root, A, 0, rootIndex,A.length-1);
+        return root;
+    }
+
+    public static void insert(TreeNode root, int[] A, int l, int m, int r) {
+
+        if(l != m) {
+            int leftIndex =0;
+            int leftLarge = Integer.MIN_VALUE;
+            for (int i = l; i < m; i++) {
+                if(A[i] > leftLarge) {
+                    leftLarge = A[i];
+                    leftIndex = i;
+                }
+            }
+            TreeNode leftNode = new TreeNode(A[leftIndex]);
+            root.left = leftNode;
+            insert(leftNode,A,l,leftIndex, m-1);
+        }
+        if(m != r) {
+            int rightIndex = 0;
+            int rightLarge = Integer.MIN_VALUE;
+            for (int i = m + 1; i <= r; i++) {
+                if(A[i] > rightLarge) {
+                    rightLarge = Math.max(A[i], rightLarge);
+                    rightIndex = i;
+                }
+            }
+            TreeNode rightNode = new TreeNode(A[rightIndex]);
+            root.right = rightNode;
+            insert(rightNode,A,m+1,rightIndex,r);
+        }
+
+
+    }
+}
+
