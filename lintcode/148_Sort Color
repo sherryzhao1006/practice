@@ -1,3 +1,40 @@
+Better Approach :
+
+class Solution {
+    /**
+     * @param nums: A list of integer which is 0, 1 or 2 
+     * @return: nothing
+     */
+    public static void sortColors(int[] nums) {
+        if(nums == null || nums.length == 0)
+            return;
+        int zeroNext = 0;
+        int twoLast = nums.length-1;
+        int i=0;
+        while( i <= twoLast) {
+            if(nums[i] == 0) {
+                swap(nums,zeroNext,i);
+                zeroNext++;
+                i++;
+            } else if(nums[i] == 2) {
+                swap(nums,i,twoLast);
+                twoLast--;
+            } else {
+                i++;
+            }
+        }
+    }
+    public static void swap(int[] nums, int l, int r){
+        int temp = nums[l];
+        nums[l] = nums[r];
+        nums[r] = temp;
+    }
+}
+
+
+
+
+
 //http://www.geeksforgeeks.org/sort-an-array-of-0s-1s-and-2s/
 import java.util.*;
 import java.io.*;
