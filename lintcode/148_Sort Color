@@ -1,15 +1,6 @@
+//http://www.geeksforgeeks.org/sort-an-array-of-0s-1s-and-2s/
 import java.util.*;
 import java.io.*;
-
-
-class TreeNode {
-        public int val;
-        public TreeNode left, right;
-          public TreeNode(int val) {
-            this.val = val;
-            this.left = this.right = null;
-        }
-    }
 
 public class Solution {
     public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
