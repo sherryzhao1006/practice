@@ -4,6 +4,8 @@ public class Solution {
      * @return: A list of integers includes the index of the first number 
      *          and the index of the last number
      */
+    // -3, 1, 2, -3, 4
+    // 0,-3, -2,0, -3, 1
 public ArrayList<Integer> subarraySum(int[] nums) {
         int[] sum = new int[nums.length+1];
         for(int i=1; i < sum.length; i++) {
