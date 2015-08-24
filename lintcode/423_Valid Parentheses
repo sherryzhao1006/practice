@@ -1,0 +1,90 @@
+3. Coding Question, LeetCode Valid Parentheses.
+    Follow up 1: 如果中间有别的字符怎么办
+    Follow up 2: 如果添加别的括号种类比如<>，如何做到对原先的代码改动尽量少
+    
+Best Solution :
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Answer ans = new Answer();
+        System.out.println(ans.isValid("(){}[]"));
+        System.out.println(ans.isValid("(()){{[()]}}[]"));
+        System.out.println(ans.isValid("((){}[]"));
+        System.out.println(ans.isValid("(){][}[]"));
+    }
+}
+
+class Answer {
+    public boolean isValid(String input) {
+        Stack<Character> stack = new Stack<Character>();
+        Map<Character, Character> hash = new HashMap<Character, Character>();. more info on 1point3acres.com
+        hash.put('}', '{');
+        hash.put(']', '[');
+        hash.put(')', '(');
+        HashSet<Character> set = new HashSet<Character>(hash.values());
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (set.contains(c)) {
+                stack.push(c);
+            } else if (hash.containsKey(c)) {
+                if (stack.peek() == hash.get(c)) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return stack.isEmpty();
+    }
+}
+
+
+My Solution :    
+    
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File(INPUT_FILE));
+        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
+        System.out.println(isValidParentheses("()"));
+    }
+    public static boolean isValidParentheses(String s) {
+        Stack<Character> st = new Stack<Character>();
+
+        for(int i=0; i < s.length(); i++) {
+            if(isOpen(s.charAt(i))) {
+                st.push(s.charAt(i));
+            }else {
+                if(st.isEmpty())
+                    return false;
+                if(st.peek() != open(s.charAt(i)))
+                    return false;
+                st.pop();
+            }
+        }
+        if(!st.isEmpty())
+            return false;
+        return true;
+    }
+    public static boolean isOpen(char c) {
+        if(c == '(' || c == '{' || c== '[')
+            return true;
+        return false;
+    }
+    public static char open(char c) {
+        if(c == ')')
+            return '(';
+        if(c == ']')
+            return '[';
+        if(c == '}')
+            return '{';
+        return '\0';
+    }
+}
