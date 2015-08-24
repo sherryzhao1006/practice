@@ -1,0 +1,25 @@
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: A list of integers includes the index of the first number 
+     *          and the index of the last number
+     */
+public ArrayList<Integer> subarraySum(int[] nums) {
+        int[] sum = new int[nums.length+1];
+        for(int i=1; i < sum.length; i++) {
+            sum[i] = sum[i-1] + nums[i-1];
+        }
+        Map<Integer,Integer> m = new HashMap<Integer,Integer>();
+        for(int i=0; i < sum.length; i++) {
+            if(m.containsKey(sum[i])) {
+                ArrayList<Integer> res = new ArrayList<Integer>();
+                res.add(m.get(sum[i]));
+                res.add(i-1);
+                return res;
+                //Arrays.asList(m.get(sum[0]),i); can't use because it return List
+            } else
+                m.put(sum[i],i);
+        }
+        return null;
+    }
+}
