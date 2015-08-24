@@ -1,0 +1,51 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File(INPUT_FILE));
+        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
+        System.out.println(removeInValidParentheses("((()()(())"));
+    }
+    public static String removeInValidParentheses(String s) {
+        Stack<Character> st = new Stack<Character>();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i < s.length(); i++) {
+            if(isOpen(s.charAt(i))) {
+                st.push(s.charAt(i));
+                sb.append("(");
+            }else {
+                if(st.isEmpty())
+                    continue;
+                if(st.peek() != open(s.charAt(i)))
+                    continue;
+                st.pop();
+                sb.append(")");
+            }
+        }
+        while(!st.isEmpty()) {
+            sb.deleteCharAt(0);
+            st.pop();
+        }
+        return sb.toString();
+    }
+
+    public static boolean isOpen(char c) {
+        if(c == '(' || c == '{' || c== '[')
+            return true;
+        return false;
+    }
+    public static char open(char c) {
+        if(c == ')')
+            return '(';
+        if(c == ']')
+            return '[';
+        if(c == '}')
+            return '{';
+        return '\0';
+    }
+
+}
+
