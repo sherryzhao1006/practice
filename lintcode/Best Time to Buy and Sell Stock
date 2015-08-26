@@ -1,0 +1,24 @@
+public class Solution {
+    /**
+     * @param prices: Given an integer array
+     * @return: Maximum profit
+     */
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length == 0 || prices.length == 1)
+            return 0;
+        // write your code here
+        int max = Integer.MIN_VALUE;
+        Stack<Integer> minStack = new Stack<Integer>();
+        minStack.push(prices[0]);
+        for(int i=1; i < prices.length; i++) {
+            int currNum = prices[i];
+            if(currNum < minStack.peek())
+                minStack.push(prices[i]);
+            else {
+                max = Math.max(max, prices[i] - minStack.peek());
+            }
+        }
+        return max == Integer.MIN_VALUE ?0 : max;
+        
+    }
+}
