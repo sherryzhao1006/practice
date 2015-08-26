@@ -1,0 +1,40 @@
+////http://www.shuatiblog.com/blog/2014/06/28/Partition-array/
+public class Solution {
+	/** 
+     *@param nums: The integer array you should partition
+     *@param k: As description
+     *return: The index after partition
+     */
+    public int partitionArray(int[] nums, int k) {
+        int left = 0;
+        int right = nums.length-1;
+        while(left < right && left <nums.length && right >=0) {
+            if(nums[left] < k)
+                left++;
+            if(nums[right] >= k)
+                right--;
+            if(nums[right] >=k || nums[left] < k)
+                continue;
+            if(left > right) //<<this is what i miss//http://www.shuatiblog.com/blog/2014/06/28/Partition-array/
+                break;
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+        }
+        int index=0;
+        boolean found = false;
+        for(int i=0; i < nums.length; i++) {
+            if(nums[i] >= k) {
+                found = true;
+                index = i;
+                break;
+            }           
+        }
+        if(found == true) {
+            return index;    
+        
+        } else
+            return nums.length;
+	    //write your code here
+    }
+}
