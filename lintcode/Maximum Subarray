@@ -1,0 +1,106 @@
+recursive DP(this doesn't need memoization)
+============
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: A integer indicate the sum of max subarray
+     */
+    public static int max = Integer.MIN_VALUE;
+    public static int maxSubArray(ArrayList<Integer> nums) {
+        if(nums == null || nums.size() == 0)
+            return 0;
+        if(nums.size() == 1)
+            return nums.get(0);
+            
+            
+        int[] arr = new int[nums.size()];
+        for(int i=0; i < nums.size(); i++) {
+            arr[i] = nums.get(i);
+        }
+        boolean allNeg = true;
+        int currMax = Integer.MIN_VALUE;
+        for(int i=0; i < arr.length; i++){
+            if(arr[i] > 0)
+                allNeg = false;
+            if(arr[i] > currMax)
+                currMax = arr[i];
+        }    
+        if(!allNeg){
+            max = arr[0];
+            int res = recursive(arr.length-1,arr);
+            return max;
+        } else {
+            return currMax;
+        }
+        // write your code
+    }
+    public static int recursive(int index, int[] arr) {
+        if(index == 0) {
+            return arr[index];
+        }
+        //compare with previous S[i-1] previous sum upto now
+        int curr = arr[index];
+        int sumSoFar = recursive(index-1,arr);
+        int res = sumSoFar;
+        if( res+curr < curr) {
+            res = curr;
+        } else {
+            res = res+curr;
+        }
+        if(res > max){
+            max = res;
+        }
+        return res;
+    }
+}
+
+
+Iterative DP :
+
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @return: A integer indicate the sum of max subarray
+     */
+    public static int max = Integer.MIN_VALUE;
+    public static int maxSubArray(ArrayList<Integer> nums) {
+        if(nums == null || nums.size() == 0)
+            return 0;
+        if(nums.size() == 1)
+            return nums.get(0);
+            
+            
+        int[] arr = new int[nums.size()];
+        for(int i=0; i < nums.size(); i++) {
+            arr[i] = nums.get(i);
+        }
+        boolean allNeg = true;
+        int currMax = Integer.MIN_VALUE;
+        for(int i=0; i < arr.length; i++){
+            if(arr[i] > 0)
+                allNeg = false;
+            if(arr[i] > currMax)
+                currMax = arr[i];
+        }    
+        if(!allNeg){
+            max = arr[0];
+            return iterative(arr);
+            
+        } else {
+            return currMax;
+        }
+        // write your code
+    }
+    public static int iterative(int[] arr) {
+        int[] S = new int[arr.length];
+        S[0] = arr[0];
+        int res = S[0];
+        for(int i=1; i< arr.length; i++) {
+            S[i] = Math.max(S[i-1]+arr[i] , arr[i]);
+            if(res < S[i]) {
+                res = S[i];    
+            }
+        }
+        return res;
+    }
+}
