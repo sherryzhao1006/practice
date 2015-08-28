@@ -1,0 +1,47 @@
+class Solution {
+    /**
+     * @param k: An integer
+     * @param prices: Given an integer array
+     * @return: Maximum profit
+     */
+public static int maxProfit(int k, int[] prices) {
+        if(k ==0 || prices.length < 2)
+            return 0;
+        if(k >= prices.length/2) {
+            int sum = 0;
+            for(int i=1; i < prices.length;i++) {
+                int diff = prices[i] - prices[i-1];
+                sum += diff > 0 ? diff:0;
+            }
+            return sum;
+        }
+        int[][][] arr = new int[prices.length][k+1][2];
+        for(int i=0; i < prices.length; i++) {
+            for(int j=0; j <= k; j++) {
+                for(int kk=0; kk < 2; kk++) {
+                    arr[i][j][kk] = -1;
+                }
+            }
+        }
+        return helper(prices,0,k,0,arr);
+    }
+    public static int helper(int[] prices,int n,int k,int hasShare,int[][][] arr) {
+
+
+        if(n == prices.length)
+            return 0;
+        if(k==0 && hasShare == 0)
+            return 0;
+        if(arr[n][k][hasShare] != -1)
+            return arr[n][k][hasShare];
+        int max = Integer.MIN_VALUE;
+        if(hasShare == 1) {
+
+            max = Math.max(helper(prices,n+1,k,1,arr),helper(prices,n+1,k,0,arr)+prices[n]);
+        } else {
+            max = Math.max(helper(prices,n+1,k,0,arr), helper(prices,n+1,k-1,1,arr)-prices[n]);
+        }
+        arr[n][k][hasShare] = max;
+        return max;
+    }
+};
