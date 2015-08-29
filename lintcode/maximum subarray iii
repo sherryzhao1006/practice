@@ -64,7 +64,9 @@ public class Solution {
     }    
     public static int recursive(int[] arr,int n,int k,int state,int[][][] dp) {
 /*
-he problem we solved before asked for at most k subarrays to be chosen; 
+Example : for test case {1,0,-1} , k=3 the above recursive equation pick up the max value which is 1 instead of correct answer {1+0+-1 = 0}. 
+
+The problem we solved before asked for at most k subarrays to be chosen; 
 this asks for exactly k subarrays.We can do it using the same techniques. 
 We'll just make it so that the "profit" when you end with more than 0 trades still available is - Infinity or whatever.
 */
@@ -81,8 +83,16 @@ We'll just make it so that the "profit" when you end with more than 0 trades sti
         if(state == 1) {
             //open
             max = Math.max(recursive(arr,n,k,0,dp),recursive(arr,n+1,k,1,dp)+arr[n]);
+            /*
+            recursive(arr,n,k,0,dp) means close at current n exclusive of current num.
+            recursive(arr,n+1,k,1,dp)+arr[n]) means keep it open and take current num in the sum.
+            */
         } else {
             max = Math.max(recursive(arr,n+1,k-1,1,dp)+arr[n], recursive(arr,n+1,k,0,dp));
+            /*
+            recursive(arr,n+1,k-1,1,dp) means open new subarray and include curr number in the new subarray.
+            recursive(arr,n+1,k,0,dp) means don't take curr number and don't open new subarray. 
+            */
             //close
         }
         dp[n][k][state] = max;
