@@ -1,0 +1,82 @@
+public class Solution {
+    /**
+     * @param nums: A list of integers
+     * @param k: An integer denote to find k non-overlapping subarrays
+     * @return: An integer denote the sum of max k non-overlapping subarrays
+     */
+    public static int max = Integer.MIN_VALUE;
+
+    public static int maxSubArray(ArrayList<Integer> nums, int k) {
+        if(nums == null || nums.size() == 0)
+            return 0;
+        if(nums.size() == 1)
+            return nums.get(0);
+            
+            
+        int[] arr = new int[nums.size()];
+        for(int i=0; i < nums.size(); i++) {
+            arr[i] = nums.get(i);
+        }
+        boolean allNeg = true;
+        int currMax = Integer.MIN_VALUE;
+        
+        for(int i=0; i < arr.length; i++){
+            if(arr[i] > 0)
+                allNeg = false;
+        } 
+        
+        
+        if(!allNeg){
+
+                int[][][] dp = new int[arr.length][k+1][2];
+                for(int i=0; i < arr.length; i++) {
+                    for(int j=0; j <= k; j++) {
+                        for(int kk=0; kk < 2; kk++) {
+                            dp[i][j][kk] = -1;
+                        }
+                    }
+                }  
+                return recursive(arr,0,k,0,dp);
+            
+        } else {
+            Collections.sort(nums,Collections.reverseOrder());
+            int sum = 0;
+            for(int i=0; i < k; i++) {
+                sum +=nums.get(i);
+            }
+            return sum;
+        }
+    }
+    public static int iterative(int[] arr) {
+        int[] S = new int[arr.length];
+        S[0] = arr[0];
+        int res = S[0];
+        for(int i=1; i< arr.length; i++) {
+            S[i] = Math.max(S[i-1]+arr[i] , arr[i]);
+            if(res < S[i]) {
+                res = S[i];    
+            }
+        }
+        return res;
+    }    
+    public static int recursive(int[] arr,int n,int k,int state,int[][][] dp) {
+        if (n== arr.length)
+            return 0;
+        if(k==0 && state == 0)
+            return 0;
+        if(dp[n][k][state] != -1)
+            return dp[n][k][state];            
+        int max = Integer.MIN_VALUE;
+        if(state == 1) {
+            //open
+            max = Math.max(recursive(arr,n,k,0,dp),recursive(arr,n+1,k,1,dp)+arr[n]);
+        } else {
+            max = Math.max(recursive(arr,n+1,k-1,1,dp)+arr[n], recursive(arr,n+1,k,0,dp));
+            //close
+        }
+        dp[n][k][state] = max;
+
+        return max;
+    }
+}
+
