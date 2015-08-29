@@ -11,6 +11,8 @@ public class Solution {
             return 0;
         if(nums.size() == 1)
             return nums.get(0);
+        if(nums.size() < k)
+            return 0;
             
             
         int[] arr = new int[nums.size()];
@@ -36,7 +38,8 @@ public class Solution {
                         }
                     }
                 }  
-                return recursive(arr,0,k,0,dp);
+                int res = recursive(arr,0,k,0,dp);
+                return res;
             
         } else {
             Collections.sort(nums,Collections.reverseOrder());
@@ -60,6 +63,14 @@ public class Solution {
         return res;
     }    
     public static int recursive(int[] arr,int n,int k,int state,int[][][] dp) {
+/*
+he problem we solved before asked for at most k subarrays to be chosen; 
+this asks for exactly k subarrays.We can do it using the same techniques. 
+We'll just make it so that the "profit" when you end with more than 0 trades still available is - Infinity or whatever.
+*/
+        if(n == arr.length && k >0)
+            return -10000;
+
         if (n== arr.length)
             return 0;
         if(k==0 && state == 0)
