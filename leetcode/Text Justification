@@ -1,0 +1,125 @@
+import java.util.*;
+import java.io.*;
+
+
+
+public class Solution {
+
+    public static void main(String[] args) throws FileNotFoundException {
+
+        //https://leetcode.com/problems/text-justification/
+        //String[] words = {"This", "is", "an", "example", "of", "text", "justification."};
+        //String[] words = {"Listen","to","many,","speak","to","a","few."};
+        String[] words = {"What","must","be","shall","be."};
+        //String[] words = {""};
+        int maxWidth = 12;
+        List<String> res = fullJustify(words,maxWidth);
+        for(int i=0; i < res.size(); i++)
+            System.out.println(res.get(i));
+    }
+    /*
+    avg slot length = (maxLen-totalLen(a,b,c))/3
+additional length = (maxLen-totalLen)%3
+把sdditional lengthfe分摊到avg len里面
+additional len = （17-4）%3 = 1 all slots length are the same
+avg slot length = (16-5)/4 = 2
+
+把 addition len 平均放到靠左边的slots里面，
+比如说L=17
+avg = (17-4)/3 = 4
+additional = (17-4)%3 = 1
+then put this additional len to the first slot
+but in the case of additiaonal = 2
+then, for the leftmost 2 gaps between words, add one space to each of them
+     */
+    public static List<String> fullJustify(String[] words, int maxWidth) {
+        int i = 0;
+        int n = words.length;
+        int currCount =0;
+        int prevCount = 0;
+        int prevIndex = 0;
+        StringBuilder sb = new StringBuilder();
+        List<String> result = new ArrayList<String>();
+
+        while(i < n) {
+            int currWordSize = words[i].length();
+            prevCount = currCount;
+            currCount += currWordSize;
+            if(currCount < maxWidth) {
+                currCount++;//for space
+                i++;
+            } else if(currCount == maxWidth) {
+                for(int j=prevIndex; j <=i ; j++) {
+                    if(j==i) {
+                        //no space at the end
+                        sb.append(words[j]);
+                    } else {
+                        sb.append(words[j] + " ");
+                    }
+
+                }
+                result.add(sb.toString());
+                prevIndex= i+1;
+                currCount = 0;
+                sb = new StringBuilder();
+                i++;
+            } else {
+                if(i-prevIndex == 1) {
+                    int slots = maxWidth -prevCount+1;//+1 to account for space "oneWord "
+                    sb.append(words[prevIndex]+makeSlot(slots));
+                } else {
+
+
+                    int removeCount = i-prevIndex; ////to account for space we added in  if(currCount < maxWidth) {
+                    int totalUnspace = prevCount-removeCount;
+                    int spaceCount = i-1-prevIndex;//how many spaces between each words
+                    int avgSlot = (maxWidth-totalUnspace)/spaceCount;//# of space we need to put between each words
+                    int addition = (maxWidth-totalUnspace)%spaceCount;//leftover to fill the leftmost slots by 1
+
+                    for(int j=prevIndex;j < i; j++) {
+                        if(j == i-1) {
+                            sb.append(words[j]);
+                        } else {
+                            sb.append(words[j]);
+                            if(addition == 0) {
+                                sb.append(makeSlot(avgSlot));
+                            } else {
+                                sb.append(makeSlot(avgSlot+1));
+                                addition--;
+                            }
+                        }
+
+                    }
+
+                }
+                result.add(sb.toString());
+                currCount = 0;
+                prevIndex = i;
+                sb = new StringBuilder();
+
+            }
+            //last line
+        }
+        if(currCount != 0) {
+            int slots = maxWidth-currCount;
+            for(int j=prevIndex; j < n; j++) {
+                if(j==n-1)
+                    sb.append(words[j]+ " ");
+                else
+                    sb.append(words[j] + " ");
+            }
+            sb.append(makeSlot(slots));
+            result.add(sb.toString());
+        }
+        return result;
+    }
+    public static String makeSlot(int num) {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i < num; i++) {
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
+}
+
+
