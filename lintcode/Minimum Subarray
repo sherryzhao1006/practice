@@ -1,0 +1,16 @@
+public class Solution {
+    /**
+     * @param nums: a list of integers
+     * @return: A integer indicate the sum of minimum subarray
+     */
+    public int minSubArray(ArrayList<Integer> nums) {
+        int min = nums.get(0);
+        int globalMin = nums.get(0);
+        for(int i=1; i < nums.size(); i++) {
+            min = Math.min(nums.get(i),min+nums.get(i));
+            globalMin = Math.min(min,globalMin);
+        }
+        return globalMin;
+        // write your code
+    }
+}
