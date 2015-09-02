@@ -35,3 +35,39 @@ public class Solution {
     }
 
 }
+
+
+
+
+
+DP 解
+
+
+//就是用一个temp记录现在左右两边最大值，然后往中间跑，如果比目前两边的小，那就加上这个值
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int end=height.size()-1;
+        int start=0;
+        int water=0;
+        int temp=0;
+        
+        while(start<end){
+            if(height[start]<height[end]){
+                temp=max(temp,height[start]);
+               
+                water=water+temp-height[start];
+                 start++;
+            }else{
+                temp=max(temp,height[end]);
+               
+                water=water+temp-height[end];
+                 end--;
+            }
+        }
+        return water;
+    }
+};
+Test case：
+1 4 3 2 0 3
+1 4 3 2 0 3 4 3 2 0 3
