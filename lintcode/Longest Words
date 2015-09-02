@@ -1,0 +1,20 @@
+class Solution {
+    /**
+     * @param dictionary: an array of strings
+     * @return: an arraylist of strings
+     */
+    ArrayList<String> longestWords(String[] dictionary) {
+        int len = 0;
+        ArrayList<String> res = new ArrayList<String>();
+        for(int i=0; i < dictionary.length; i++) {
+            if(dictionary[i].length() == len) {
+                res.add(dictionary[i]);
+            } else if(dictionary[i].length() > len) {
+                len = dictionary[i].length();
+                res.clear();
+                res.add(dictionary[i]);
+            }
+        }
+        return res;
+    }
+};
