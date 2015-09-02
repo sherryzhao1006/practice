@@ -1,0 +1,38 @@
+public class Solution {
+    /** 
+     *@param chars: The letter array you should sort by Case
+     *@return: void
+     */
+    public void sortLetters(char[] chars) {
+        int n = chars.length;
+        int l = 0;
+        int r = n-1;
+        while(l < r) {
+            while(l < r && isLower(chars,l)) {
+                l++;
+            }
+            if(l < r && isUpper(chars,r)){
+                r--;
+            }
+            if(l < r) {
+                swap(chars,l,r);
+            }
+        }
+    }
+    public boolean isLower(char[] chars, int index) {
+         if (chars[index]>='a' && chars[index]<='z') return true;
+         else return false;
+     }
+     
+     public boolean isUpper(char[] chars, int index) {
+         if (chars[index]>='A' && chars[index]<='Z') return true;
+         else return false;
+     }
+     
+     public void swap(char[] chars, int l, int r) {
+         char temp = chars[l];
+         chars[l] = chars[r];
+         chars[r] = temp;
+     }    
+}
+
