@@ -1,0 +1,30 @@
+http://ouqi.iteye.com/blog/1956168
+
+当从两边向中间考虑时，乘水的面积是由（两端较小的高度）×（两个板之间的宽度）决定的。
+
+http://img.blog.csdn.net/20131210185210921?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd3p5XzE5ODg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center
+
+public class Solution {
+    /**
+     * @param heights: an array of integers
+     * @return: an integer
+     */
+    public int maxArea(int[] heights) {
+        if(heights == null || heights.length == 0)
+            return 0;
+        int n = heights.length;
+        int i=0;
+        int j=n-1;
+        int temp = 0;
+        int max = Integer.MIN_VALUE;
+        while(i < j) {
+            /*j-i not j-i+1 because 当从两边向中间考虑时，乘水的面积是由（两端较小的高度）×（两个板之间的宽度）决定的。*/ 
+            max = Math.max(max,Math.min(heights[i],heights[j])*(j-i));
+            if(heights[i] < heights[j]) 
+                i++;
+            else
+                j--;
+        }
+        return max;
+    }
+}
