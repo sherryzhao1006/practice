@@ -72,6 +72,39 @@ public:
         return water;
     }
 };
+
+Java :
+
+
+public class Solution {
+    /**
+     * @param heights: an array of integers
+     * @return: a integer
+     */
+    
+    public int trapRainWater(int[] heights) {
+        if( heights.length < 3)
+            return 0;
+        int n = heights.length;
+        int output = 0;
+        int start = 0;
+        int end = n-1;
+        int maxSoFar = 0;
+        while(start < end) {
+            if(heights[start] < heights[end]) {
+                maxSoFar = Math.max(maxSoFar,heights[start]);
+                output += maxSoFar-heights[start];
+                start++;
+            } else {
+                maxSoFar = Math.max(maxSoFar,heights[end]);
+                output += maxSoFar-heights[end];
+                end--;
+            }
+        }
+        return output;
+    }
+
+}
 Test case：
 1 4 3 2 0 3
 1 4 3 2 0 3 4 3 2 0 3
