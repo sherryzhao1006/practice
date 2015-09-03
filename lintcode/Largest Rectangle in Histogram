@@ -1,5 +1,5 @@
 Largest Rectangle in Histogram (Two pointers solution & Container with most water solution)
-
+http://fisherlei.blogspot.com/2012/12/leetcode-largest-rectangle-in-histogram.html
 [5,5,1,7,1,1,5,2,7,6]
 Output : 10
 Expected : 12
@@ -53,9 +53,31 @@ public class Solution {
         return max;
      }
 }
-
+ 对于每一个height，遍历前面所有的height，求取面积最大值。时间复杂度是O(n*n)
+ 
+ int largestRectangleArea(vector<int> &height) {  
+2:      // Start typing your C/C++ solution below  
+3:      // DO NOT write int main() function  
+4:      //int result[height.size()];  
+5:      int maxV = 0;  
+6:      for(int i =0; i< height.size(); i++)  
+7:      {  
+8:        int minV = height[i];  
+9:        for(int j =i; j>=0; j--)  
+10:        {  
+11:          minV = std::min(minV, height[j]);  
+12:          int area = minV*(i-j+1);  
+13:          if(area > maxV)  
+14:            maxV = area;  
+15:        }  
+16:      }  
+17:      return maxV;  
+18:    }  
+ 
 
 Still it's expensive to use O(n^2).
+
+可以过小数据，但是大数据超时。可以理解，这个解法包含了很多重复计算。一个简单的改进，是只对合适的右边界（峰顶），往左遍历面积。
 
 public class Solution {
    public int largestRectangleArea(int[] height) {
