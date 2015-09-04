@@ -17,3 +17,17 @@ i=0 , i=1, i=2 , i=3 > citations[3] so (previous 3 papers has more than 3 papers
 remaining 2 papers has no more than 3 citations.
 
 there can be more than one h-index.
+
+Example : [3, 0, 2, 6, 1, 5]
+
+Sort : [6 5 3 2 1 0]
+
+i=0,i=1,i=2,i=3  (i=3 > citations[i] = 2 ) therefore hindex =3  (previous 3 papers has more than 3 papers and 
+remaining 3 papers has no more than 3 citations.
+
+Edge case : [100,200,300]
+i=0,i=1,i=2, break loop, i=3
+return i;
+
+
+
