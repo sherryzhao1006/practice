@@ -1,0 +1,69 @@
+// it uses minheap to put all boundary cells into the minheap
+// after that it uses the min element in minheap and then 
+//以他为中心然后把他四周cells放到minheap。如果他旁边比他小肯定着水否则不着水
+
+class Cell implements Comparable<Cell> {
+    public int x;
+    public int y;
+    public int h;
+    public Cell(int x,int y, int h) {
+        this.x = x;
+        this.y = y;
+        this.h = h;
+    }
+    public int compareTo(Cell c) {
+        return this.h - c.h;
+    }
+}
+public class Solution {
+    /**
+     * @param heights: a matrix of integers
+     * @return: an integer
+     */
+        public  int trapRainWater(int[][] heights) {
+        Cell c1 = new Cell(0,0,4);
+        Cell c2 = new Cell(0,0,3);
+        PriorityQueue<Cell> pq = new PriorityQueue<Cell>();
+        int n = heights.length;
+        int m = heights[0].length;
+        boolean[][] visited = new boolean[n][m];
+        for(int i=0; i < n; i++) {
+            pq.add(new Cell(i,0,heights[i][0]));
+            pq.add(new Cell(i,m-1,heights[i][m-1]));
+            visited[i][0] = true;
+            visited[i][m-1] = true;
+        }
+        for(int i=0; i<m; i++) {
+            pq.add(new Cell(0,i,heights[0][i]));
+            pq.add(new Cell(n-1,i,heights[n-1][i]));
+            visited[0][i] = true;
+            visited[n-1][i] = true;
+        }
+        //down,up,left
+        int[][] dir = {
+                {0,0,-1,1},
+                {1,-1,0,0}
+        };
+        int water = 0;
+        while(!pq.isEmpty()) {
+            Cell curr = pq.poll();
+            int currH = curr.h;
+
+            for(int i=0; i < dir[0].length; i++) {
+                int newX = curr.x + dir[0][i];
+                int newY = curr.y + dir[1][i];
+                if(newX >=0 && newX < n && newY >=0 && newY <m && visited[newX][newY]==false) {
+                    visited[newX][newY] = true;
+                    int max = Math.max(currH, heights[newX][newY]);
+                    water += max-heights[newX][newY];
+                    //the commented line below is wrong
+                    //pq.add(new Cell(newX,newY,heights[newX][newY]));
+
+                    pq.add(new Cell(newX,newY,max));
+                }
+            }
+        }
+        return water;
+        // write your code here
+    }
+};
