@@ -29,5 +29,20 @@ Edge case : [100,200,300]
 i=0,i=1,i=2, break loop, i=3
 return i;
 
+public class Solution {
+    public static int hIndex(int[] citations) {
+        Integer[] arr = new Integer[citations.length];
+        for(int i=0; i < citations.length; i++) {
+            arr[i] = citations[i];
+        }
+        Arrays.sort(arr,Collections.reverseOrder());
+        for(int i=0; i < arr.length; i++) {
+            if(i >= arr[i]) // if(i > arr[i]) need equals input :[0], output : 1, expected : 0
+                return i;
+        }
+        return arr.length;
+    }
+}
 
-
+input : 2 1 0
+ans : 1
