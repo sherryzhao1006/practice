@@ -75,5 +75,73 @@ ans : 1
         return output;
     }
 
+H index using pure counting sort
 
+/*
+public class Solution {
+    public static int hIndex(int[] citations) {
+        if(citations == null || citations.length == 0)
+            return 0;
+
+
+        int max = citations[0];
+        int n = citations.length;
+        for(int i=1; i < n; i++) {
+            max = Math.max(citations[i],max);
+        }
+
+        int[] count = new int[max+1];
+        for(int i=0; i < n; i++) {
+            count[citations[i]]++;
+        }
+        for(int i=1; i <=max; i++) {
+            count[i] += count[i-1];
+        }
+        int[] output = new int[n+1];
+        for(int i=0; i <n; i++) {
+            output[n-count[citations[i]]] = citations[i];
+            count[citations[i]]--;
+        }
+        for(int i=0; i <n; i++) {
+            if(i >= output[i])
+                return i;
+        }
+        return n;
+    }
+}
+*/
+
+the above solution doesn't work so put everything > n into last bucket fixed it
+public class Solution {
+    public static int hIndex(int[] citations) {
+        if(citations == null || citations.length == 0)
+            return 0;
+
+
+        int n = citations.length;
+
+
+        int[] count = new int[n+1];
+        for(int i=0; i < n; i++) {
+            if(citations[i] > n) {
+                count[n]++;
+            } else
+                count[citations[i]]++;
+        }
+        for(int i=1; i <=n; i++) {
+            count[i] += count[i-1];
+        }
+        int[] output = new int[n];
+        for(int i=0; i <n; i++) {
+            int lookup = citations[i] > n ? n : citations[i];
+            output[n-count[lookup]] = citations[i];
+            count[lookup]--;
+        }
+        for(int i=0; i <n; i++) {
+            if(i >= output[i])
+                return i;
+        }
+        return n;
+    }
+}
 
