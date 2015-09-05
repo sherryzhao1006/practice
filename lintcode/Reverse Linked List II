@@ -1,0 +1,49 @@
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     * @param ListNode head is the head of the linked list 
+     * @oaram m and n
+     * @return: The head of the reversed ListNode
+     */
+        public static ListNode reverseBetween(ListNode head, int m , int n) {
+        // write your code
+        int cnt = 1;
+        ListNode curr = head;
+        ListNode prev = null;
+        //prev is used to connect mth node to head of reversed LL(currPrev at) 
+        while(cnt < m) {
+            prev = curr;
+            curr= curr.next;
+            cnt++;
+        }
+        ListNode secondPrev = curr;
+        //secondPrev to connect end of reversed LL(secondPrev at) to the m+1 element of LL(next at)
+        ListNode currPrev = null;
+        ListNode next = curr;
+        while(next != null && cnt <= n) {
+            next = next.next;
+            curr.next = currPrev;
+            currPrev = curr;
+            curr = next;
+            cnt++;
+        }
+        secondPrev.next = next;
+        
+        if(prev == null)
+            return currPrev;
+        else 
+            prev.next = currPrev;
+        
+        return head;
+    }
+}
