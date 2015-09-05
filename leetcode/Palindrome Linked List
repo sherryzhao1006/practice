@@ -1,0 +1,44 @@
+ //1 2 2 1
+ //first i find the middle node using slow and fast pointer.
+ //slow = index 0
+ //fast = index 0
+ //==============
+ //fast = index 2
+ //slow = index 1
+ //secondHead= head of second linkedlist = slow.next and slow.next = null
+ //firstHead = head of first linkedlist is remained as head
+ //now reverse the head of second linkedlist
+ //firstHead = 12   secondHead = 21, reverseSecondHead = 12
+ //now traverse both firstHead and secondHead and if any value is diff return false;
+public class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null)
+            return true;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode firstHead = head;
+        ListNode secondHead = slow.next;
+        slow.next = null;
+        ListNode prev = null;
+        ListNode curr = secondHead;
+        ListNode next = secondHead;
+        while(next != null) {
+            next = next.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        secondHead = prev;
+        while(firstHead != null && secondHead != null) {
+            if(firstHead.val != secondHead.val)
+                return false;
+            firstHead = firstHead.next;
+            secondHead = secondHead.next;
+        }
+        return true;
+    }
+}
