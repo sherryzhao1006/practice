@@ -1,0 +1,20 @@
+public class Solution {
+    /**
+     * @param head: The head of linked list.
+     * @return: The new head of reversed linked list.
+     */
+    public ListNode reverse(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next = head;
+        while(next != null) {
+            next = next.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+}
