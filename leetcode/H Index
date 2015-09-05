@@ -46,6 +46,8 @@ public class Solution {
 
 input : 2 1 0
 ans : 1
+如果是2的话，就是要有2篇不少于2citation
+只有一篇耶,有1篇不少于1的citation
 
     //http://www.geeksforgeeks.org/counting-sort/
     public static int[] countSort(int[] arr) {
