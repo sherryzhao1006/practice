@@ -10,3 +10,62 @@ If landing and flying happens at the same time, we consider landing should happe
 将所有区间的start与end放在一起排序，但是要标记其是属性，然后统一排序，
 问题就转化成了括号匹配嵌套的问题了(最大有多少层括号嵌套，比如说((()))就是一个3层嵌套，()(()))最大嵌套是2)，
 这里start相当于左括号，end相当于右括号，只要用一个cnt来记录，遇到start就加1，遇到end就减1，记录过程中的最大值就是答案。
+
+
+[[1,10],[2,3],[5,8],[4,7]]
+
+
+
+
+he is just splitting the interval into left and right points
+
+<1,isLeftPoint> = <1, true>
+<10,isLeftPoint> = <10,false>
+he spltis the intervals into left and right point. 
+
+can u write the remaining two intervals so that u know the logic
+
+
+
+<1,true>
+<10,false>
+<2,true>
+<3,false>
+<5,true>
+<8,false>
+<4,true>
+<7,false>
+
+now sort above by numbers
+<1,true>
+<2,true>
+<3,false>
+<4,true>
+<5,true>
+<7,false>
+<8,false>
+<10,false>
+
+the idea is simple. when u see leftpoint, u increment the count(airplane count)
+so that at any point we can find out how many airplane are flying
+now we have counter =0
+go through the above one by one
+<1,true> (leftpoint increment counter =1)
+<2,true) (leftpoint increment counter =2)
+<3,false) (the first airplane landed so decrement counter =2-1 = 1
+<4,true) {the third airplane start cunter = 1+1=2
+
+
+<5,true) (another airplane fly so incrmeent counter =2+1 = 3
+<7,false) (one airplane landed so decrement counter =3-1 = 2
+<8,false) etc..
+
+now instead of returning airplanes
+u need to return the time that has many airplanes flying
+how will u modify it?
+ in original code
+ it did most = max(most, cnt);  
+ now we can change
+ if(cnt>most){
+ most = cnt; output =p.first
+ ｝
