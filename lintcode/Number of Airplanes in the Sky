@@ -1,0 +1,12 @@
+http://yuanhsh.iteye.com/blog/2216972
+
+Given an interval list which are flying and landing time of the flight. How many airplanes are on the sky at most?
+Example
+For interval list [[1,10],[2,3],[5,8],[4,7]], return 3
+
+Note
+If landing and flying happens at the same time, we consider landing should happen at first.
+
+将所有区间的start与end放在一起排序，但是要标记其是属性，然后统一排序，
+问题就转化成了括号匹配嵌套的问题了(最大有多少层括号嵌套，比如说((()))就是一个3层嵌套，()(()))最大嵌套是2)，
+这里start相当于左括号，end相当于右括号，只要用一个cnt来记录，遇到start就加1，遇到end就减1，记录过程中的最大值就是答案。
