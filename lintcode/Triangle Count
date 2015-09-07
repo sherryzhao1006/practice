@@ -29,3 +29,34 @@ public class Solution {
         return count;
     }
 }
+
+O(N^2) solution
+http://www.chenguanghe.com/lintcode-triangle-count/
+/*
+if(S[l] + S[r] > S[i]){
+他 是 第一个(l)和第n－2个(r) 加 》 最后一个 (i)
+他就把r-l加进solution set
+就是小于r的都是答案
+
+(l,r) (l,r-1) (l,r-2) ...(l,l+1) 也符合条件
+*/
+public int triangleCount(int S[]) {
+        // write your code here
+        int res = 0;
+        if(S.length == 0 || S == null)
+            return res;
+        Arrays.sort(S);
+        for(int i = S.length - 1; i > 0; i--) {
+            int l = 0;
+            int r = i - 1;
+            while(l < r) {
+                if(S[l] + S[r] > S[i]){
+                    res += (r-l);
+                    r--;
+                }
+                else
+                    l++;
+            }
+        }
+        return res;
+    }
