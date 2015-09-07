@@ -1,0 +1,61 @@
+// 时间复杂度 O(n^2)，空间复杂度 O(1)
+
+class Solution {
+    /**
+      * @param board: the board
+        @return: wether the Sudoku is valid
+      */
+    public boolean isValidSudoku(char[][] board) {
+        
+        int n = board.length;
+        int m = board[0].length;
+        //check all columns and rows
+        for(int i=0; i < n; i++) {
+                    if(!isValid(i,board)) {
+                        return false;    
+                    }        
+        }
+        //check all nine boxes
+        for(int r=0; r < 3; r++) {
+            for(int c=0; c < 3; c++) {
+                boolean[] validArr = new boolean[9];
+                for(int ir=3*r; ir < (3*(r+1)); ir++) {
+                    for(int ic=3*c; ic <(3*(c+1)); ic++) {
+                        if(!checkValid(ir,ic,board,validArr))
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;
+        
+        
+    }
+    public boolean isValid(int curr, char[][] board) {
+        int row = curr;
+        int col = curr;
+        int n = board.length;
+        int m = board[0].length;
+        boolean[] validArr = new boolean[9];
+        //check current column
+        for(int i=0; i < n; i++) {
+            if(!checkValid(i,col,board,validArr))
+                return false;
+        }
+        //check current row
+        validArr = new boolean[9];
+        for(int j=0; j < m; j++) {
+            if(!checkValid(row,j,board,validArr))
+                return false;
+        }
+        return true;
+    }
+    public boolean checkValid(int i,int j,char[][] board,boolean[] validArr) {
+        if(board[i][j] == '.')
+            return true;
+        if(validArr[board[i][j]-'1'] == true)
+            return false;
+        validArr[board[i][j]-'1'] = true;
+        return true;
+    }
+};
