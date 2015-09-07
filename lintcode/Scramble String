@@ -1,0 +1,69 @@
+//github.com/soulmachine/leetcode
+/*
+Some checks are needed otherwise it will time out. For example, 
+if the lengths of two strings are different, they can’t be scramble.
+And if the characters in two strings are different, they can’t be scramble either.
+*/
+public class Solution {
+    /**
+     * @param s1 A string
+     * @param s2 Another string
+     * @return whether s2 is a scrambled string of s1
+     */
+    public boolean isScramble(String s1, String s2) {
+        //check whether string are null
+        if( s1 == null && s2 == null)
+            return false;
+        //check leaft node are the same
+        if(s1.length() ==1 && s2.length() ==1 && s1.charAt(0) == s2.charAt(0)){
+            return true;
+        }
+        //if s1 and s2 are different they can't be scramble string
+        if(s1.length()!=s2.length())
+            return false;
+        //now we also need to check whether s1 and s2 have same characters
+        /*
+        [g] ["reat"] and [r] ["geat"]--> do not need to check 
+        */
+        int[] A = new int[26]; 
+        for(int i=0; i < s1.length(); i++) {
+            A[s1.charAt(i)-'a']++;
+        }
+
+        for(int i=0; i < s2.length(); i++) {
+            A[s2.charAt(i)-'a']--;
+        } 
+        for(int i=0; i < 26; i++) {
+            if( A[i] != 0)
+                return false;
+        }
+        /*
+        s1 = great, s2 = rgeat
+        if (isScramble("g", "r")&&isScramble("reat","geat")){ << this line
+s2Left = "t"
+s2Right = "rgea"
+if (isScramble("g", "t")&&isScramble("reat","rgea")){ << this line
+        */ 
+        for(int i=0; i < s1.length(); i++) {
+            String s1Left = s1.substring(0,i);
+            String s2Left = s2.substring(0,i);
+            String s1Right = s1.substring(i);
+            String s2Right = s2.substring(i);
+            //see if forward order is ok
+            if (isScramble(s1Left,s2Left) && isScramble(s1Right,s2Right)) {
+                return true;
+            }
+            //see if reverse order is ok            
+            s2Left = s2.substring(s2.length()-i);
+            s2Right = s2.substring(0,s2.length()-i);
+
+            if (isScramble(s1Left,s2Left) && isScramble(s1Right,s2Right)) {
+                return true;
+            }            
+        }
+        return false;
+    }    
+}
+//Complexity : (2^n) or exponential because inside (i=0 to n) loop there is 2 recursive call)
+//similar example is listed below. "swap or don't swap"
+／／O(10^N): trying to break a password by testing every possible combination (assuming numerical password of length N)
