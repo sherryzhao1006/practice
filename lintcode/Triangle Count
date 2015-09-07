@@ -1,0 +1,31 @@
+ Triangle Inequality Theorem, which states that the sum of two side lengths of a triangle is always greater than the third side. 
+/*
+假如前两个加起来 小于第三个 那么就不用再比较第四个 和之后的了 然后就节省时间啦 O(n^3)
+*/
+
+public class Solution {
+    /**
+     * @param S: A list of integers
+     * @return: An integer
+     */
+    public int triangleCount(int S[]) {
+        // write your code here
+        int res = 0;
+        if(S.length == 0 || S == null)
+            return res;
+        Arrays.sort(S);
+        int count =0;
+        for(int i = 0; i < S.length ;i++){
+            for(int j=i+1;j<S.length;j++){
+                for(int z =j+1;z<S.length;z++){
+                    if(S[i]+S[j] < S[z]){
+                        break;
+                    }else{
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+}
