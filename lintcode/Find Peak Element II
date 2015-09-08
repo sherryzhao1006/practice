@@ -31,8 +31,69 @@ class Solution {
                return output;
            }else if(A[mid][maxlocation]<A[mid-1][maxlocation]){
                end = mid;
+               /*you can't put end = mid-1 because 比如你的1d peak
+               1 2 3
+               哪left = 0
+               right = 2
+               mid = 1
+               left = 2, right = 2 
+               那样会越界
+               因为 我们条件是 while(left < right) 不会越界
+               直接给错误答案.look at second solution in this page for setting end = mid-1;
+               */
+               
            }else {
                start = mid;
+           }
+           
+           
+       }
+            output.add(mid);
+               output.add(maxlocation);
+               return output;
+    }
+}
+
+
+
+
+
+Solution 2: set end = mid-1;
+
+
+//lecture note : http://courses.csail.mit.edu/6.006/spring11/lectures/lec02.pdf
+// nlogM
+class Solution {
+    /**
+     * @param A: An integer matrix
+     * @return: The index of the peak
+     */
+    public List<Integer> findPeakII(int[][] A) {
+        // write your code here
+         int m = A.length;
+       int n = A[0].length;
+       int start =1;
+       int end = m-2;
+       int mid=-1, maxlocation=-1;
+       ArrayList<Integer> output = new ArrayList<Integer>();
+       while(start<=end){
+            mid = start + (end -start)/2;
+           int max = Integer.MIN_VALUE;
+            maxlocation = -1;
+           for(int i=1; i < n-1; i++){
+               if(A[mid][i]>max){
+               max = A[mid][i];
+               maxlocation = i;
+               }
+           }
+           if(A[mid][maxlocation]>A[mid+1][maxlocation]&&A[mid][maxlocation]>A[mid-1][maxlocation]){
+               output.add(mid);
+               output.add(maxlocation);
+               return output;
+           }else if(A[mid][maxlocation]<A[mid-1][maxlocation]){
+               end = mid-1;
+           }else {
+               start = mid+1;
            }
            
            
