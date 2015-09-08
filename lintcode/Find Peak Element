@@ -1,3 +1,5 @@
+
+http://blog.welkinlan.com/2015/05/14/find-peak-element-lintcode-java/
 /*
 since we know:A[0] < A[1] && A[A.length - 2] > A[A.length - 1]. and The numbers in adjacent positions are different.
 since the two feature we can know that there must be one peak inside the range.
@@ -7,6 +9,7 @@ if A[mid-1]<A[mid】
     since the second also satisfy the two features
 therefore, we can find the peak element in O(logN) time since we do mid = start + (end-start)/2
 */
+／／The valid peek would be between [1, A.length – 2]. Binary search the peek.
 
     public int findPeak(int[] A) {
         int left = 1;
