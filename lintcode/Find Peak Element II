@@ -1,0 +1,45 @@
+//lecture note : http://courses.csail.mit.edu/6.006/spring11/lectures/lec02.pdf
+//video : https://www.youtube.com/watch?v=HtSuA80QTyo
+//https://dl.dropboxusercontent.com/u/15824957/Screen%20Shot%202015-09-07%20at%209.09.36%20PM.png
+// nlogM
+class Solution {
+    /**
+     * @param A: An integer matrix
+     * @return: The index of the peak
+     */
+    public List<Integer> findPeakII(int[][] A) {
+        // write your code here
+         int m = A.length;
+       int n = A[0].length;
+       int start =0;
+       int end = m-1;
+       int mid=-1, maxlocation=-1;
+       ArrayList<Integer> output = new ArrayList<Integer>();
+       while(start<end){
+            mid = start + (end -start)/2;
+           int max = Integer.MIN_VALUE;
+            maxlocation = -1;
+           for(int i=1; i < n-1; i++){
+               if(A[mid][i]>max){
+               max = A[mid][i];
+               maxlocation = i;
+               }
+           }
+           if(A[mid][maxlocation]>A[mid+1][maxlocation]&&A[mid][maxlocation]>A[mid-1][maxlocation]){
+               output.add(mid);
+               output.add(maxlocation);
+               return output;
+           }else if(A[mid][maxlocation]<A[mid-1][maxlocation]){
+               end = mid;
+           }else {
+               start = mid;
+           }
+           
+           
+       }
+            output.add(mid);
+               output.add(maxlocation);
+               return output;
+    }
+}
+
