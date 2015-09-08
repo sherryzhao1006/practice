@@ -23,5 +23,14 @@ therefore, we can find the peak element in O(logN) time since we do mid = start 
             else
                 right = mid-1;
         }
-        return left;
+        return left;//or return right
     }
+
+12354
+left = 1
+right = 3
+=====
+mid = 2
+left = 3
+right = 3
+in that case either left or right is correct
