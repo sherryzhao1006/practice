@@ -1,0 +1,75 @@
+import java.lang.CloneNotSupportedException;
+import java.lang.Object;
+import java.lang.Override;
+import java.util.*;
+
+class Point {
+    int x;
+    int y;
+    int sum;
+    public Point(int x,int y,int sum){
+        this.x = x;
+        this.y = y;
+        this.sum = sum;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Point))
+                return false;
+        Point p = (Point) o;
+        if( p.x == x && p.y ==y )
+            return true;
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        return (x*31)^y;
+    }
+}
+class sumComp implements Comparator<Point> {
+    public sumComp() {}
+    public int compare(Point p1, Point p2) {
+        return Integer.compare(p1.sum,p2.sum);
+    }
+}
+
+public class Solution {
+    public  int kthSmallest(int[][] matrix, int k) {
+        PriorityQueue<Point> heap = new PriorityQueue<Point>(3,new sumComp());
+        Set<Point> set = new HashSet<Point>();
+        Point currPoint = new Point(0,0,matrix[0][0]);
+        heap.add(currPoint);
+        set.add(currPoint);
+        int[][] dir = {
+                {1,0,1},
+                {0,1,1}
+                };
+        while(!heap.isEmpty()) {
+            Point maxPoint = heap.poll();
+            Point addPoint = null;
+            for(int i=0; i < dir[0].length; i++) {
+                int x = maxPoint.x + dir[0][i];
+                int y = maxPoint.y + dir[1][i];
+                if ( x < matrix.length && y < matrix[0].length) {
+                    addPoint = new Point(x, y, matrix[x][y]);
+                    if (!set.contains(addPoint)) {
+                        heap.add(addPoint);
+                        set.add(addPoint);
+                    }
+                }
+            }
+            k--;
+            if ( k == 0)
+                return maxPoint.sum;
+        }
+        return -1;
+    }
+    
+    public static void main(String[] args) {
+        int[][] matrix = {{1,5,7},
+                          {3,7,8},
+                          {4,8,9}};
+        //System.out.println(kthSmallest(matrix,4));
+    }
+}
+
