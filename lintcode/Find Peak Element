@@ -1,0 +1,24 @@
+/*
+since we know:A[0] < A[1] && A[A.length - 2] > A[A.length - 1]. and The numbers in adjacent positions are different.
+since the two feature we can know that there must be one peak inside the range.
+we can use divide. each time search the middle element in to array and compare to the two element next to it.
+if A[mid-1]<A[mid】
+    we can disgard the first half only look into the second half
+    since the second also satisfy the two features
+therefore, we can find the peak element in O(logN) time since we do mid = start + (end-start)/2
+*/
+
+    public int findPeak(int[] A) {
+        int left = 1;
+        int right = A.length-2;
+        while(left < right) {
+            int mid = left+(right-left)/2;
+            if ((A[mid-1] < A[mid]) && (A[mid] > A[mid+1]))
+                return mid;
+            else if(A[mid] > A[mid-1])
+                left = mid+1;
+            else
+                right = mid-1;
+        }
+        return left;
+    }
