@@ -1,0 +1,35 @@
+/*
+http://www.cnblogs.com/felixfang/p/3814463.html
+思路变化二
+
+
+total = {0->3} + {3,5}
+total = {0->3} + 2
+
+so if total >=0 means {0->3} can be covered by {3,5}'s sum
+*/
+public class Solution {
+    /**
+     * @param gas: an array of integers
+     * @param cost: an array of integers
+     * @return: an integer
+     */
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int total = 0;
+        int sum = 0;
+        int start = 0;
+        int n = gas.length;
+        for(int i=0; i < n; i++) {
+            int diff = gas[i]-cost[i];
+            total += diff;
+            if(sum < 0) {
+                start = i;
+                sum = diff;
+            } else {
+                sum += diff;
+            }
+        }
+        return total <0 ? -1 : start;
+        // write your code here
+    }
+}
