@@ -1,0 +1,30 @@
+public class Solution {
+    /**
+     * @param n the nth
+     * @return the nth sequence
+     */
+    public String countAndSay(int n) {
+        // Write your code here
+        StringBuilder sb = new StringBuilder();
+        sb.append("1");
+       
+        while(n > 1) {
+            int count = 1;
+            StringBuilder newSb = new StringBuilder();
+            
+            for(int i=1; i < sb.length(); i++) {
+                if(sb.charAt(i) == sb.charAt(i-1)) {
+                    count++;
+                } else {
+                    newSb.append(count).append(sb.charAt(i-1));
+                    count = 1;
+                }
+            }
+            newSb.append(count).append(sb.charAt(sb.length()-1));
+            sb = newSb;
+            n--;    
+        }
+        return sb.toString();
+        
+    }
+}
