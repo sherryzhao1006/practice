@@ -1,0 +1,92 @@
+//http://rleetcode.blogspot.com/2014/01/valid-number-java.html
+/*
+Validate if a given string is numeric.
+
+Some examples:
+"0" => true
+" 0.1 " => true
+"abc" => false
+"1 a" => false
+"2e10" => true
+Note: It is intended for the problem statement to be ambiguous.
+You should gather all requirements up front before implementing one.
+*/
+
+
+public class ValidNumber {
+    public boolean isNumber(String s) {
+         if (s==null ){
+             return false;
+         } 
+         // trim off head and tail zeros which not affect result depend on question
+         s=s.trim();
+         if(s.length()==0){
+             return false;
+         } 
+        boolean hasNum=false;
+        
+        boolean canSign=true;
+       
+        boolean canDot=true;
+       
+        boolean canE=false;
+        boolean hasE=false;
+        
+        int i=0;
+        while(i<s.length()){
+            char c=s.charAt(i++);
+            //can't have space between numbers
+            if (c==' '){
+               return false;                
+            }
+            //you can have sign in the first place of a valid number. if you see it again it's not a valid number
+            if (c=='+' ||c=='-'){
+                if (!canSign){
+                    return false;
+                }
+                canSign=false;
+                
+                continue;
+            }
+            if (c=='.'){
+                if (!canDot){
+                    return false;
+                }
+                canDot=false;
+                canSign=false;
+                continue;
+            }
+            if (c=='e'){
+            //canE 用来标注第一个数不能是e后面的可以
+            //hasE 用来标注是否已经出现过e
+                if (!canE||hasE){
+                    return false;
+                }
+                canE=false;
+                hasE=true;
+                //初始化hasNum因为e后面一定要有0-9
+                hasNum=false;
+                canDot=false;
+                canSign=true;
+                
+                continue;
+            }
+            if (c>='0' && c<='9'){
+                hasNum=true;
+                
+                if (!canE&&!hasE){
+                    canE=true;
+                }
+                
+                canSign=false;
+            }
+            else{
+                return false;
+            }
+            
+            
+        }
+        
+        return hasNum;
+    }
+}
