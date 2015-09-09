@@ -1,0 +1,8 @@
+//http://www.programcreek.com/2014/03/leetcode-candy-java/
+
+    6,4,5,2    
+
+    1 1 2 1 (left to right) (compare curr value with left previous one)
+    2 1 2 1 (right to left) (compare curr value with right previous one)
+    
+    2 1 2 1 (take max of both)
