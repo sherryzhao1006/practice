@@ -1,0 +1,34 @@
+public class Solution {
+    /**
+     * @param s : A string
+     * @return : The length of the longest substring 
+     *           that contains at most k distinct characters.
+     */
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        if(k==0)
+            return 0;
+        Map<Character,Integer> hm = new HashMap<Character,Integer>();
+        int leftPointer = 0;
+        int max = Integer.MIN_VALUE;
+        for(int i=0; i < s.length(); ) {
+            
+            if(hm.size() == k+1) {
+                if(hm.get(s.charAt(leftPointer)) == 1)
+                    hm.remove(s.charAt(leftPointer));
+                else
+                    hm.put(s.charAt(leftPointer),hm.get(s.charAt(leftPointer))-1); 
+                leftPointer++;    
+            } else {
+                if(hm.containsKey(s.charAt(i))) {
+                    hm.put(s.charAt(i),hm.get(s.charAt(i))+1);
+                } else {
+                    hm.put(s.charAt(i),1);
+                }
+                if(hm.size() <= k)
+                max = Math.max(max, i-leftPointer+1);
+                i++;
+            } 
+        }
+        return max == Integer.MIN_VALUE ? 0: max ;
+    }
+}
