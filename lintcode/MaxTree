@@ -1,3 +1,26 @@
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+ 
+ 
+ /*
+Max tree:
+左右两边取最大，再找最小
+要递减
+Expression tree:
+要递增
+左右两边取最小  然后比较左右两边 大的赢
+
+
+
 思路就是
 for i=1 to n
 1.对于每个A[i] 找到这个元素最近的 左右两边的最大值
@@ -22,48 +45,50 @@ for i=1 to n
         2          0   1
       
       
-stack:2,5 (5>2, 2 pop, 再找比2进入的更早的值 发现没有 所以5的left是2）--》5，6（6>5,5pop, stack为空 6left=5）--》6，0（6>0,则只是push0入stack）-->6,0,3（0<3,pop0,找比0早push进来的还在Stack里面的值 是6，6>3,3left=0)-->6,3,1(你看解答，加入了最后一个值为max_value,max>1,max>3,3right=1,1pop)-->6,3(max>3,max>6,6 right =3,3pop)-->6(max>6,max left =6,6pop)-->max(遍历结束） return max.left   
+stack:2,5 (5>2, 2 pop, 再找比2进入的更早的值 发现没有 所以5的left是2）--》5，6（6>5,5pop, stack为空 6left=5）--》6，0（6>0,则只是push0入stack）-->6,0,3（0<3,pop0,找比0早push进来的还在Stack里面的值 是6，6>3,3left=0)-->6,3,1(你看解答，加入了最后一个值为max_value,max>1,max>3,3right=1,1pop)-->6,3(max>3,max>6,6 right =3,3pop)-->6(max>6,max left =6,6pop)-->max(遍历结束） return max.left  
 
-
-
-
-
-
-
-
-
-
-
-
-
-Brute Force (Doesn't AC large Test case)
-http://www.lintcode.com/en/problem/max-tree/
-
-import java.util.*;
-import java.io.*;
-
-
-class TreeNode {
-        public int val;
-        public TreeNode left, right;
-          public TreeNode(int val) {
-            this.val = val;
-            this.left = this.right = null;
-        }
-    }
-
+*/
 public class Solution {
-    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
-
-    public static void main(String[] args) throws FileNotFoundException {
-        Scanner in = new Scanner(new File(INPUT_FILE));
-        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
-        int[] A = {2, 5, 6, 0, 3, 1};
-        TreeNode root = maxTree(A);
-
+    public TreeNode maxTree(int[] A) {
+        // write your code here
+        if(A == null || A.length == 0){
+            return null;
+        }
+        Stack<TreeNode> stack=new Stack<>();
+        for(int i=0;i<=A.length;++i){
+            TreeNode right=i==A.length?new TreeNode(Integer.MAX_VALUE):new TreeNode(A[i]);
+            while(!stack.empty()){
+                if(right.val>stack.peek().val){
+                    TreeNode cur=stack.pop();
+                    if(stack.isEmpty()){
+                        right.left=cur;
+                    }
+                    else{
+                        TreeNode left=stack.peek();
+                        if(left.val<right.val){
+                            left.right=cur;
+                        }
+                        else{
+                            right.left=cur;
+                        }
+                    }
+                }
+                else{
+                    break;
+                }
+            }
+            stack.push(right);
+        }
+        return stack.peek().left;
     }
-
-    public static TreeNode maxTree(int[] A) {
+} 
+ 
+ 
+ //brute force
+ 
+/* 
+public class Solution {
+    public  TreeNode maxTree(int[] A) {
         //find max and set it as root
         int rootVal = Integer.MIN_VALUE;
         int rootIndex = 0;
@@ -78,8 +103,9 @@ public class Solution {
         return root;
     }
 
-    public static void insert(TreeNode root, int[] A, int l, int m, int r) {
-
+    public  void insert(TreeNode root, int[] A, int l, int m, int r) {
+        if(m < l || m > r)
+            return;
         if(l != m) {
             int leftIndex =0;
             int leftLarge = Integer.MIN_VALUE;
@@ -110,4 +136,4 @@ public class Solution {
 
     }
 }
-
+*/
