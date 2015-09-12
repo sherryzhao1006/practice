@@ -1,3 +1,41 @@
+思路就是
+for i=1 to n
+1.对于每个A[i] 找到这个元素最近的 左右两边的最大值
+2.选择这两个值中的比较小的那个元素 这个元素就是他的父亲节点
+3.如果是该元素左边的点是父亲节点 则这个元素应该为右儿子
+  如果是右边的点是父亲节点 则这个元素为左儿子
+
+
+[2, 5, 6, 0, 3, 1]
+
+哦哦 不对 是左右两边 临近的 比这个元素大的
+2=A[0] = 2  = {null,5}<< 左右两边的最大值 =  find the nearest one so null,5
+5=A[1] = {null,6}
+6=A[2] = {null,null}
+0=A[3] = {6,3} =
+3=A[4] = {6,null}
+1=A[5] = {3,null}
+
+
+                6
+            5        3
+        2          0   1
+      
+      
+stack:2,5 (5>2, 2 pop, 再找比2进入的更早的值 发现没有 所以5的left是2）--》5，6（6>5,5pop, stack为空 6left=5）--》6，0（6>0,则只是push0入stack）-->6,0,3（0<3,pop0,找比0早push进来的还在Stack里面的值 是6，6>3,3left=0)-->6,3,1(你看解答，加入了最后一个值为max_value,max>1,max>3,3right=1,1pop)-->6,3(max>3,max>6,6 right =3,3pop)-->6(max>6,max left =6,6pop)-->max(遍历结束） return max.left   
+
+
+
+
+
+
+
+
+
+
+
+
+
 Brute Force (Doesn't AC large Test case)
 http://www.lintcode.com/en/problem/max-tree/
 
