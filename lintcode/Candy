@@ -1,8 +1,38 @@
+/*
+
 //http://www.programcreek.com/2014/03/leetcode-candy-java/
-
-    6,4,5,2    
-
-    1 1 2 1 (left to right) (compare curr value with left previous one)
-    2 1 2 1 (right to left) (compare curr value with right previous one)
-    
-    2 1 2 1 (take max of both)
+6,4,5,2
+1 1 2 1 (left to right) (compare curr value with left previous one)
+2 1 2 1 (right to left) (compare curr value with right previous one)
+2 1 2 1 (take max of both)
+*/
+public class Solution {
+    /**
+     * @param ratings Children's ratings
+     * @return the minimum candies you must give
+     */
+    public int candy(int[] ratings) {
+        // Write your code here
+        int n = ratings.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        left[0] = 1;
+        right[n-1] = 1;
+        for(int i=1; i < n; i++) {
+            if(ratings[i] > ratings[i-1])
+                left[i] = left[i-1]+1;
+            else
+                left[i] = 1;
+            if(ratings[n-i-1] > ratings[n-i]) 
+                right[n-i-1] = right[n-i]+ 1;
+            else
+                right[n-i-1] = 1;
+        }
+        int output = 0;
+        for(int i=0; i < n ;i++) {
+            output += Math.max(left[i],right[i]);    
+        }        
+        return output;
+        
+    }
+}
