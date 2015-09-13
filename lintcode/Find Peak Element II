@@ -1,6 +1,6 @@
 //lecture note : http://courses.csail.mit.edu/6.006/spring11/lectures/lec02.pdf
 //video : https://www.youtube.com/watch?v=HtSuA80QTyo
-//https://dl.dropboxusercontent.com/u/15824957/Screen%20Shot%202015-09-07%20at%209.09.36%20PM.png
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/Find%20Peak%20Element%20II.png
 // nlogM
 class Solution {
     /**
