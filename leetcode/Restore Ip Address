@@ -1,0 +1,44 @@
+public class Solution {
+    public  List<String> restoreIpAddresses(String s) {
+        List<String> result = new ArrayList<String>();
+        int n = s.length();
+        int curr = 0;
+        helper(result,n,curr,"",0,s);
+        return result;
+    }
+    public  void helper(List<String> result,int n,int curr,String currStr,int segment,String s) {
+        
+        if(segment == 4) {
+            if(curr == n)
+                result.add(new String(currStr.substring(0,currStr.length()-1)));
+            return ;
+        }
+        for(int i=curr; i <= n; i++) {
+        // i<=n because it's substring endIndex
+            String passStr = s.substring(curr,i);
+            if(isValid(passStr)) {
+                helper(result,n,i,currStr+passStr+'.',segment+1,s);
+            }
+        }
+    }
+    private  boolean isValid(String str) {
+        if(str == null || str.length() == 0)
+            return false;
+        //str.length() is 0.0.0.2222222 case
+        if(str.length() > 3)
+            return false;
+        //对于其中的2位数或3位数，不能以0开头
+        /*
+        if(str.charAt(0) == '0' && str.length() ==3)
+            return false;
+        if(str.charAt(0) == '0' && str.length() ==2)
+            return false;
+            */
+        if(str.charAt(0) == '0' && str.length() != 1)
+            return false;
+        int num = Integer.parseInt(str);
+        if(num>=0 && num<=255)
+            return true;
+        return false;
+    }
+}
