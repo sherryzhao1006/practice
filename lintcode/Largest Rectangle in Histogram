@@ -132,5 +132,33 @@ public class Solution {
 
 
 
-Largest Rectangle in Histogram (Stack Solution)
 
+Largest Rectangle in Histogram (Stack Solution)
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/Largest_Rectanlge_in_histogram.png
+
+public class Solution {
+    /**
+     * @param height: A list of integer
+     * @return: The area of largest rectangle in the histogram
+     */
+    public int largestRectangleArea(int[] height) {
+        int n = height.length;
+        Stack<Integer> s = new Stack<Integer>();
+        int max = 0;
+        int i=0;
+        for(; i < n; i++) {
+            while(!s.isEmpty() && height[i] < height[s.peek()]) {
+                int h = height[s.pop()];
+                int w = s.isEmpty() ? i : i-s.peek()-1;
+                max = Math.max(max,h*w);
+            } 
+            s.push(i);    
+        }
+        while(!s.isEmpty()) {
+            int h = height[s.pop()];
+            int w = s.isEmpty() ? i : i-s.peek()-1;
+            max = Math.max(max,h*w);
+        }
+        return max;
+    }
+}
