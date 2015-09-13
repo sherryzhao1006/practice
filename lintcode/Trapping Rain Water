@@ -36,7 +36,7 @@ http://bangbingsyb.blogspot.com/2014/11/leetcode-trapping-rain-water.html
 
 
 DP 解
-
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/trapping_rain_water.png
 
 //就是用一个temp记录现在左右两边最大值，然后往中间跑，如果比目前两边的小，那就加上这个值
 class Solution {
@@ -67,7 +67,7 @@ public:
 Java :
 
 
-
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/trapping_rain_water.png
 public class Solution {
     /**
      * @param heights: an array of integers
