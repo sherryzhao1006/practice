@@ -1,0 +1,51 @@
+
+interval:[1,2],[5,9]
+[3,4]
+result:[1,2],[3,4],[5,9]
+for i=0 to n
+1.new.start>cur.end  //put curr into the result interval list
+pos++;
+2.new.end<cur.start , put new into the  result interval list
+
+3.else new.start=Math.min(new.start,cur.start)
+        new.end=Math.max(new.end,cur.end)//don't put,record position
+
+
+[1,2],[6,7]
+[3,5]
+result:[1，2］[6,7]
+newINterval [3,5] pos = 1
+
+
+
+class Solution {
+    /**
+     * Insert newInterval into intervals.
+     * @param intervals: Sorted interval list.
+     * @param newInterval: A new interval.
+     * @return: A new sorted interval list.
+     */
+    public ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval newInterval) {
+        ArrayList<Interval> result = new ArrayList<Interval>();
+        int n = intervals.size();
+        Interval curr = null;
+        int pos=0;
+        for(int i=0; i < n; i++) {
+            curr=intervals.get(i);
+            if(curr == null)
+                continue;
+            if(newInterval.start > curr.end) {
+                result.add(curr);
+                pos++;
+            } else if(newInterval.end < curr.start) {
+                result.add(curr);
+
+            } else {
+                newInterval.start = Math.min(newInterval.start,curr.start);
+                newInterval.end = Math.max(newInterval.end,curr.end);
+            }
+        }
+        result.add(pos,newInterval);
+        return result;
+    }
+}
