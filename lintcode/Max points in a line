@@ -1,0 +1,52 @@
+
+为什么只考虑斜率：两个点定一条直线 在这里 我们已经先定义了一个点了，假设这个点是(1,2) 那么我们要找的是过这个点得直线，我们可以知道
+public class Solution {
+    /**
+     * @param points an array of point
+     * @return an integer
+     */
+    public int maxPoints(Point[] points) {
+        // Write your code here
+        if(points == null || points.length ==0){
+            return 0;
+        }
+        int max = 0;
+        Map<Double,Integer> map=new HashMap<Double,Integer>();
+        for(int i=0;i<points.length;++i){
+            Point currPoint = points[i];
+            map.clear();
+            int duplicate =1;
+            for(int j=0;j<points.length;++j){
+                if(i==j)
+                    continue;
+                Point nextPoint = points[j]; 
+                //same points to consider
+                if(currPoint.x == nextPoint.x && currPoint.y == nextPoint.y){
+                    duplicate++;
+                    continue;
+                }  
+                double slope = 0.0; 
+                if(nextPoint.x == currPoint.x)
+                    slope = Integer.MAX_VALUE;
+                else if(nextPoint.y == currPoint.y)
+                    slope = 0.0;
+                else{
+                    //slope = (Double)(nextPoint.y - currPoint.y)/(nextPoint.x - currPoint.x);
+                     slope = 1.0* (nextPoint.y - currPoint.y)/(nextPoint.x - currPoint.x);       
+                }
+                if(map.containsKey(slope)) {
+                    map.put(slope,map.get(slope)+1);
+                } else {
+                    map.put(slope,1);
+                }
+            }
+            if(map.keySet().size() == 0)
+                max = Math.max(max,duplicate);
+            for(Double b:map.keySet()){
+                max = Math.max(max,duplicate+map.get(b));
+            }
+        }
+        return max;
+
+    }
+}
