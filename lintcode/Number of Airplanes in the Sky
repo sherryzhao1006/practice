@@ -26,7 +26,6 @@ he spltis the intervals into left and right point.
 can u write the remaining two intervals so that u know the logic
 
 
-
 <1,true>
 <10,false>
 <2,true>
@@ -69,3 +68,62 @@ how will u modify it?
  if(cnt>most){
  most = cnt; output =p.first
  ｝
+ 
+ 
+ 
+ 
+ 
+ /**
+ * Definition of Interval:
+ * public classs Interval {
+ *     int start, end;
+ *     Interval(int start, int end) {
+ *         this.start = start;
+ *         this.end = end;
+ *     }
+ */
+class Dot {
+    int loc;
+    boolean isLeft;
+    public Dot(int loc, boolean isLeft) {
+        this.loc = loc;
+        this.isLeft = isLeft;
+    }
+}
+class DotComparator implements Comparator<Dot> {
+    public int compare(Dot d1,Dot d2) {
+        if(d1.loc != d2.loc)
+            return d1.loc - d2.loc;
+        if(d1.isLeft == true && d2.isLeft == false)
+            return 1;
+        else
+            return -1;
+            
+    }
+}
+class Solution {
+    /**
+     * @param intervals: An interval array
+     * @return: Count of airplanes are in the sky.
+     */
+    public int countOfAirplanes(List<Interval> airplanes) { 
+        List<Dot> dots = new ArrayList<Dot>();
+        for(int i=0; i < airplanes.size(); i++) {
+            Interval curr = airplanes.get(i);
+            dots.add(new Dot(curr.start,true));
+            dots.add(new Dot(curr.end,false));
+        }
+        Collections.sort(dots,new DotComparator());
+        int count = 0;
+        int max = 0;
+        for(int i=0; i < dots.size();i++) {
+            if(dots.get(i).isLeft == true){
+                count++;
+                max = Math.max(count,max);
+            } else {
+                count--;
+            }
+        }
+        return max;
+    }
+}
