@@ -1,0 +1,30 @@
+/*
+Minimum difference between two array
+ A = [3,6,7,4], B = [2,8,9,3]
+ 1.排序 
+ 2.相交作对比 差存入min
+ 3.但凡有一个数组扫描完了就ok乐
+*/
+public class Solution {
+    /**
+     * @param A, B: Two integer arrays.
+     * @return: Their smallest difference.
+     */
+    public int smallestDifference(int[] A, int[] B) {
+        Arrays.sort(A);
+        Arrays.sort(B);
+        int ptrA = 0;
+        int ptrB = 0;
+        int min = Integer.MAX_VALUE;
+        while(ptrA<A.length && ptrB<B.length){
+            min = Math.min(min, Math.abs(A[ptrA]-B[ptrB]));
+            if(A[ptrA] > B[ptrB]) {
+                ptrB++;
+            } else {
+                ptrA++;
+            }
+        }
+        return min;
+    }
+}
+
