@@ -1,0 +1,42 @@
+Solution: when see question about two strings , DP should be considered first.
+we can abstract this question to calculate appear times for string T with length i in string S with length j, 
+which can be represented by numbers[i][j], then through observation and thinking , 
+we can know for numbers[i][j] it should at least equal the numbers[i][j-1] and if T.charAt(i)==S.charAt(j) , 
+numbers[i][j] should also be add numbers[i-1][j-1]
+
+public class Solution {
+    /**
+     * @param S, T: Two string.
+     * @return: Count the number of distinct subsequences
+     */
+    public int numDistinct(String S, String T) {
+        int sl = S.length();
+        int tl = T.length();
+        int[][] dp = new int[sl][tl];
+        dp[0][0] = S.charAt(0)==T.charAt(0) ? 1 :0;
+        for(int i=1; i < sl; i++) {
+        // appears numbers of String "firstCharacter" in String S;
+            dp[i][0] = dp[i-1][0] + (S.charAt(i) == T.charAt(0) ? 1 : 0);
+        }
+        for(int j=1; j < tl; j++) {
+        // appear numbers of String T in String "firstCharacter";
+            dp[0][j] = 0;
+        }
+        for(int i=1; i < sl; i++) {
+            for(int j=1; j < tl; j++) {
+            // no matter if current char in S equal to current char in T
+            // current matched times is at least equal to the times matched between T and S.substring(0, index(current Char))[0,i-1]
+                dp[i][j] = dp[i-1][j];
+            // if current char in T matched current char in S, then dp[i][j] should also plus
+            // the times matched between T.substring(0,index(current char) )[0,i-1] and S.substring(0, index(current char));[0,i-1]
+            //Example : S = "rabb", T = "rab"
+            //dp[rabb][rab]  = dp[rab][rab] 
+            //                if(lastCharacters are the same) 
+            //                  dp[rabb][rab] += dp[rab][ra];
+                if(S.charAt(i) == T.charAt(j))
+                    dp[i][j] += dp[i-1][j-1];
+            }
+        }
+        return dp[sl-1][tl-1];
+    }
+}
