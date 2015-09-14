@@ -31,6 +31,8 @@ class Solution {
         List<Interval> res = new ArrayList<Interval>();
         int n = intervals.size();
         Interval curr = intervals.get(0);
+        //[[1,4],[0,2],[3,5]]
+        //output : [0,5]
         for(int i=1; i < n; i++) {
 
             Interval next = intervals.get(i);
