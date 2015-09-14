@@ -1,0 +1,61 @@
+http://www.lintcode.com/en/problem/unique-paths/
+思路：
+
+Bottom-up
+
+dp[n][n]=dp[n-1][n]+dp[n][n-1] (通过i,j这个点有多少条路径）: example dp[1][1]=dp[1][0]+dp[0][1]
+
+初始化
+dp[0][i]=1 (往右边走 只有一条路）   dp[i][0]=1 （往下边走只有一条路）
+=
+
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for(int i=0; i < m; i++) {
+            dp[i][0] = 1;
+        } 
+        for(int j=0; j < n; j++) {
+            dp[0][j] = 1;
+        }
+        for(int i=1; i < m; i++) {
+            for(int j=1; j < n; j++) {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[m-1][n-1];
+    }
+    
+    
+//Recursive Version    
+Recursive
+1.
+dfs
+       o   x   x     x
+       o x(6) o(1+2) x(1)
+       x x(2+1) x(1+1) x(1)
+       x x x x(1)
+
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for(int i=0; i < m; i++) {
+            for(int j=0; j <n; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        return helper(dp,m,n,0,0);
+    }    
+    public int helper(int[][] dp,int m, int n, int x, int y) {
+        if(x >=m || x <0 || y <0 || y >=n)
+            return 0;
+            
+        if(x == m-1 && y == n-1)
+            return 1;
+        if(dp[x][y] != -1)
+            return dp[x][y];
+        int right = helper(dp,m,n,x,y+1);
+        int down = helper(dp,m,n,x+1,y);
+        dp[x][y] = right+down;
+        return dp[x][y];
+    }
+    
+
