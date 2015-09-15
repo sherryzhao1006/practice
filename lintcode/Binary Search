@@ -28,7 +28,8 @@ class Solution {
                 right = m-1;
             } else {
                 res = m;
-                right = m-1;
+                right = m-1;//right = m-1;//找target的第一个出现的地方
+                            //left = m+1; //找target的最后一个出现的地方
             }
         }
         return res;
