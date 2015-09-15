@@ -1,0 +1,22 @@
+public class Solution {
+    /**
+     * @param s : A string
+     * @return : A string
+     */
+    public String reverseWords(String s){
+        s=s.trim();
+        if(s==null || s.length() ==0){
+            return "";
+        }
+        String[] words=s.split(" ");
+        //a    b  => [a,' ',' ',b] ?
+        StringBuffer br=new StringBuffer();
+        for(int i=words.length-1;i>=0;--i){
+            if(words[i]!=" "){
+                br.append(words[i]).append(" ");
+            }
+        }
+        br.deleteCharAt(br.length()-1);
+        return br.toString();
+    }
+}
