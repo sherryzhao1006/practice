@@ -1,0 +1,64 @@
+http://www.lintcode.com/en/problem/add-binary/
+a = 1       0
+   index0   index1 
+b = 1
+    index0
+    
+str = a    b  c
+    index0
+
+
+     public String addBinary(String a, String b) {
+        // Write your code here
+        if(a.length() == 0 && b.length() == 0){
+            return "0";
+        }
+        int alen=a.length()-1,blen=b.length()-1;
+        int abit,bbit,carry=0,result=0;
+        StringBuffer br=new StringBuffer();
+        while(alen>=0 || blen >= 0 || carry == 1){
+            abit=alen>=0?a.charAt(alen--)-'0':0;
+            bbit=blen>=0?b.charAt(blen--)-'0':0;
+            result=(abit+bbit+carry)%2;
+            carry=(abit+bbit+carry)/2;
+            br.append(result);
+        }
+        return br.reverse().toString();
+    }
+
+public String addBinary(String a, String b){
+    StringBuilder sb = new StringBuilder();
+    int alen=a.length()-1,blen=b.length()-1;
+    int carry=0;
+    
+    while(alen >=0 && blen >=0) {
+        int currA = a.charAt(alen)-'0';
+        int currB = b.charAt(blen)-'0';
+        int sum = currA+currB+carry;
+        int leftOver = sum%2;
+        carry = sum/2;
+        sb.insert(0,leftOver+"");
+        alen--;
+        blen--;
+    }
+    while(alen >=0) {
+        int currA = a.charAt(alen)-'0';
+        int sum = carry+currA;
+        int leftOver = sum%2;
+        carry = sum/2;
+        sb.insert(0,leftOver+"");
+        alen--;
+    }
+
+    while(blen >=0) {
+        int currB = b.charAt(blen)-'0';
+        int sum = carry+currB;
+        int leftOver = sum%2;
+        carry = sum/2;
+        sb.insert(0,leftOver+"");
+        blen--;     
+    }
+    if(carry != 0)
+        sb.insert(0,carry+"");
+    return sb.toString();
+}
