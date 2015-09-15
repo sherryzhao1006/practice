@@ -1,0 +1,48 @@
+//http://www.lintcode.com/en/problem/partition-array/#
+  
+  [3,2,2,1] and k=2
+   |     |
+   l     r
+  [1,2,2,3]
+   l     r
+     l r
+     l
+     r
+  
+two pointers:
+
+from the left side keep incrementing until u meet value greater than k
+from the right side keep decrementing until u meet the value less than k
+  
+
+[9,9,9,8,9,8,7,9,8,8,8,9,8,9,8,8,6,9], 9
+  
+[6,8,8,8,8,8,7,8,8,8,9,9,9,9,9,9,9,9], 9
+
+   |           |     |
+   l               r l
+  
+  
+  
+  
+    public int partitionArray(int[] nums, int k) {
+      int n = nums.length;
+      
+      int left = 0;
+      int right = n-1;
+      while(left<right) {
+        while(left < n && nums[left] < k)
+            left++;
+        while(right >=0 && nums[right] >=k)
+            right--;
+        if(left <right)
+          swap(nums,left,right);
+
+      }
+      return (left < n ? left : nums.length);
+    }
+    public void swap(int[] A, int left,int right) {
+      int temp = A[left];
+      A[left] = A[right];
+      A[right] = temp;
+    }
