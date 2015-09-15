@@ -1,0 +1,10 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/triangle.png
+ int m = triangle.size();
+int[][] record = new int[m][m];
+for(int i=0;i<m;i++){record[m-1][i]=triangle.get(m-1).get(i);}
+for(int i=m-2;i>=0;i--){
+      for(int j=0;j<=i;j++){
+      record[i][j]=triangle.get(i).get(j)+Math.min(record[i+1][j],record[i+1][j+1]);
+      }
+}
+return record[0][0];
