@@ -1,0 +1,57 @@
+http://www.cnblogs.com/EdwardLiu/p/4314781.html
+
+http://www.lintcode.com/en/problem/interleaving-positive-and-negative-numbers/
+
+Given [-1, -2, -3, 4, 5, 6], after re-range, it will be [-1, 5, -2, 4, -3, 6] 
+  
+说说你思路。继续
+two pointer啊  
+[-1,-2,-3,4,5,6]
+  i           j
+idea:这道题没有给出正数、负数谁多谁少，所以需要先统计数量，数量多的要包着数量少的，然后数组尾部全是数量多的数
+
+  
+  -1,-2,-3,4
+     |        |
+     pos      neg
+  如果neg数目多的话 把neg全放到前面。后面在交叉正负
+    这个例子把全部负数放到前面然后后面在交叉
+   
+       
+  
+  public void rerange(int[] A) {
+    int posCount = 0;
+    int negCount = 0;
+    int n = A.length;
+  
+    for(int i=0; i < n; i++) {
+      if(A[i] < 0) {
+        negCount++;
+      } else {
+        posCount++;
+      }
+    }    
+    int negIndex = 0;
+    int posIndex = 1;
+    if(posCount > negCount) {
+      posIndex = 0;
+      negIndex = 1;
+    }
+    while(posIndex <n && negIndex <n) {
+      while(posIndex < n && A[posIndex] >0) {
+        posIndex +=2;
+      }
+      while(negIndex <n && A[negIndex] < 0) {
+        negIndex +=2;
+      }
+      if(posIndex < n && negIndex < n) {
+        swap(A,posIndex,negIndex);  
+      }
+    }
+    
+  }
+  public void swap(int[] A, int left,int right) {
+    int temp = A[left];
+    A[left] = A[right];
+    A[right] = temp;
+  }
