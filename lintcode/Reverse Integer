@@ -1,0 +1,30 @@
+//http://www.chenguanghe.com/lintcode-reverse-integer/
+public class Solution {
+    /**
+     * @param n the integer to be reversed
+     * @return the reversed integer
+     */
+  
+    public int reverseInteger(int n) {
+        // Write your code here
+      boolean isNeg = false;
+      if(n < 0) {
+        isNeg = true;
+        n = n*(-1);
+      }
+      int multiply = 10;
+      int curr = 0;
+      while(n > 0) {
+        int lastDigit = n%10;
+        if(curr > (Integer.MAX_VALUE-lastDigit)/10)
+          return 0;
+        curr = curr*multiply+lastDigit;
+
+        n/=10;
+      }
+      if(isNeg)
+        return curr*-1;
+      else
+        return curr;
+    }   
+}
