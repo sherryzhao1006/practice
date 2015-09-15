@@ -1,0 +1,38 @@
+http://www.lintcode.com/en/problem/kth-largest-element/
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/K_Largest_Element.png
+
+    public int kthLargestElement(int k, ArrayList<Integer> numbers) {
+        if(numbers == null || numbers.size() ==0){
+            return -1;
+        }
+        return quicksort(numbers,k,0,numbers.size()-1);
+    }
+    public int quicksort(ArrayList<Integer> numbers, int k,int start, int end) {
+        int i = start;
+        int j = end;
+        int pivotIndex = start;
+        int pivot = numbers.get(pivotIndex);
+        while(start <= end) {
+            while(start <= end && numbers.get(start) <= pivot)
+                start++;
+            while(start <= end && numbers.get(end) >= pivot)
+                end--; 
+            if(start < end) {
+                int tmp = numbers.get(start);
+                numbers.set(start,numbers.get(end)); 
+                numbers.set(end,tmp);                
+            }
+        }
+        
+        //exchange ith value and pivot;
+        int tmp = numbers.get(pivotIndex);
+        numbers.set(pivotIndex,numbers.get(end));
+        numbers.set(end,tmp);
+        if(end+1 < numbers.size()-k+1) {
+            return quicksort(numbers,k,end+1,j);
+        } else if(end+1 > numbers.size()-k+1) {
+            return quicksort(numbers,k,i,end-1);
+        }else {
+            return numbers.get(end);
+        }
+    }
