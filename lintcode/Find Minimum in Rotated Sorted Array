@@ -1,0 +1,23 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/minimumelement_in_rotated_array.png
+public class Solution {
+    /**
+     * @param num: a rotated sorted array
+     * @return: the minimum number in the array
+     */
+     
+    public int findMin(int[] num) {
+      int start = 0;
+      int end = num.length-1;
+      while(start < end) {
+        int m = start + (end-start)/2;
+        //compare end and middle
+        //don't compare start and middle because 1 2 3 will give 3 as ans
+        if(num[end] < num[m]) {
+          start = m+1;
+        } else if(num[end] > num[m]) {
+          end = m;
+        }
+      }
+      return num[start];
+    }
+}
