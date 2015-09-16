@@ -1,3 +1,8 @@
+http://www.lintcode.com/en/problem/backpack-ii/
+size: [2, 3, 5, 7]  value [1, 5, 2, 4], and a backpack with size 10. 
+  dp[i][j]=表示前i个物品中，取出“若干”物品后，体积“正好”为j的最大价值。
+  
+  
 public class Solution {
     /**
      * @param m: An integer m denotes the size of a backpack
