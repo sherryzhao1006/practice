@@ -1,4 +1,6 @@
 http://www.lintcode.com/en/problem/search-in-rotated-sorted-array/
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/search_in_rotated_array.png
+
 A= [1,0], target 0
   start=0,end=1,j=0
 
