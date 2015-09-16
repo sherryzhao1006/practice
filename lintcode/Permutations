@@ -1,0 +1,39 @@
+class Solution {
+    /**
+     * @param nums: A list of integers.
+     * @return: A list of permutations.
+     */
+
+    public ArrayList<ArrayList<Integer>> permute(ArrayList<Integer> S) {
+        ArrayList<ArrayList<Integer>> result=new ArrayList<>();
+        if(S == null || S.size() == 0){
+            return result;
+        }
+        int n = S.size();
+        ArrayList<Integer> sub=new ArrayList<>();
+        boolean[] visited = new boolean[n];
+        Collections.sort(S);
+        helper(0,n,S,sub,result,visited);
+        return result;
+    }
+
+
+
+    public void helper(int curr,int n, ArrayList<Integer> S, ArrayList<Integer> sub,ArrayList<ArrayList<Integer>> res,boolean[] visited) {
+        if(curr >n)
+            return;
+        if(sub.size() == n) {
+            res.add(new ArrayList<Integer>(sub));
+            return;
+        }
+        for(int i=0; i < n; i++) {
+            if (visited[i] == false) {
+                visited[i] = true;
+                sub.add(S.get(i));
+                helper(i + 1, n, S, sub, res, visited);
+                sub.remove(sub.size() - 1);
+                visited[i] = false;
+            }
+        }
+    }    
+}
