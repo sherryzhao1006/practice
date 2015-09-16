@@ -1,3 +1,4 @@
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/search_in_rotated_array_ii.png
 public class Solution {
     /** 
      * param A : an integer ratated sorted array and duplicates are allowed
