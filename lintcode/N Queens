@@ -1,0 +1,78 @@
+|||
+|||
+|||
+VVV
+0 1 2
+
+
+
+
+
+
+    ArrayList<ArrayList<String>> solveNQueens(int n) {
+        ArrayList<ArrayList<String>> result=new ArrayList<>();
+        if(n==0){
+            return result;
+        }
+        ArrayList<String> curr = new ArrayList<String>(n);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            sb.append('.');
+        }
+
+        for(int i=0; i < n; i++) {
+            curr.add(sb.toString());
+        }
+
+        helper(curr,result,0,n);
+        return result;
+    }
+    public void helper(ArrayList<String> curr, ArrayList<ArrayList<String>> res, int currCol,int n) {
+        if(currCol == n) {
+            res.add(new ArrayList<String>(curr));
+            return;
+        }
+//go through all rows 列坐标没变啊
+// 首先2d矩阵都是 . . . .然后慢慢加Q
+//我是top 到 down 走法。从第一列开始慢。
+        for(int i=0; i < n; i++) {
+            if( valid(curr,i,currCol,n)) {
+                StringBuilder sb = new StringBuilder(curr.get(i));
+                sb.setCharAt(currCol,'Q');
+                curr.set(i,sb.toString());
+                helper(curr,res,currCol+1,n);
+                sb.setCharAt(currCol,'.');
+                curr.set(i,sb.toString());
+            }
+        }
+
+    }
+
+/*
+valid method check
+
+\
+ \
+---
+ /
+/
+*/
+
+    public boolean valid(ArrayList<String> curr, int x, int y, int n) {
+        //check curr row upto y col
+        for(int i=0; i < y; i++){
+            if(curr.get(x).charAt(i) == 'Q')
+                return false;
+        }
+
+        //上对角线
+        for(int i=x-1, j=y-1; i >=0 && j >=0; i--,j--)
+            if(curr.get(i).charAt(j) == 'Q')
+                return false;
+        for(int i=x+1,j=y-1;i<n && j>=0;i++,y--){
+            if(curr.get(i).charAt(j)=='Q'){
+                return false;
+            }
+        }
+        return true;
+    }
