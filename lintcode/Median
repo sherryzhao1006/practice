@@ -1,0 +1,34 @@
+1 2 (3) 4 5   (odd = 5/2 = 2 +1 =3)后面第三个(3rd largest)
+1 (2) 3 4      (even = 4/2 = 2+1=3)后面第三个(3rd largest)
+
+public int median(int[] nums) {
+    if(nums == null || nums.length ==0)
+        return -1;
+        return quicksort(nums,(nums.length/2)+1,0,nums.length-1);
+}    
+public int quicksort(int[] nums, int k, int start,int end) {
+    int i = start;
+    int j = end;
+    int pivotIndex = start;
+    int pivot = nums[pivotIndex];
+    while(start <= end) {
+        while(start <= end && nums[start] <= pivot)
+            start++;
+        while(start <= end && nums[end] >= pivot)
+        end--;
+        if(start < end) {
+            int tmp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = tmp;
+        }        
+    }
+    int tmp = nums[pivotIndex];
+    nums[pivotIndex] = nums[end];
+    nums[end] = tmp;
+    if(end+1 < (nums.length-k+1))
+      return quicksort(nums,k,end+1,j);
+    else if(end+1 > nums.length-k+1)
+      return quicksort(nums,k,i,end-1);
+    else
+      return nums[end];    
+}
