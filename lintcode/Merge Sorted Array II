@@ -1,0 +1,24 @@
+class Solution {
+    /**
+     * @param A and B: sorted integer array A and B.
+     * @return: A new sorted integer array
+     */
+    public ArrayList<Integer> mergeSortedArray(ArrayList<Integer> A, ArrayList<Integer> B) {
+	ArrayList<Integer> res = new ArrayList<Integer>();
+	int aLen = A.size();
+	int bLen = B.size();
+	int aStart = 0;
+	int bStart = 0;
+    	
+    	while(aStart < aLen  && bStart < bLen) {
+    		res.add( (A.get(aStart) >= B.get(bStart)  ? B.get(bStart++) : A.get(aStart++)));	
+    	}
+    	while(aStart < aLen ) {
+    		res.add(A.get(aStart++));
+        }
+        while(bStart < bLen) {
+        	res.add(B.get(bStart++));
+        }
+	return res;
+    }
+}
