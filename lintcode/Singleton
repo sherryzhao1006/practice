@@ -1,0 +1,12 @@
+//http://www.chenguanghe.com/lintcode-singleton/
+class Solution {
+    /**
+     * @return: The same instance of this class every time
+     */
+     private static Solution s = null;
+    public static Solution getInstance() {
+        if(s == null)
+            s = new Solution();
+        return s;
+    }
+};
