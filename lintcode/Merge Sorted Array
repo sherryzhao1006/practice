@@ -1,0 +1,29 @@
+class Solution {
+    /**
+     * @param A: sorted integer array A which has m elements, 
+     *           but size of A is m+n
+     * @param B: sorted integer array B which has n elements
+     * @return: void
+     */
+	public void mergeSortedArray(int[] A, int m, int[] B, int n) {
+		int aLen = m;
+		int bLen = n;
+    	int aStart = aLen-1;
+		int bStart = bLen-1;
+		int index=m+n-1;
+        while(aStart >=0 && bStart >=0) {
+            if(A[aStart] >= B[bStart]) {
+                A[index--] = A[aStart--];
+            } else {
+                A[index--] = B[bStart--];
+            }
+            
+        }
+        while(aStart >=0) {
+            A[index--] = A[aStart--];
+        }
+        while(bStart >=0) {
+            A[index--] = B[bStart--];
+        }
+	}
+}
