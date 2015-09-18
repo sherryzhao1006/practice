@@ -1,0 +1,40 @@
+public void connect(TreeLinkNode root) {
+    if(root == null)
+      return;
+		Queue<TreeLinkNode> q = new LinkedList<TreeLinkNode>();
+		q.add(root);
+		int currLevel = 1;
+		int nextLevel = 0;
+		TreeLinkNode prev = null;
+		
+		while(!q.isEmpty()) {
+			TreeLinkNode curr = q.poll();
+            currLevel--;
+            if(curr.left != null) {
+	            q.add(curr.left);
+	            nextLevel++;
+            }	
+            if(curr.right != null) {
+	            q.add(curr.right);
+	            nextLevel++;
+            }
+            if(currLevel == 0) {
+	            if(prev == null) {
+		            curr.next = null;
+                } else {
+					prev.next = curr;
+					curr.next = null;
+				}
+				currLevel = nextLevel;
+				nextLevel = 0;
+				prev=null;
+            } else {
+	            if(prev == null) {
+		            prev = curr;
+                } else {
+	                prev.next = curr;
+	                prev = curr;
+                }
+        }
+    }
+}
