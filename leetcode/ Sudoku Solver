@@ -1,0 +1,69 @@
+public class Solution {
+    public void solveSudoku(char[][] board) {
+             if(board == null || board.length ==0 || board[0].length==0){
+            return;
+        }
+        int n = board.length;
+        int m = board[0].length;
+        helper(board, 0 ,0,n,m);
+    }
+    public boolean helper(char[][] board,int x, int y, int n, int m) {
+        for(int i=0; i < n; i++) {
+            for(int j=0; j < m; j++) {
+                if(board[i][j] == '.') {
+                    for(int k=0; k <9; k++) {
+                        board[i][j] = (char)('1' + k);
+                        if(checkValid(board,i,j) && helper(board,i,j,n,m)) {
+                            return true;
+                        }
+                        board[i][j] = '.';
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean checkValid(char[][] board, int x, int y){
+        boolean[] validBoolean = new boolean[9];
+        Arrays.fill(validBoolean,false);
+        //check row
+        for(int i=0;i<9;++i){
+            if(board[x][i] !='.'){
+                int val=board[x][i]-'1';
+                if(validBoolean[val]){
+                    return false;
+                }
+                validBoolean[val]=true;
+            }
+        }
+        Arrays.fill(validBoolean,false);
+        //check column
+        for(int i=0; i < 9; i++) {
+            if(board[i][y] != '.') {
+                int val = board[i][y]-'1';
+                if(validBoolean[val] == true)
+                    return false;
+                validBoolean[val] = true;
+            }
+        }
+        //(1,5)
+        //currRow*3 = 0*3 = 0
+        //1*3 = 3
+        //currCol*3 = 1*3 = 3   , currCol*4 = 1*4 = 4
+        int currRow = x/3;
+        int currCol = y/3;
+        Arrays.fill(validBoolean,false);
+        for(int i=currRow*3; i < (currRow+1)*3; i++) {
+            for(int j= currCol*3; j < (currCol+1)*3; j++) {
+                if(board[i][j] == '.')
+                    continue;
+                int val = board[i][j]- '1';
+                if(validBoolean[val] == true)
+                    return false;
+                validBoolean[val] = true;
+            }
+        }
+        return true;
+    }
+}
