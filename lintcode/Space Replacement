@@ -1,0 +1,24 @@
+public int replaceBlank(char[] string, int length) {
+    if(string == null || string.length ==0){
+            return 0;
+    }
+    int spaceCount = 0;
+    for(int i =0; i < string.length; i++) {
+    if(string[i] == ‘ ‘)
+        spaceCount++;
+    }
+      
+    int newLen = length + (2*spaceCount);
+    int res = newLen;
+    while(length >=0) {
+      if(string[length] != ‘ ‘) {
+        string[newLen--] = string[length--];
+      } else {
+        string[newLen--] = ‘0’;
+        string[newLen--] = ‘2’;
+        string[newLen--] = ‘%’;
+        length--;
+      }
+    }
+    return res;
+}
