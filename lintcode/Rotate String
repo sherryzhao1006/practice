@@ -1,0 +1,33 @@
+http://www.lintcode.com/en/problem/rotate-string/
+
+abcdefg
+
+offset=3 => "efg|abcd" 
+
+abcd|efg 
+offset = n-1-offset.
+dcba|efg
+//reverse(0,offset)  
+dcba|gfe
+//reverse(offset+1,n-1)
+efg|abcd
+
+    public void rotateString(char[] str, int offset) {
+        if(str == null || str.length ==0){
+            return;
+        }
+        offset=offset%str.length;
+        offset=str.length-1-offset;
+        reverse(str,0,offset);
+        reverse(str,offset+1,str.length-1);
+        reverse(str,0,str.length-1);     
+    }
+    public void reverse(char[] str, int start, int end) {
+        while(start < end) {
+            char tmp = str[start];
+            str[start] = str[end];
+            str[end] = tmp;
+            start++;
+            end--;
+        }
+    }
