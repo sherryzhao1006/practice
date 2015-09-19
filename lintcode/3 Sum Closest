@@ -1,0 +1,40 @@
+public class Solution {
+    /**
+     * @param numbers: Give an array numbers of n integer
+     * @param target : An integer
+     * @return : return the sum of the three integers, the sum closest target.
+     */
+    public int threeSumClosest(int[] numbers ,int target) {
+        Arrays.sort(numbers);
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        int n = numbers.length;
+        int record = Integer.MAX_VALUE;
+        int output = Integer.MAX_VALUE;
+        for(int i=0; i < n; i++) {
+       
+                int left = i+1;
+                int right = n-1;
+                while(left < right) {
+                    int sum = numbers[i]+numbers[left]+numbers[right];
+                    if(sum == target)
+                        return sum;
+                    else if(sum > target) {
+                        int diff = Math.abs(sum-target);
+                        if(diff < record) {
+                            output = sum;
+                            record = diff;
+                        }
+                        right--;
+                    } else if(sum < target) {
+                        int diff = Math.abs(sum-target);
+                        if(diff < record) {
+                            output = sum;
+                            record = diff;
+                        }                    
+                        left++;
+                    }         
+                }
+            }
+        return output;
+    }
+}
