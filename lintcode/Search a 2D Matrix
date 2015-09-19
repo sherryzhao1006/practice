@@ -1,0 +1,33 @@
+http://www.lintcode.com/en/problem/search-a-2d-matrix/
+
+
+[
+    ["1", 3, 5, 7],
+    [10, 11, 16, 20],
+    [23, 30, 34, “50”]
+]
+t=3
+[1,  3,   5,7,10,11,16,20...,50]
+ s=m e=s  m    e  m            e
+
+public boolean searchMatrix(int[][] matrix, int target) {
+     if(matrix == null || matrix.length==0 || matrix[0].length ==0){
+         return false;
+     }
+     int n=matrix.length;
+     int m=matrix[0].length;
+     int start=0, end=n*m-1;
+     while(start<=end){
+         int mid=start+(end-start)/2;
+         int val=matrix[mid/m][mid%m];
+         if(target ==val){
+             return true;
+         }
+         else if(target <val){
+             end = mid-1;
+         } else {
+             start = mid+1;
+         }
+     }
+     return false;
+}
