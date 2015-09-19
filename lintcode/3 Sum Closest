@@ -1,3 +1,4 @@
+//https://tianrunhe.wordpress.com/2012/07/07/finding-sum-of-triplets-that-is-closest-to-a-given-number-3sum-closest/
 public class Solution {
     /**
      * @param numbers: Give an array numbers of n integer
