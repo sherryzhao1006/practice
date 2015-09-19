@@ -1,0 +1,32 @@
+http://www.lintcode.com/en/problem/recover-rotated-sorted-array/#
+
+//[4, 5, |1, 2, 3] -> [1, 2, 3, 4, 5]
+-->[5,4, 1,2,3]
+    reverse before |
+-->[5,4,3,2,1]
+    reverse after |
+-->[1,2,3,4,5]
+    reverse everything
+    public void recoverRotatedSortedArray(ArrayList<Integer> nums) {
+        if(nums == null || nums.size() ==0 || nums.size() ==1){
+            return;
+            }
+            int n = nums.size();
+            int i=1;
+            for(; i < n; i++) {
+                if(nums.get(i) < nums.get(i-1))
+                    break;    
+            }
+            reverse(nums,0,i-1); 
+            reverse(nums,i,n-1);    
+            reverse(nums,0,n-1);
+    }
+    public void reverse(ArrayList<Integer> nums,int start,int end) {
+            while(start<end){
+                int tmp=nums.get(start);
+                nums.set(start,nums.get(end));
+                nums.set(end,tmp);
+                start++;
+                end--;
+            }
+    }
