@@ -1,3 +1,4 @@
+//http://algorithm.yuanbin.me/zh-cn/integer_array/3_sum.html
 public class Solution {
     /**
      * @param numbers : Give an array numbers of n integer
