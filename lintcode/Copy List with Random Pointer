@@ -1,3 +1,5 @@
+with O(n) space(hashmap)
+================
     public RandomListNode copyRandomList(RandomListNode head) {
         if(head == null){
             return null;
@@ -22,4 +24,45 @@
             curr = curr.next;
         }
         return dummy.next;
+    }
+
+
+with O(1) space (without hashmap)
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/Copy%20With%20Random%20Pointer.png
+===================================
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if(head == null){
+            return null;
+        }
+        copyNext(head);
+        copyRandom(head);
+        return split(head);
+        }
+    public void copyNext(RandomListNode head){
+        while(head != null){
+            RandomListNode node=new RandomListNode(head.label);
+            node.next=head.next;
+            head.next=node;
+            head=head.next.next;
+        }
+    }
+    public void copyRandom(RandomListNode head){
+        while(head != null){
+            if(head.random!= null){
+                head.next.random=head.random.next;
+            }
+            head=head.next.next;
+        }
+    }
+    public RandomListNode split(RandomListNode head){
+        RandomListNode node=head.next;
+        while(head != null){
+            RandomListNode tmp=head.next;
+            head.next=tmp.next;
+            if(head.next != null){
+                tmp.next=tnp.next.next;
+            }
+            head=head.next;
+        }
+        return node;
     }
