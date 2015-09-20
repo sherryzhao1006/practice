@@ -1,0 +1,27 @@
+    ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head == null)
+            return head;
+        ListNode curr = head;
+        while(curr != null && n > 0) {
+            curr = curr.next;
+            n--;
+        }
+        /*
+        1->2->null,2
+        output 1->2->null
+        expected : 2->null;so we need this following if statement
+        */
+        if(curr == null){
+            return head.next;
+        }
+        ListNode prev = head;
+        ListNode deleteNode = prev;
+        while(curr != null) {
+            deleteNode = prev;
+            prev = prev.next;
+            curr = curr.next;    
+        }
+        deleteNode.next = prev.next;
+        return head;
+        
+    }
