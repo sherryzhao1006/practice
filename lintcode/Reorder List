@@ -1,0 +1,61 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/ReorderList.png
+
+
+/**
+ * Definition for ListNode.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int val) {
+ *         this.val = val;
+ *         this.next = null;
+ *     }
+ * }
+ */ 
+public class Solution {
+    /**
+     * @param head: The head of linked list.
+     * @return: void
+     */
+    public void reorderList(ListNode head) {
+        if(head == null)
+            return;  
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        } 
+        fast= slow.next;
+        //记得切开
+        slow.next = null;
+        fast = reverse(fast);    
+        slow = head;
+        ListNode slowTemp = slow;
+        ListNode fastTemp = fast;
+        while(slow != null && fast != null) {
+            slowTemp = slow.next;
+            fastTemp = fast.next;
+            slow.next = fast;
+            if(slowTemp != null)
+                fast.next = slowTemp;
+            slow = slowTemp;
+            fast = fastTemp;
+        }
+        return;
+    }
+    public ListNode reverse(ListNode root) {
+        if(root == null)
+            return root;
+        ListNode prev=null;
+        ListNode curr = root;
+        ListNode next = root;
+        while(curr!= null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+}
