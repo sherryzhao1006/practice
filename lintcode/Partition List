@@ -1,0 +1,28 @@
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/Partition%20List.png
+public class Solution {
+    /**
+     * @param head: The first node of linked list.
+     * @param x: an integer
+     * @return: a ListNode 
+     */
+    public ListNode partition(ListNode head, int x){
+        ListNode dummyLess=new ListNode(0);
+        ListNode dummyGreat=new ListNode(0);
+        ListNode curr = head;
+        ListNode runLess = dummyLess;
+        ListNode runGreat = dummyGreat;
+        while(curr != null) {
+            if(curr.val < x) {
+                runLess.next = curr;
+                runLess = runLess.next;
+            } else {
+                runGreat.next = curr;
+                runGreat = runGreat.next;
+            }
+            curr = curr.next;
+        }
+        runGreat.next = null;
+        runLess.next = dummyGreat.next;
+        return dummyLess.next;
+    }
+}
