@@ -18,3 +18,35 @@ void insertionSort(int[] ar,int n) {
         arr[j+1] = key;
     }
 }
+
+
+
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/insertionSortList.png
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/insertionsort2.png
+public class Solution {
+    /**
+     * @param head: The first node of linked list.
+     * @return: The head of linked list.
+     */
+    public ListNode insertionSortList(ListNode head) {
+        if(head == null)
+            return null;
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode curr = head;
+        while(curr != null && curr.next != null) {
+            while(curr.next != null && curr.val <= curr.next.val)
+                curr = curr.next;
+            if(curr.next == null) break;
+            ListNode target = curr.next;
+            ListNode p = dummyNode;
+            while(p.next != null && p.next.val < target.val)
+                p = p.next;
+                ListNode next = p.next;
+                p.next = target;
+                curr.next = target.next; 
+                target.next = next;
+        }    
+        return dummyNode.next;
+    }
+}
