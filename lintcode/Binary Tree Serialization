@@ -1,0 +1,30 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/Binary%20Tree%20Serialization.png
+
+private static int count = 0;
+public String serialize(TreeNode root) {
+    if(root == null)
+        return "#,";
+    String result = root.val + ",";//
+    String left = serialize(root.left);
+    String right = serialize(root.right);
+    result += left + right;
+    return result; 
+}
+public TreeNode deserialize(String data){
+    if(data == null || data.length() == 0)
+        return null;
+    String[] res = data.split(",");
+
+    return helper(res);
+}
+public TreeNode helper(String[] res) {
+    if(res[count].equals("#")) {
+        count++;
+        return null;
+    }
+    TreeNode root = new TreeNode(Integer.parseInt(res[count]));
+    count++;
+    root.left = helper(res);
+    root.right=helper(res);
+    return root;
+}
