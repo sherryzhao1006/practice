@@ -1,0 +1,17 @@
+//http://www.lintcode.com/en/problem/nth-to-last-node-in-list/
+    ListNode nthToLast(ListNode head, int n) {
+        if(head == null)
+            return head;
+        ListNode curr = head;
+        while(curr != null && n > 0) {
+            curr = curr.next;
+            n--;
+        }
+        ListNode prev = head;
+        
+        while(curr != null) {
+            prev = prev.next;
+            curr = curr.next;    
+        }
+        return prev;
+    }
