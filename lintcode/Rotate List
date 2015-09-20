@@ -1,0 +1,30 @@
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/Rotate_List.png
+http://www.lintcode.com/en/problem/rotate-list/#
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head == null)
+            return head;
+        if(head.next == null)
+            return head;
+
+        int n = 0;
+        ListNode curr = head;
+        ListNode end= head;
+        while(curr != null) {
+            n++;
+            end = curr;
+            curr = curr.next;
+        }
+        //n=5, k=9 (4)
+        int steps = n- (k%n);
+        curr = head;
+        ListNode prev = head; 
+        while(curr != null && steps > 0) {
+            steps--;
+            prev = curr;
+            curr = curr.next;
+        }
+        prev.next = null;
+//================================
+        end.next = head;
+        return curr;   
+    }
