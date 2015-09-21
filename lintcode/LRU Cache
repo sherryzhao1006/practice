@@ -1,0 +1,79 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/LRUCache.png
+class Node {
+    Node prev;
+    Node next;
+    int value;
+    int key;
+    Node(int key,int value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+public class Solution {
+
+    // @param capacity, an integer
+    private HashMap<Integer,Node> map;
+    private Node head,tail;
+
+    private int capacity;
+    public Solution(int capacity) {
+        map = new HashMap<Integer,Node>();
+        // write your code here
+        this.capacity=capacity;
+        head = new Node(-1,-1);
+        tail = new Node(-1,-1);
+        head.next = tail;
+        tail.prev=head;
+    }
+    //head -> new   .........  old <----tail
+    public void moveToHead(Node p) {      
+          Node next = head.next;
+          head.next = p;
+          p.prev= head;
+          p.next = next;
+          next.prev = p;
+    }
+    public int removeFromEnd() {
+        Node delete = tail.prev;
+        delete.prev.next = tail;
+        tail.prev =delete.prev;
+        delete.prev = null;
+        delete.next = null;
+        return delete.key; 
+    }
+    // @return an integer
+    public int get(int key) {
+        if(map.containsKey(key)) {
+            Node p = map.get(key);
+            p.prev.next = p.next;
+            p.next.prev = p.prev;            
+            moveToHead(p);
+            return p.value;
+        }
+        return -1;
+    }
+
+    // @param key, an integer
+    // @param value, an integer
+    // @return nothing
+    public void set(int key, int value) {
+            if(map.containsKey(key)) {
+                Node p = map.get(key);
+                p.prev.next = p.next;
+                p.next.prev = p.prev;  
+                p.value = value;
+                moveToHead(p);
+            } else if( map.size() < capacity) {
+                Node p = new Node(key,value);
+                moveToHead(p);
+                map.put(key,p);
+            } else {
+                Node p = new Node(key,value);
+                 
+                moveToHead(p);
+                map.put(key,p);
+                int tmp = removeFromEnd();
+                map.remove(tmp);
+            }
+    }
+}
