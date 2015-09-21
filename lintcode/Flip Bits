@@ -1,0 +1,20 @@
+class Solution {
+    /**
+     *@param a, b: Two integer
+     *return: An integer
+     */
+    public static int bitSwapRequired(int a, int b) {
+        if(a == b)
+            return 0;
+        int numDigits = 32;
+        int diff = a ^ b;
+        int count=0;
+        while(numDigits > 0) {
+            if((diff & 1)==1)
+                count++;    
+            diff = diff >> 1;
+            numDigits--;
+        }
+        return count;
+    }
+};
