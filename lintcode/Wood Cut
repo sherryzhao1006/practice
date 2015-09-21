@@ -1,0 +1,32 @@
+public class Solution {
+    /** 
+     *@param L: Given n pieces of wood with length L[i]
+     *@param k: An integer
+     *return: The maximum length of the small pieces.
+     */
+     public int woodCut(int[] L, int k) {
+         int max = 0;
+         for(int i=0; i < L.length; i++) {
+             max = Math.max(max,L[i]);
+         }
+         int start = 0;
+         int end = max;
+         while(start <= end) {
+             int mid = start + (end-start)/2;
+             //if total length of all woords < k then mid can be 0
+             if(mid == 0)
+                return 0;
+             int count = 0;
+             for(int j=0; j < L.length;j++) {
+                 
+                 count += L[j]/mid;
+             }
+             if(count >= k) {
+                 start = mid+1;
+             } else {
+                 end = mid-1;
+             }
+         }
+         return end;
+     }
+}
