@@ -37,3 +37,49 @@ http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=136248&extra=page%3
 
 
 http://massivealgorithms.blogspot.com/2015/09/flatten-json-to-list-of-map.html
+
+
+
+
+
+
+
+
+
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=140449&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption[3046][value]%3D22%26searchoption[3046][type]%3Dradio%26sortid%3D311
+
+
+
+
+getValue(int row, int col) {                
+  HashMap<Integer, Cell> colsMap= cellsMap.get(row);
+                if (colsMap == null) {
+                        return "";
+                }
+                Cell cell = colsMap.get(col);
+                if (cell == null) {.1point3acres缃�
+                        return "";
+                }
+                return cell.getValue();. more info on 1point3acres.com
+               
+        } 
+       
+        public void setValue(Cell cell) {
+                int row = cell.getRow();
+                int col = cell.getCol();
+               
+                HashMap<Integer, Cell> colsMap = cellsMap.get(row);
+                if (colsMap == null) {
+                        colsMap = new HashMap<Integer, Cell>();
+                        cellsMap.put(row, colsMap);. From 1point 3acres bbs
+                }
+                colsMap.put(col, cell);
+        }
+
+
+
+
+
+
+
+
