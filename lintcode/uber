@@ -5,3 +5,25 @@ http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=140665&extra=page%3
 rectangle add
 http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=136566&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption[3046][value]%3D22%26searchoption[3046][type]%3Dradio%26sortid%3D311
 http://www.ardendertat.com/2011/09/20/programming-interview-questions-2-matrix-region-sum/
+
+
+
+
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=141712&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption[3046][value]%3D22%26searchoption[3046][type]%3Dradio%26sortid%3D311
+
+* insert("k1", "v1", 10)
+* get("k1") // returns "v1"
+* get("k1", 11) // returns "v1"
+* insert("k1", "v2", 20)
+* get("k1", 15) // returns "v1"
+* get("k1", 11) // returns "v1"
+* get("k1", 21).
+
+hashMap<String, HashMap<int, String>>;
+* insert("k1", "v1", 10)
+k1-> hashmap . put(10, v1)
+get(k1,11)
+timestamp是int
+insert应该比较好理解吧就是直接插入。
+get的话如果给明确的timestamp了，就返回比给定的timestamp小并且latest timestamp对应的value.
+如果没给timestamp就是返回key+latest timestamp的value
