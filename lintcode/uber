@@ -27,3 +27,13 @@ timestamp是int
 insert应该比较好理解吧就是直接插入。
 get的话如果给明确的timestamp了，就返回比给定的timestamp小并且latest timestamp对应的value.
 如果没给timestamp就是返回key+latest timestamp的value
+
+
+
+
+
+
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=136248&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption[3046][value]%3D22%26searchoption[3046][type]%3Dradio%26sortid%3D311
+
+
+http://massivealgorithms.blogspot.com/2015/09/flatten-json-to-list-of-map.html
