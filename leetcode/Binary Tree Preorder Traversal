@@ -1,0 +1,20 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/PreOrderTree.png
+    public ArrayList<Integer> preorderTraversal(TreeNode root) {
+        // write your code here
+        ArrayList<Integer> result=new ArrayList<>();
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        if(root == null) {
+                return result;
+        }
+        s.push(root);
+        while(!s.isEmpty()) {
+            TreeNode curr = s.pop();  
+            result.add(curr.val);
+            if(curr.right != null)
+                s.push(curr.right);
+            if(curr.left != null)
+                s.push(curr.left);
+              
+        }
+        return result;
+    }
