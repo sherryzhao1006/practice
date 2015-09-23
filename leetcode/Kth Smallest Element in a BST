@@ -1,3 +1,5 @@
+Recursive Version
+=================
     public int kthSmallest(TreeNode root, int k) {
         int[] count = new int[1];    
         TreeNode res = helper(count,root, k);
@@ -16,3 +18,35 @@
         }
         return helper(count,root.right,k);
     }
+
+
+Iterative Version
+===================
+
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/KthSmallestInBST.png
+public class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        TreeNode curr=root;
+        int count = 0;
+        while(!s.isEmpty() || curr != null) {
+            if(curr != null) {
+                while(curr.left != null) {
+                    s.push(curr);
+                    curr = curr.left;
+                }
+                count++;
+                if(count == k)
+                    return curr.val;
+                curr = curr.right;
+            } else {
+                curr = s.pop();
+                count++;
+                if(count == k)
+                    return curr.val;
+                curr = curr.right;
+            }
+        }
+        return -1;
+    }
+}
