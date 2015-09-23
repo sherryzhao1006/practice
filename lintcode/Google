@@ -1,4 +1,5 @@
 Google asked to implement BigInteger class
+============================================
 that was first question
 and then second ques
 was find largest sequence of integers in a set
@@ -153,3 +154,84 @@ int[] arr = {110,110,100} = biginteger2
 1 2 3 4 5 6 7 8 9 10 | 11 12 13 14 15 16 
 
 =====================
+(2) find largest sequence of integers in a set
+like {1, 4, 3, 6, 7, 8, 2} would be {1, 2, 3, 4}
+
+
+
+
+like {1, 4, 3, 6, 7, 8, 2} would be {1, 2, 3, 4}
+
+
+min = 1, max = 8
+
+
+int[] input = {1, 4, 3, 6, 7, 8, 2};
+
+
+
+
+int[] arr = new int[max-min+1];
+for(int i=0; i < input.length; i++) {
+    arr[input[i]-min]++;
+}
+
+int count = 0;
+int max = Integer.MIN_VALUE;
+for(int start = 0; start <= (max-min); start++) {
+    if(arr[start] == 0)
+        count = 0;
+    if(arr[start] > 0) {
+        count++;
+        max = Math.max(max,count);
+    } 
+}
+{0 , 1000]
+
+
+Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+for(int i=0; i < input.length; i++) {
+    map.put(input[i],1);
+}
+
+
+
+2^31-1 +1 =  -(2^31-1)
+
+
+Nice Solution :
+
+
+for(int i=0; i < input.length; i++) {
+    
+    if(map.containsKey(input[i])) {
+        
+        count = 1;
+        int curr = input[i];
+        int minPos = curr;
+        int maxPos = curr;
+        map.remove(curr);        
+        
+        curr = input[i] - 1;
+        while(map.containsKey(curr) && curr != Integer.MAX_VALUE) {
+            map.remove(curr);            
+            count++;
+                      
+            curr--;
+        }
+        minPos = curr+1;
+        curr = input[i] +1;
+        while(map.containsKey(curr) && curr != Integer.MIN_VALUE) {            
+            map.remove(curr);
+            count++;                
+            curr++;
+        }
+        maxPos = curr-1;
+        
+        //max = Math.max(max,count);
+        max = Math.max(max,maxPos-minPos+1);
+    }
+}
+
+
+1 1000 (waste of lots of space)
