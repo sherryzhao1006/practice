@@ -1,0 +1,18 @@
+    public int kthSmallest(TreeNode root, int k) {
+        int[] count = new int[1];    
+        TreeNode res = helper(count,root, k);
+        return res.val ;
+    }
+    public TreeNode helper(int[] count, TreeNode root, int k) {
+        if(root == null){
+            return null;
+        }
+        TreeNode temp = helper(count,root.left,k);
+        if(temp != null)
+            return temp;
+        count[0]++;
+        if(count[0] == k) {
+            return root;
+        }
+        return helper(count,root.right,k);
+    }
