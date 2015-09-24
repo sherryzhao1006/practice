@@ -25,3 +25,9 @@ http://buttercola.blogspot.com/search/label/System%20Design
 When considering scalable system design, it helps to decouple functionality and 
 think about each part of the system as its own service with a clearly defined interface. 
 In practice, systems designed in this way are said to have a Service-Oriented Architecture (SOA). 
+
+
+Another potential problem with this design is that a web server like Apache or lighttpd 
+typically has an upper limit on the number of simultaneous connections 
+it can maintain (defaults are around 500, but can go much higher) and in high traffic, writes can quickly consume 
+all of those.
