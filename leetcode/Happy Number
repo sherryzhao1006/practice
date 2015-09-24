@@ -1,0 +1,55 @@
+My Solution :
+    public boolean isHappy(int n) {
+        
+        Set<Integer> set = new HashSet<Integer>();
+        set.add(n);
+        while(n != 1) {
+            n = getSum(getDigits(n));
+            if(set.contains(n))
+                return false;
+            set.add(n);
+        }
+        return true;
+    }
+    public int getSum(int[] arr) {
+        int sum = 0;
+        for(int i=0; i < arr.length; i++) {
+            sum += Math.pow(arr[i],2);
+        }
+        return sum;
+        
+    }
+    public int[] getDigits(int n) {
+        String currNum = String.valueOf(n);
+        int[] res = new int[currNum.length()];
+        int cnt = 0;
+        while(n > 0) {
+            res[cnt++] = n%10;
+            n = n/10;
+        }
+        return res;
+    }
+    
+    
+    
+    Better short solution :
+        public boolean isHappy(int n) {
+        if(n == 1){
+            return true;
+        }
+        HashSet<Integer> set=new HashSet<Integer>();
+        set.add(n);
+        while(n != 1){
+            int result=0;
+            while(n != 0){
+                result+=Math.pow(n%10,2);
+                n=n/10;
+            }
+            if(set.contains(result)){
+                return false;
+            }
+            set.add(result);
+            n=result;
+        }
+        return true;
+    }
