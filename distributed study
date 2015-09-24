@@ -18,3 +18,6 @@ Redirect
 	•	redirect is marginally slower than a forward, since it requires two browser requests, not one
 	•	objects placed in the original request scope are not available to the second request
 
+http://www.aosabook.org/en/distsys.html
+
+http://buttercola.blogspot.com/search/label/System%20Design
