@@ -21,3 +21,7 @@ Redirect
 http://www.aosabook.org/en/distsys.html
 
 http://buttercola.blogspot.com/search/label/System%20Design
+
+When considering scalable system design, it helps to decouple functionality and 
+think about each part of the system as its own service with a clearly defined interface. 
+In practice, systems designed in this way are said to have a Service-Oriented Architecture (SOA). 
