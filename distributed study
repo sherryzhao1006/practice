@@ -1,2 +1,20 @@
 https://www.youtube.com/watch?v=dZc6CP-x2d0 － acid
 master slave replica (journalling) : https://docs.mongodb.org/v3.0/faq/replica-sets/
+
+
+
+http://www.webopedia.com/TERM/C/CDN.html Content Delivery Network
+
+forward and redirect : http://www.javapractices.com/topic/TopicAction.do?Id=181 
+
+
+forward
+	•	a forward is performed internally by the servlet
+	•	the browser is completely unaware that it has taken place, so its original URL remains intact
+	•	any browser reload of the resulting page will simple repeat the original request, with the original URL
+Redirect
+	•	a redirect is a two step process, where the web application instructs the browser to fetch a second URL, which differs from the original
+	•	a browser reload of the second URL will not repeat the original request, but will rather fetch the second URL
+	•	redirect is marginally slower than a forward, since it requires two browser requests, not one
+	•	objects placed in the original request scope are not available to the second request
+
