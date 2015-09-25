@@ -1,0 +1,108 @@
+/**. From 1point 3acres bbs
+* Given a nested list of integers, returns the sum of all integers in the list weighted by their depth
+* For example, given the list {{1,1},2,{1,1}} the function should return 10 (four 1's at depth 2, one 2 at depth 1)
+* Given the list {1,{4,{6}}} the function should return 27 (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3).
+*/
+
+{1,2,{1,2}}
+input.getInteger() =1
+input.getInteger()  =2
+input.getInteger()  = null
+ArrayList<NestedInteger> input
+上面是题目
+下面是我写的代码部分
+
+public int depthSum (List<NestedInteger> input)
+{
+    //Implementation here
+    return getSum(input,1);
+}
+
+
+public int getSum(List<NestedInteger> input,int level){
+//base case should arrive the deepest level
+    int addup = 0;
+    if(input.size() == 0)
+        return 0;
+
+    for(int i=0;i<input.size();i++){
+        if(input.get(i).isInteger()){//input.get(i) is an integer
+            addup += input.get(i).getInteger()*level;
+        }
+        else{
+            addup += getSum(input.get(i).getList(),level+1);
+        }
+    }
+    return addup;
+}
+下面是给出的一个interface，其实就是一个class，我在这个class的理解上傻逼了很久。。。。。其实人家写的很清楚了
+基本功不行啊。。。。面壁去了。。。
+
+public interface NestedInteger
+{
+    /** @return true if this NestedInteger holds a single integer, rather than a nested list */
+    boolean isInteger();
+
+    /** @return the single integer that this NestedInteger holds, if it holds a single integer. from: 1point3acres.com/bbs
+     * Return null if this NestedInteger holds a nested list */. 1point3acres.com/bbs
+    Integer getInteger();
+
+    /** @return the nested list that this NestedInteger holds, if it holds a nested list. From 1point 3acres bbs
+     * Return null if this NestedInteger holds a single integer */
+    List<NestedInteger> getList();
+}
+
+
+下面是我们的讨论
+
+//List<NestedInteger>
+
+// {} => 0
+//{} isInteger() =  false//
+//How to judge when I arrive at deepest level
+//If you're at the deepest level, will there be any more Nestedintegers nested within . 1point 3acres 璁哄潧
+
+/**
+* This is the interface that represents nested lists.
+* You should not implement it, or speculate about its implementation.
+*/
+
+
+/**. From 1point 3acres bbs
+* Given a nested list of integers, returns the sum of all integers in the list weighted by their depth
+* For example, given the list {{1,1},2,{1,1}} the function should return 10 (four 1's at depth 2, one 2 at depth 1)
+* Given the list {1,{4,{6}}} the function should return 27 (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3). 鍥磋鎴戜滑@1point 3 acres
+*/
+// { {21,{32}, {{43,44}, 35}} ,12}
+public int getSum(List<NestedInteger> input, int level) {
+  if(input == null || input.size() ==0)
+    return 0;
+  int sum = 0;
+  for(NestedInteger currInput : input) {
+    if(currInput.isInteger()){
+      sum += level*currInput.getInteger();  
+    } else{
+      sum += getSum(currInput.getList(),level+1);
+    }
+  }
+  return sum;
+}
+
+
+http://www.1point3acres.com/bbs/thread-120371-1-1.html
+这句不对，应该找每个{}的最大值。
+{ {21,{32}, {{43,44}, 35}} ,12}
+{32}的level 是1
+{{43,44}, 35} 的是2
+{21,{32}, {{43,44}, 35}} 应该返回3
+最后结果是4
+level 遍历输出。。。跟二叉树的levelOrderOutput一样。
+public int getLevel(List<NestedInteger> input) {
+  int maxLevel = 0;
+  for(NestedInteger currInput : input) {
+    if(!input.isInteger()) {
+      maxLevel = Math.max(maxLevel,getLevel(currInput.getList()));
+    }
+  }
+  return maxLevel+1;
+}
