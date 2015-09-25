@@ -1,3 +1,42 @@
+  public void fizzBuzz(int n) {
+        ArrayList<String> results = new ArrayList<String>();
+        for (int i = 1; i <= n; i++) {
+          boolean a= i%15==0;
+          boolean b=  i%5 ==0;
+          boolean c = i%3 == 0;
+          (second optimization)
+          if(i%5==0 && i%3 ==0)
+            fizz buzz 
+          if(i%5 ==0)
+            fizz
+          if(i%3 == 0)
+            buzz
+          replace with boolean to avoid duplicate calculation
+          (first optimization)
+          //no need to check for "a"
+          if(b)
+              fizz
+          if(c)
+              buzz
+           
+          
+            if (a) {
+                System.out.print("fizz buzz");
+            } else if (b) {
+                results.add("buzz");
+            } else if (c) {
+                results.add("fizz");
+            } else {
+                results.add(String.valueOf(i));
+            }
+        }
+        return results;
+    }  
+  
+}
+
+
+
 /*
 For example, given: start = "hit", end = "cog", and dict = ["hot","dot","dog","lot","log"], return:
 
