@@ -1,0 +1,65 @@
+http://algorithms.tutorialhorizon.com/print-the-binary-tree-in-vertical-order-path/
+import java.io.*;
+import java.util.*;
+
+/*
+ * To execute Java, please define "static void main" on a class
+ * named Solution.
+ *
+ * If you need more classes, simply define them inline.
+ */
+
+class Node {
+  int data;
+  Node left;
+  Node right;
+  public Node(int data) {
+    this.data = data;
+    left = null;
+    right = null;
+  }
+}
+
+class Solution {
+
+  public static void main(String[] args) {
+    Node root = new Node(1);
+    root.left = new Node(2);
+    root.right = new Node(3);
+    root.left.left = new Node(4);
+    root.left.right = new Node(5);
+    root.right.left = new Node(6);
+    root.right.right = new Node(7);
+ 
+    
+    Map<Integer, ArrayList<Node>> treeMap = new TreeMap<Integer, ArrayList<Node>>(
+          new Comparator<Integer>() {
+          @Override
+          public int compare(Integer o1, Integer o2) {
+            return o2.compareTo(o1);
+          }
+    });
+    
+ 
+    printVertical(treeMap,0,root);
+    for(int i : treeMap.keySet()) {
+       for(Node j : treeMap.get(i)) {
+         System.out.print(j.data);
+       }
+      System.out.println();
+    }
+    
+    
+  }
+  public static void printVertical(Map<Integer, ArrayList<Node>> treeMap,int level,Node root) {
+    if(root == null) {
+        return;
+    }  
+    printVertical(treeMap,level+1,root.left);
+    if(!treeMap.containsKey(level)) {
+      treeMap.put(level,new ArrayList<Node>());
+    }
+    treeMap.get(level).add(root);
+    printVertical(treeMap,level-1,root.right); 
+  }
+}
