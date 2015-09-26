@@ -1,5 +1,67 @@
 https://dl.dropboxusercontent.com/u/15824957/Lintcode/DungeonGame.png
 
+Explanation:
+/*
+ya we can start from top also but for that we have to check for all the possible starting points
+we dont know in advance how much point should we take in advance so that we can pass through all the cells sucessfully
+
+got it. since we have to try all starting points
+ya correct
+keep going with bottom right approach. from bottom we need to know which path to take right? won't that be the same issue?sure watching. 
+ya explaining then u can understand
+ok.yep agree. yep keep going
+
+
+-2(K)  -3      3
+-5     -10     1
+10     30     -5(P)
+
+see  for successully passing from a cell we need atleast 1 points . 
+so the bottom right is -5 , for passing through it we need 6 points . so that 6-5 = 1 total points for passing. crrect?
+
+now we can reach to bottom right cell from only 2 positions
+
+
+1 and 30 
+now conidering path from 1
+1 is positive it means this cell got added in the resultant 
+so if we have 6 in bottom right, then in this cell we would have only 5
+becoz 5+val of cell(ie. 1) = 6
+so path from 1 is :  5(1) -> 6(-5)
+
+now considering 30
+path is 30(30) -> 30(-5) 
+
+now as we have to consider only minimum path, so we'll take in consideration the first path ie. 5(1) -> 6(-5)
+
+so for reaching 1 , we have 2 more path options: ie from 3 and -10
+taking 3 ,
+
+2(3) -> 5(1) -> 6(-5) 
+
+and from -10 as path:
+
+-10(15) -> 5(1) -> 6(-5)
+
+now 3 is less than 15 , so taking only path with 3 in consideration
+
+, so with following path we'll proceed:
+
+2(3) -> 5(1) -> 6(-5) 
+
+now to 3 , we can go from -3 only
+
+so : path => 5(-3) -> 2(3) -> 5(1) -> 6(-5)
+5 = abs(-3-2)
+
+now next cell = -2 (starting cell)
+ path = 7(-2) -> 5(-3) -> 2(3) -> 5(1) -> 6(-5)
+ 
+ so ans is 7 
+ 
+ */
+
+
 public class Solution {
     public int calculateMinimumHP(int[][] dungeon) {
         int n = dungeon.length;
