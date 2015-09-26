@@ -1,0 +1,82 @@
+
+
+//http://sbzhouhao.net/LeetCode/LeetCode-Group-Shifted-Strings.html
+
+bcc-->#10
+cdd
+["az","ba"],
+  25   -1
+ ((25%26)+26)%26 =25
+ -1+26=25%26 = 25
+ #01 =>
+["abc", "bcd", "acef", "xyz"
+  11      11    221     111
+  "11" = key
+  abc = value 0;
+  
+  
+  import java.io.*;
+import java.util.*;
+
+/*
+ * To execute Java, please define "static void main" on a class
+ * named Solution.
+ *
+ * If you need more classes, simply define them inline.
+ */
+
+
+class Solution {
+  public static void main(String[] args) {
+
+    String[] strings = {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"};
+    for(List<String> str : groupStrings(strings)) {
+      System.out.println(str);
+    }
+    
+  }
+public static List<List<String>> groupStrings(String[] strings) {
+    
+  List<List<String>> output = new ArrayList<List<String>>();
+    HashMap<String,ArrayList<String>> map = new HashMap<String,ArrayList<String>>();
+    for(int i = 0;i<strings.length;i++){
+         String code = calculation_code(strings[i]); 
+         if(!map.containsKey(code)){
+             ArrayList<String> temp = new ArrayList<String>();
+             temp.add(strings[i]);
+             map.put(code,temp);
+                 
+         } else {
+             ArrayList<String> temp = map.get(code);
+             temp.add(strings[i]);
+             map.put(code,temp);
+         }         
+    }
+  
+    for(ArrayList<String> l : map.values()) {
+         output.add(l);
+     }
+     
+  /*
+  for(String key : map.keySet()) {
+    ArrayList<String> temp = map.get(key);
+    Collections.sort(temp);
+    output.add(temp);
+  }
+  */
+  return output;
+}
+  
+    
+  
+  public static String calculation_code(String s){
+    StringBuilder sb = new StringBuilder();
+    sb.append("#");
+    for(int i = 1; i< s.length(); i++) {
+        int code = ((s.charAt(i)-s.charAt(i-1))%26+26)%26;
+        sb.append(code);
+        sb.append("#");
+    }     
+    return sb.toString();    
+  }
+}
