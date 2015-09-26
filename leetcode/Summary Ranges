@@ -1,3 +1,4 @@
+Optimized Solution ( https://leetcode.com/discuss/42290/accepted-java-solution-easy-to-understand )
     public static List<String> summaryRanges(int[] nums) {
         List<String> res = new ArrayList<String>();
         if(nums == null || nums.length == 0)
@@ -19,6 +20,12 @@
         }
         return res;
     }
+    
+    
+    
+    
+    
+My Solution    
     /*
     public static List<String> summaryRanges(int[] nums) {
         List<String> res = new ArrayList<String>();
