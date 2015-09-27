@@ -1,1 +1,28 @@
 http://www.jiuzhang.com/solutions/palindrome-partitioning/
+
+
+abba
+
+所有结果数量？2^(n-1) = ? 16  
+a|b|b|a
+a|bb|a
+a|b|ba
+ab|b|a
+ab|ba
+abb|a
+a|bba
+abba
+
+     
+f(n)= f(n-1) +
+        f(n-2)+ ..1
+f(n-1) = f(n-2)+f(n-3) +....
+f(n) = f(n-1) +f(n-1) = 2*f(n-1)
+
+
+f(n) = 2*f(n-1) 
+
+f(1) = 1
+f(2) = 2*1
+f(n) = 2*f(n-1) = 2^2 * f(n-2) = .... =2^(n) f(1)  
+     
