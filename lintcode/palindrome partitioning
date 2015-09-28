@@ -26,3 +26,36 @@ f(1) = 1
 f(2) = 2*1
 f(n) = 2*f(n-1) = 2^2 * f(n-2) = .... =2^(n) f(1)  
      
+    //abba
+    public static List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<List<String>>();
+        cut(0,s,res,new ArrayList<String>());
+        return res;
+    }
+    public static void cut(int start, String s, List<List<String>> res, List<String> currRes){
+        if(start == s.length()) {
+            res.add(new ArrayList(currRes));
+            return;
+        }
+        for(int i=start; i < s.length(); i++) {
+            String currStr = s.substring(start,i+1);
+            if(isValid(currStr)) {
+                currRes.add(currStr);
+                cut(i + 1, s, res, currRes);
+                currRes.remove(currRes.size()-1);
+            }
+        }
+    }
+    //aba
+    //abba
+    public static boolean isValid(String s) {
+        int left = 0;
+        int right = s.length()-1;
+        while(left < right) {
+            if(s.charAt(left) != s.charAt(right))
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
