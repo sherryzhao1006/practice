@@ -1,0 +1,47 @@
+//http://buttercola.blogspot.com/2015/09/leetcode-closest-binary-search-tree.html
+import java.util.*;
+import java.io.*;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        TreeNode r = new TreeNode(8);
+        r.left = new TreeNode(7);
+        r.right = new TreeNode(9);
+        r.right.left = new TreeNode(8);
+        r.right.right = new TreeNode(10);
+        System.out.println(closestValue(r,7.8));
+    }
+    /*
+        8
+     7      9
+          8   10
+
+     */
+    public static int closestValue(TreeNode root, double target) {
+
+        int res = Integer.MAX_VALUE;
+        double currMin = Double.MAX_VALUE;
+        if(root == null)
+            return res;
+        while(root != null) {
+            if(Math.abs((double)root.val-target) < currMin) {
+                currMin = Math.abs(root.val-target);
+                res = root.val;
+            }
+            if(root.val < target) {
+
+                root = root.right;
+
+            }else
+                root = root.left;
+        }
+        return res;
+    }
+}
