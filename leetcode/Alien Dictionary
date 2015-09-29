@@ -1,4 +1,6 @@
 //http://buttercola.blogspot.com/2015/09/leetcode-alien-dictionary.html
+
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/Alien%20Dictionary.png
 public class Solution {
     public String alienOrder(String[] words) {
         //Set interface (can't create object)
