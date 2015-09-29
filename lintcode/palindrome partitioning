@@ -59,3 +59,51 @@ f(n) = 2*f(n-1) = 2^2 * f(n-2) = .... =2^(n) f(1)
         }
         return true;
     }
+
+
+
+
+//Using dp for finding whether substring i to j is palindrom substring
+
+
+
+
+
+
+public class Solution {
+    public  List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<List<String>>();
+        boolean[][] dp = isPalindrome(s);
+        cut(0,s,res,new ArrayList<String>(),dp);
+        
+        return res;
+    }
+    public  void cut(int start, String s, List<List<String>> res, List<String> currRes,boolean[][] dp){
+        if(start == s.length()) {
+            res.add(new ArrayList(currRes));
+            return;
+        }
+        for(int i=start; i < s.length(); i++) {
+            String currStr = s.substring(start,i+1);
+            if(dp[start][i]) {
+                currRes.add(currStr);
+                cut(i + 1, s, res, currRes,dp);
+                currRes.remove(currRes.size()-1);
+            }
+        }
+    }
+    
+    public boolean[][] isPalindrome(String s) {
+        boolean[][] dp= new boolean[s.length()][s.length()];
+        for(int i=0; i < s.length(); i++) {
+           for(int j=i;j >=0; j--) { 
+               if(s.charAt(i) == s.charAt(j) && ((i-j< 2) || dp[j+1][i-1])) {
+                    dp[j][i]= true;
+                }else{
+                    dp[j][i] = false;
+                } 
+            }
+        }
+        return dp;        
+    }    
+}
