@@ -1,0 +1,76 @@
+//http://buttercola.blogspot.com/2015/09/leetcode-alien-dictionary.html
+public class Solution {
+    public String alienOrder(String[] words) {
+        //Set interface (can't create object)
+        Map<Character,HashSet<Character>> map = new HashMap<Character,HashSet<Character>>();
+        
+        for(int i=0; i < words.length;i++) {
+            String curr = words[i];
+            for(int j=0; j < curr.length(); j++) {
+                if(!map.containsKey(curr.charAt(j))) {
+                    map.put(curr.charAt(j), new HashSet<Character>());
+                }
+            } 
+            if(i > 0) {
+            //connect all character(nodes) in a graph
+                String prev = words[i-1];
+                buildGraph(prev,curr,map); 
+            }
+        }
+        Map<Character,Integer> visited = new HashMap<Character,Integer>();
+        Stack<Character> s = new Stack<Character>();
+        Iterator it = map.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            char currChar = (char)pair.getKey();
+            if(topologicalSort(visited,s,map,currChar) == false)
+                return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        
+        while(!s.isEmpty()) {
+            sb.append(s.pop());
+        }
+        return sb.toString();
+    }
+    public boolean topologicalSort(Map<Character,Integer> visited, Stack<Character> s,Map<Character,HashSet<Character>> map,char start) {
+        //0 -white
+        //-1 - inprogres
+        //1 -black
+        //   
+        
+        
+        if(!visited.containsKey(start)) {
+            visited.put(start,-1);
+        } else {
+            if(visited.get(start) == -1) {
+                return false;    
+            }
+            if(visited.get(start) == 1) {
+                return true;
+            }
+        }
+        for(char currChar : map.get(start)) {
+                if(topologicalSort(visited,s,map,currChar) == false)
+                    return false;    
+        }
+        s.push(start);
+        visited.put(start,1);
+        //find its neighbors
+        return true;
+    } 
+
+    public void buildGraph(String prev, String curr, Map<Character,HashSet<Character>> map) {
+        int len = Math.min(prev.length(),curr.length());
+        for(int i = 0; i<len ;i++){
+            char p = prev.charAt(i);
+            char q = curr.charAt(i);
+            if(p != q){
+                if(!map.get(p).contains(q)){
+                    map.get(p).add(q);
+                }
+                break;//make sure to break if you meet the first char which is not matched.
+            }
+        }
+    }
+}
