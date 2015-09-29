@@ -1,0 +1,21 @@
+public class Solution {
+    private TreeNode inorderNode= null;
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        TreeNode curr = root;
+        inorder(curr,p);
+        if(inorderNode != null && inorderNode == p)
+            return null;
+        return inorderNode;
+    }
+    public void inorder(TreeNode root,TreeNode p) {
+        if(root == null)
+            return;
+        inorder(root.left,p);
+        if(root == p ){
+            inorderNode = p;
+        } else if(inorderNode != null && inorderNode == p) {
+            inorderNode = root;
+        }
+        inorder(root.right,p);
+    }
+}
