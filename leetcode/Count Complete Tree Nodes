@@ -1,0 +1,37 @@
+//http://blog.csdn.net/xudli/article/details/46385011
+[思路]
+用暴力法, recursive求会超时 O(N).   
+如果从某节点一直向左的高度 = 一直向右的高度, 那么以该节点为root的子树一定是complete binary tree. 
+而 complete binary tree的节点数,可以用公式算出 2^h - 1. 
+如果高度不相等, 则递归调用 return countNode(left) + countNode(right) + 1.  
+
+复杂度为O(h^2) 
+public class Solution {
+    public int countNodes(TreeNode root) {
+        if(root == null)
+            return 0;
+        int leftHeight = getLeftHeight(root);
+        int rightHeight = getRightHeight(root);
+        if(leftHeight == rightHeight) {
+            return ((1 << rightHeight)-1);
+        }
+        return countNodes(root.left)+countNodes(root.right)+1;
+    }
+    
+    public int getLeftHeight(TreeNode root) {
+        int count =0;
+        while(root != null) {
+            root = root.left;
+            count++;
+        }
+        return count;
+    }
+    public int getRightHeight(TreeNode root) {
+        int count =0;
+        while(root != null) {
+            root = root.right;
+            count++;
+        }
+        return count;
+    }
+}
