@@ -1,0 +1,58 @@
+//这题展示了怎么样即简单又易懂的写出一个好的算法来，
+//把独立的功能用函数封装出去，这样问题规模就会缩小
+import java.util.Comparator;
+import java.util.PriorityQueue;
+public class Solution {
+    //判断S是否能包住T，即T中的字符个数要小于S中对应的字符个数
+    //numList1 is S count, numList2 is T count
+    public boolean valid(int[] numList1,int[] numList2) {
+        for(int i=0; i < 256;i++) {
+            if(numList1[i] < numList2[i])
+                return false;
+        }
+        return true;
+    }
+    public String minWindow(String s, String t) {
+        int[] sCount = new int[256];
+        int tCount[] = new int[256];
+        int cCount[] = new int[256];
+        int sizeS = s.length();
+        int sizeT = t.length();
+        if(sizeS < sizeT)
+                return "";
+        //统计S中各字符的个数
+        for(int i=0; i < sizeS ; i++)
+                sCount[s.charAt(i)]++;
+        //统计T中各字符的个数
+        for(int i=0; i < sizeT; i++)
+                tCount[t.charAt(i)]++;
+        if(!valid(sCount,tCount))
+                return "";
+        cCount[s.charAt(0)]++;
+        int head = 0, tail = 0, minLen = sizeS,head_min = 0;
+        while(tail < sizeS) {
+                //如果不能包住,tail右移
+                if(!valid(cCount,tCount)){
+                        if (++tail < sizeS)
+                                cCount[s.charAt(tail)]++;
+                }
+                else{
+                        //如果全包住,head右移
+                        if(tail-head+1 < minLen) {
+                                //刷新最小window长度
+                                minLen = tail-head+1;
+                                head_min = head;
+                        }
+                        cCount[s.charAt(head++)]--;
+                }
+        }
+        return s.substring(head_min,head_min+minLen);//返回最小window
+    }
+    public static void main(String args[]){
+        Solution s = new Solution();
+        String S = "ADOBECODEBANC";
+        String T = "ABC";
+        //solution : "BANC"
+        System.out.println(s.minWindow(S,T));
+    }
+}
