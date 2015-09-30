@@ -1,3 +1,4 @@
+//http://www.programcreek.com/2014/03/two-sum-iii-data-structure-design-java/
 public class TwoSum {
  private HashMap<Integer,Integer> map;
     
