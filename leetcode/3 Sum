@@ -1,0 +1,40 @@
+INPUT: S = {-1, 0, 1, 2, -1, -4}
+OUTPUT: (-1, 0, 1) and (-1, -1, 2) 
+
+sort: -4,-1,-1,0,1,2
+          i    j k
+sum=num1+num2+num3
+num1 constant, num2 num3
+sum<0 sum2++
+
+
+public class Solution {
+    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
+        ArrayList<ArrayList<Integer>> result =
+                new ArrayList<ArrayList<Integer>>();
+        Arrays.sort(num);
+        for(int i = 0; i < num.length; ++i) {
+            int j = i + 1;
+            int k = num.length - 1;
+            while (j < k) {
+                int sum = num[i] + num[j] + num[k];
+                if(sum == 0) {
+                    ArrayList<Integer> triplet =
+                            new ArrayList<Integer>();
+                    triplet.add(num[i]);
+                    triplet.add(num[j]);
+                    triplet.add(num[k]);
+                    if(!result.contains(triplet))
+                        result.add(triplet);
+                    j++;
+                    k--;
+                } else if(sum > 0) {
+                    k--;
+                } else { // sum < 0
+                    j++;
+                }
+            }
+        }
+        return result;
+    }
+}
