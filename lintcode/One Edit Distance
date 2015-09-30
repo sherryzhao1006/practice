@@ -1,0 +1,63 @@
+/*
+
+
+1)length1 - length2 >1  false
+2)equal= increment both
+
+
+3) len diff by 1
+i=0
+j=0
+abcd
+bcd
+increment 1 to longest len pointer
+*/
+
+public class Solution {
+    public boolean isOneEditDistance(String s, String t) {
+        
+        //if both are empty
+        if(s.length() == 0 && t.length() ==0)
+            return false;
+        if(s.equals(t))
+            return false;
+        int sLen = s.length();
+        int tLen = t.length();
+        //1) if length1 - length2 >1
+        if(Math.abs(sLen-tLen) > 1) {
+            return false;
+        }
+        //2) if the length are the same , increment both
+        if(sLen == tLen) {
+            int count = 0;
+            for(int i=0; i < s.length(); i++) {
+                if(s.charAt(i) != t.charAt(i))
+                    count++;
+                if(count > 1)
+                    return false;
+            }
+        } else {
+            //3) the length difference is 1. take minLength and then iterate through minLength and increment largeLen by 1 if the current char is different            
+            int count = 0;
+            int i=0,j=0;
+            while(i < sLen && j < tLen) {
+                
+                if(s.charAt(i) != t.charAt(j)) {
+                    if(sLen < tLen)
+                        j++;
+                    else
+                        i++;
+                    count++;
+                    
+                } else{
+                    i++;
+                    j++;
+                }
+                if(count >1)
+                        return false;
+            }    
+        }
+        return true;        
+        
+    }
+}
