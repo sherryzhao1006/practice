@@ -1,0 +1,41 @@
+/*
+
+pow(2.0,3):
+x=2.0 n=3
+
+n/2 = 3/2 = 1  (2.0)
+res = 4.0
+n= 3 如果n是奇数要多乘一次x.
+temp = 2.0
+res = 4.0
+
+if(n%2 !=0)  {
+    res = 8.0    
+}
+return 8.0
+
+
+*/
+public class Solution {
+
+    public double myPow(double x,int n) {
+        if(n >= 0) {
+            return helper(x,n);
+        } else {
+            return 1/helper(x,n);
+        }
+    }
+    public double helper(double x,int n) {
+        if(n == 0)
+            return 1.0;
+        if(n == 1 || n== -1) {
+            return x;
+        }
+        double temp = helper(x,n/2);
+        double res = temp*temp;
+        if(n %2 != 0) {
+            res *= x;
+        }
+        return res;
+    }
+}
