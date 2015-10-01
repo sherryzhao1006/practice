@@ -1,0 +1,61 @@
+/*
+example
+x = 5, sqrt(x) = 2
+lo = 0
+hi = 5
+mid = 2
+lo = 3
+hi = 5
+mid = 4
+hi = 4
+lo = 3
+mid = 3
+hi = 3
+lo = 3
+mid = 3
+hi = 2
+
+so return 2(hi)
+
+*/
+
+With Precision
+==============
+public int sqrt(int x) {
+            double lo = 0;
+            double hi = x;
+            //double precision = 0.001;//means equal to real sqrt to decimal 3 digits
+            double precision = 0.00001;
+            while(hi-lo > precision) {
+                double mid = lo+(hi-lo)/2;
+                double res = mid*mid;
+                if(res == x) {
+                    return (int)mid;
+                } else if(res < x) {
+                    lo = mid;    
+                } else {
+                    hi = mid;
+                }
+            }
+            return (int)hi; 
+       }
+Without Precision
+  /*
+     public int sqrt(int x) {
+         long lo = 0;
+         long hi = x; 
+         while(lo <= hi) {
+             long mid = lo+(hi-lo)/2;
+             long res = mid*mid;
+             if(res == x)
+                 return (int) mid;
+             else if(res < x) {
+                 lo = mid+1;
+             } else {
+                 hi = mid-1;
+             }
+         }
+        return (int) hi;
+       }
+       */
+       
