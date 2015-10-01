@@ -43,6 +43,20 @@ public class Solution {
 
 
 =====================================================================
+/*
+==============================================================
+10 = max
+============
+add = 5
+
+curr = 7
+
+================
+max-add = 10-5 = 5 > curr => no overflow
+max-add = 10-5 = 5 < curr => overflow
+================
+*/
+
 public class Solution {
 
     public int myAtoi(String str) {
