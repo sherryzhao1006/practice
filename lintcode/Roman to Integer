@@ -1,0 +1,49 @@
+
+
+
+XII -> 12
+
+XXI -> 21
+
+XCIX -> 99
+i
+i=0
+compare X and next element C.if X is smaller subtract from the num.
+num - 10 = -10
+i=1
+compare C and next element I. C is greater than I so add C to the num.
+num +100 = 90
+i=2
+compare I and next element X. I is smaller than X so subtract from the num
+num -1 = 89
+i=3
+X is the last element so add to num
+num = num+10 = 99
+
+
+    public int romanToInt(String s) {
+        // Write your code here
+        Map<Character,Integer> map=new HashMap<Character,Integer>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        int num=0;
+        for(int i=0; i < s.length(); i++) {
+            if(i == s.length()-1 ) {
+                num += map.get(s.charAt(i));
+            } else {
+                int curr = map.get(s.charAt(i));
+                int next = map.get(s.charAt(i+1));
+                if( curr >= next ) {
+                    num += curr;
+                } else {
+                    num -= curr;
+                }
+            }
+        }
+        return num;        
+    }
