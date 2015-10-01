@@ -1,0 +1,22 @@
+//http://rleetcode.blogspot.com/2013/09/integer-to-roman.html
+//99 => XCIX
+//99 => 99/90 = 1 = times (XC)
+//99-90 = 9 (IX)
+//9/9 = 1 
+//Solution : XCIX
+    public String intToRoman(int n) {
+        int [] nums={1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4,1};
+        String [] digits={"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I" };
+        int count =0;
+        
+        StringBuilder sb = new StringBuilder();
+        while(n > 0) {
+            int times = n /nums[count];
+            n = n - (times*nums[count]); 
+            while(times-- > 0) {
+                sb.append(digits[count]);
+            }       
+            count++;            
+        }
+        return sb.toString();
+    }
