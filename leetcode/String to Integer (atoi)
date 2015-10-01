@@ -24,6 +24,7 @@ public class Solution {
                 break;
             sum =str.charAt(index)-'0' + sum*10;
             index++;
+            //this is tricky to break as soon as it's larger than Integer.MAX_VALUE;
             if(sum>Integer.MAX_VALUE){
                 break;
             } 
@@ -42,7 +43,45 @@ public class Solution {
 
 
 =====================================================================
+public class Solution {
 
+    public int myAtoi(String str) {
+        if(str == null) {
+            return 0;
+        }
+        str=str.trim();
+        if(str.length() == 0)
+            return 0;
+        int index=0;
+        boolean negSign = false;
+        long num=0;
+        if(str.charAt(index) == '-') {
+            negSign = true;
+            index++;
+        }else if(str.charAt(index) == '+'){
+            index++;
+        }
+        //123
+        int sum =0;
+        boolean overflow = false;
+        while(index < str.length()) {
+        if(str.charAt(index)-'0'<0 || str.charAt(index)-'0'>9) break;
+            int digit = (int)(str.charAt(index)-'0');
+            //-(Integer.MIN_VALUE+1) =2147483647
+
+            if(negSign && sum > -((Integer.MIN_VALUE+digit)/10))
+                return Integer.MIN_VALUE;
+            if(!negSign && sum > (Integer.MAX_VALUE-digit)/10)
+                return Integer.MAX_VALUE;
+
+           sum = digit + sum*10;
+           index++; 
+        }
+        if(negSign == true)
+            sum *= -1;
+        return sum;
+    }    
+}
 
 
 
