@@ -1,0 +1,18 @@
+public class Solution {
+    /**
+     * @param root: The root of binary tree.
+     * @return: True if the binary tree is BST, or false
+     */
+    public boolean isValidBST(TreeNode root) {
+        int min = Integer.MIN_VALUE;
+        int max = Integer.MAX_VALUE;
+        return helper(root,Long.MIN_VALUE,Long.MAX_VALUE);
+    }
+    public boolean helper(TreeNode root,long min,long max) {
+        if(root == null)
+            return true;
+        if(!(root.val > min && root.val < max))
+            return false;
+        return helper(root.left,min,root.val) && helper(root.right,root.val,max);
+    }
+}
