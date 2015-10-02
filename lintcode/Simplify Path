@@ -1,0 +1,37 @@
+public class Solution {
+    public static String simplifyPath(String path) {
+        if(path == null){
+            return path;
+        }
+        /*
+        There is no need to escape forward slashes. Your code works fine if you just do:
+        String[] paths = path.split("/");
+        */
+        String[] strings = path.split("/");
+        StringBuilder sb = new StringBuilder();
+        sb.append("/");
+        Stack<String> s = new Stack<String>();
+        for(int i=0; i < strings.length; i++) {
+            if(strings[i].equals("..")) {
+                if(!s.isEmpty()) {
+                    s.pop();
+                }
+            } else if(!(strings[i].equals(".") || strings[i].equals(""))) {
+                s.push(strings[i]);
+            }
+        }
+        //string = "///" => string.split("/") => empty string array.
+        if(s.isEmpty()){
+            return sb.toString();
+        }
+        Stack<String> reverseStack = new Stack<String>();
+        while(!s.isEmpty()) {
+            reverseStack.push(s.pop());
+        }
+        while(!reverseStack.isEmpty()) {
+            sb.append(reverseStack.pop()+"/");
+        }
+        sb.deleteCharAt(sb.length()-1); 
+        return sb.toString();
+    }
+}
