@@ -6,6 +6,8 @@ public class Solution {
         /*
         There is no need to escape forward slashes. Your code works fine if you just do:
         String[] paths = path.split("/");
+        for backward slash you need to escape.
+        simplifyPath("c\\d\\");
         */
         String[] strings = path.split("/");
         StringBuilder sb = new StringBuilder();
