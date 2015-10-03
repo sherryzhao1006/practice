@@ -1,0 +1,35 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/BST_To_DLL.png
+
+https://chesterli0130.wordpress.com/2012/10/08/convert-binary-search-tree-bst-to-sorted-doubly-linked-list/ 
+class NodePair {
+    TreeNode head;//to store the global head to return
+    TreeNode tail;//to store the previous node (updateverytimes)
+}
+public static TreeNode bstToDll(TreeNode root) {
+     NodePair result=new NodePair();
+     helper(root,result);   
+}
+public static void helper(TreeNode root,NodePair result) {
+    if(root == null)
+        return;
+    //step:1.link with previous node 
+    
+    helper(root.left,result);
+    root.left=result.tail;
+    //step2.previous node.next=cur 
+
+    if(result.head == null) {
+        //set the global head of the dll to return if it's null)
+        result.head = root;
+    } else {
+        //if the global head exists, result.tail.next=cur
+        result.tail.right = root;
+    }
+    //3.find next and store cur as previous node
+    TreeNode right = root.right;
+    //update previous node in result.tail
+    result.tail = root;
+    //at current root node we don't know what is the root.right so set to null;
+    root.right = null;
+    helper(root.right,result);
+}
