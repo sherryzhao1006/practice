@@ -1,35 +1,35 @@
 https://dl.dropboxusercontent.com/u/15824957/Lintcode/BST%20Iterator.png
 https://dl.dropboxusercontent.com/u/15824957/BinaryTreeIterator.mov
 public class BSTIterator {
-    public TreeNode curr = null;
-    public Stack<TreeNode> s;
+    private TreeNode curr = null;
+    private Stack<TreeNode> s = null;
     public BSTIterator(TreeNode root) {
         curr = root;
-        s = new Stack<TreeNode>();   
+        s = new Stack<TreeNode>();    
     }
 
     /** @return whether we have a next smallest number */
     public boolean hasNext() {
-        return !(s.isEmpty() && curr == null);
+        return (!s.isEmpty() || curr != null);    
     }
 
     /** @return the next smallest number */
     public int next() {
-            if(curr == null) {
-                curr = s.pop();  
-                int returnVal = curr.val;  
-                curr = curr.right;
-                return returnVal;
-            }
-            while(curr.left != null){
-                s.push(curr);
-                curr=curr.left;
-            }
+        TreeNode returnVal = null;
+        if(curr != null) {
             
-            int returnVal=curr.val;
+            while(curr.left != null) {
+                s.push(curr);
+                curr = curr.left;
+            }
+            returnVal = curr;
             curr = curr.right;
-    
-            return returnVal;
+        } else {
+            returnVal = s.pop();
+            curr = returnVal.right;
+        }        
+        return returnVal.val;    
     }
+}
     
 }
