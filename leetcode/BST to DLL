@@ -1,3 +1,4 @@
+http://articles.leetcode.com/2010/11/convert-binary-search-tree-bst-to.html
 //reuse inorder traversal(non-recursion)
 =========================================================================================================
 import java.util.*;
@@ -39,6 +40,7 @@ public class Solution {
                 curr = s.pop();
 
             }
+            //new code added starts
             if(prev== null){
                 curr.left = prev;
                 head = curr;
@@ -47,8 +49,8 @@ public class Solution {
                 prev.right = curr;
             }
             prev=curr;
-
-            curr = curr.right;
+            //new code added ends
+            curr = curr.right;//take it out from if else statement above
         }
         return head;
     }
