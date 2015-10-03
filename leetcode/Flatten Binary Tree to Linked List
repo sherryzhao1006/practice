@@ -1,0 +1,30 @@
+//reuse the same logic as pre-order (non-recursion) logic
+
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/PreOrderTree.png
+
+https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
+    public void flatten(TreeNode root) {
+        if(root == null)
+            return;
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        s.push(root);
+        TreeNode prev = null;
+        while(!s.isEmpty()) {
+            TreeNode curr = s.pop();
+            if(curr.right != null) {
+                s.push(curr.right);
+            }
+            if(curr.left != null) {
+                s.push(curr.left);
+            }
+            
+            if(prev == null) {
+                prev = curr;
+                curr.left = null;
+            } else {
+                prev.right = curr;
+                curr.left = null;//because it's not doubly linked list
+                prev = curr;
+            }
+        }
+    }
