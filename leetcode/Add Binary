@@ -1,0 +1,21 @@
+public class Solution {
+    public String addBinary(String a, String b) {
+        if(a == null || b == null)
+            return "";
+        if(a.length() == 0 || b.length() == 0)
+            return "";
+        StringBuilder br=new StringBuilder();
+        int result=0,carry=0;
+        int abit,bbit;
+        int alen=a.length()-1,blen=b.length()-1;
+        while(alen>=0 || blen>=0 || carry == 1){
+            abit=alen>=0?a.charAt(alen--)-'0':0;
+            bbit=blen>=0?b.charAt(blen--)-'0':0;
+            int temp = abit+bbit+carry;
+            result=temp%2;
+            carry=temp/2;
+            br.insert(0,result+"");
+        }
+        return br.toString();            
+    }
+}
