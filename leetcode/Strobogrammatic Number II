@@ -1,0 +1,44 @@
+public class Solution {
+public List<String> findStrobogrammatic(int n) {
+        char[] arr = new char[n];
+        List<String> res = new ArrayList<String>();
+        Map<Character,Character> map = buildMap();
+        helper(arr,map,0,n-1,res);
+        return res;
+    }
+    public void helper(char[] arr,Map<Character,Character> map,int left,int right,List<String> res) {
+
+        if(left >= right) {
+            if(left == right) {
+                for (char key : map.keySet()) {
+                  //middle value can't be 6,9
+                    if (key != '6' && key != '9') {
+                        arr[left] = key;
+                        res.add(String.valueOf(arr));
+                    }
+                }
+            } else {
+                res.add(String.valueOf(arr));
+            }
+            return;
+        }
+        for(char key : map.keySet()) {
+            //0 can't be in the first position
+            if(left == 0 && key == '0') 
+                continue;
+            arr[left] = key;
+            arr[right] = map.get(key);
+            helper(arr,map,left+1,right-1,res);
+                
+        }
+    }
+    public Map<Character,Character> buildMap() {
+        Map<Character,Character> map = new HashMap<Character,Character>();
+        map.put('1','1');
+        map.put('6','9');
+        map.put('9','6');
+        map.put('0','0');
+        map.put('8','8');
+        return map;
+    }
+}
