@@ -1,3 +1,49 @@
+["az",                  "ba"],
+  0,25                  1,0
+  0+26,25               1%26 = 1         
+  abs(25-26)%26 = 1
+public class Solution {
+    public List<List<String>> groupStrings(String[] strings) {
+          Map<String,List<String>> map = new HashMap<String,List<String>>();
+          Arrays.sort(strings);
+
+          List<List<String>> res = new ArrayList<List<String>>();
+          calculateHash(strings,map);
+          for(String key : map.keySet()) {
+              res.add(map.get(key));
+          }
+          return res;
+    }
+    public void calculateHash(String[] strings, Map<String,List<String>> map) {
+        for(String s : strings) {
+   
+
+                String code = "";
+                for(int i=0; i < s.length(); i++) {
+                    if(i==0) {
+                        code+= "#";
+                    } else{
+                        code += (Math.abs((s.charAt(i-1)+26)-s.charAt(i)))%26;
+                        code += "#";
+                    }
+                }
+                
+                if(!map.containsKey(code)) {
+                    List<String> temp = new ArrayList<String>();
+                    temp.add(s);
+                    map.put(code,temp);
+                } else {
+                    List<String> temp = map.get(code);
+                    temp.add(s);
+                }
+        }
+    } 
+}
+
+
+
+
+
 
 
 //http://sbzhouhao.net/LeetCode/LeetCode-Group-Shifted-Strings.html
