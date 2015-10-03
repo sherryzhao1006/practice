@@ -1,3 +1,11 @@
+    123 （n=3)
+     12  (m=2)
+    ＝＝
+    246
+   123
+   ＝＝＝
+   1476
+
 //https://leetcode.com/problems/multiply-strings/
     public static String multiply(String num1, String num2) {
         if(num1 ==null || num2 == null){
