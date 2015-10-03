@@ -1,3 +1,69 @@
+//reuse inorder traversal(non-recursion)
+=========================================================================================================
+import java.util.*;
+import java.io.*;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        TreeNode root=new TreeNode(4);
+        TreeNode rootleft=new TreeNode(2);
+        TreeNode rootright=new TreeNode(5);
+        root.left=rootleft;
+        root.right=rootright;
+        rootleft.left=new TreeNode(1);
+        rootleft.right=new TreeNode(3);
+        TreeNode head = s.inorderTraversal(root);
+    }
+    public TreeNode inorderTraversal(TreeNode root) {
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        if(root == null)
+            return root;
+        TreeNode curr = root;
+        TreeNode prev = null;
+        TreeNode head = null;
+        while(!s.isEmpty() || curr != null) {
+            if(curr != null) {
+                while(curr.left != null) {
+                    s.push(curr);
+                    curr = curr.left;
+                }
+            } else {
+                curr = s.pop();
+
+            }
+            if(prev== null){
+                curr.left = prev;
+                head = curr;
+            } else {
+                curr.left = prev;
+                prev.right = curr;
+            }
+            prev=curr;
+
+            curr = curr.right;
+        }
+        return head;
+    }
+
+}
+
+
+
+
+
+
+Use Recursion
+=========================================================================================================
+
+
 https://dl.dropboxusercontent.com/u/15824957/Lintcode/BST_To_DLL.png
 
 https://chesterli0130.wordpress.com/2012/10/08/convert-binary-search-tree-bst-to-sorted-doubly-linked-list/ 
