@@ -1,0 +1,30 @@
+//5:00
+public class Solution {
+    public boolean isStrobogrammatic(String num) {
+        if(num == null || num.length() == 0)
+            return false;
+        int left = 0;
+        int right = num.length()-1;
+        while(left <= right) {
+            if(num.charAt(left) == num.charAt(right)) {
+                if(!isValid(left,num))
+                    return false;
+            } else if(!isLiuJiu(left,right,num))
+                    return false;
+        
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public boolean isValid(int index,String num) {
+        if(num.charAt(index) == '1' || num.charAt(index) == '8' || num.charAt(index) == '0')
+            return true;
+        return false;
+    }
+    public boolean isLiuJiu(int left, int right,String num) {
+        if((num.charAt(left) == '6' && num.charAt(right) == '9') || (num.charAt(left) == '9' && num.charAt(right) == '6'))
+            return true;
+        return false;
+    }
+}
