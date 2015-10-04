@@ -1,0 +1,32 @@
+//http://www.lintcode.com/en/problem/hash-function/
+class Solution {
+    /**
+     * @param key: A String you should hash
+     * @param HASH_SIZE: An integer
+     * @return an integer
+     */
+    public int hashCode(char[] key,int HASH_SIZE) {
+        int n = key.length;
+        long sum = 0;
+        int magic = 33;
+        for(int i=0; i < n; i++){
+            sum += key[i]*modPow(magic,n-1-i,HASH_SIZE);
+            sum = sum %HASH_SIZE;
+        }
+        return (int)sum;
+    }
+    private long modPow(int base, int n, int mod) {
+        if(n == 0){
+            return 1;
+        }
+        if(n == 1) {
+            return base%mod;
+        }
+        long temp = modPow(base,n/2,mod);
+        long res = (temp*temp)%mod;
+        if(n%2 != 0) {
+            res = (res*base)%mod;//mistake *base
+        }
+        return res;
+    }
+};
