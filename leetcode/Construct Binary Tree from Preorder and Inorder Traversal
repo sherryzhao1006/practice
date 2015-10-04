@@ -1,0 +1,28 @@
+public class Solution {
+    private int preIndex = 0;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return helper(preorder,inorder,0,inorder.length-1);
+    }
+    public TreeNode helper(int[] preorder, int[] inorder,int inStart,int inEnd) {
+        if(inStart > inEnd)
+            return null;
+        
+        if(inStart == inEnd) {
+            return new TreeNode(preorder[preIndex++]);
+        }
+        TreeNode root = new TreeNode(preorder[preIndex]);
+        int inOrderIndex = findIndex(preorder[preIndex],inorder,inStart,inEnd);
+        preIndex++;
+        root.left = helper(preorder,inorder,inStart,inOrderIndex-1);
+        root.right = helper(preorder,inorder,inOrderIndex+1,inEnd);
+        return root;        
+    }
+    public int findIndex(int findValue,int[] inorder,int start,int end) {
+        for(int i=start;i<=end;++i){
+            if(inorder[i] == findValue){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
