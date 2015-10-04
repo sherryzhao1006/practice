@@ -38,8 +38,6 @@ public class Solution {
                 case 'T':
                     sum = sum*10+3;
                     break;
-                default:
-                    System.out.println("Liu Jiu haha"); 
             }
         }
         return sum;
