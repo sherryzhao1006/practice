@@ -1,0 +1,28 @@
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/inorder_Preorder_build_tree.png
+public class Solution{
+    private int postIndex = 0;
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        postIndex = postorder.length-1;
+        return helper(inorder,postorder,0,inorder.length-1);    
+    }
+    public TreeNode helper(int[] inorder,int[] postorder,int inStart,int inEnd) {
+        if(inStart > inEnd) {
+            return null;
+        }
+        if(inStart == inEnd) {
+            return new TreeNode(postorder[postIndex--]);
+        }
+        TreeNode root = new TreeNode(postorder[postIndex]);
+        int inOrderindex = findIndex(postorder[postIndex--],inStart,inEnd, inorder);
+        root.right = helper(inorder,postorder,inOrderindex+1,inEnd);
+        root.left = helper(inorder,postorder,inStart, inOrderindex-1);
+        return root;
+    }
+    public int findIndex(int find, int start, int end, int[] inorder) {
+        for(int i = start; i <= end; i++) {
+            if(inorder[i] == find)
+                return i;
+        }
+        return -1;
+    }
+}
