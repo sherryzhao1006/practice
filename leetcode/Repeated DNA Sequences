@@ -1,0 +1,47 @@
+public class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+    
+        List<String> res = new ArrayList<String>();
+        if(s == null || s.length() == 0 || s.length() < 10)
+            return res;
+        Set<Integer> codeSet = new HashSet<Integer>();
+        //to save code. if code exists me it appear more than one time. then put into string hashset
+        Set<String> resultSet = new HashSet<String>();
+        for(int i=9;i < s.length(); i++) {
+            String curr = s.substring(i-9,i+1);
+            int code = encode(curr);
+            if(codeSet.contains(code)) {
+                resultSet.add(curr);
+            } else {
+                codeSet.add(code);
+            }
+            
+        }
+        for(String curr : resultSet) {
+            res.add(curr);
+        }
+        return res;
+    }
+    public  int encode(String curr) {
+        int sum = 0;
+        for(int i=0; i < curr.length(); i++) {
+            switch(curr.charAt(i)) {
+                case 'C':
+                    sum = sum*10;
+                    break;
+                case 'A':
+                    sum = sum*10+1;
+                    break;
+                case 'G':
+                    sum = sum*10+2;
+                    break;
+                case 'T':
+                    sum = sum*10+3;
+                    break;
+                default:
+                    System.out.println("Liu Jiu haha"); 
+            }
+        }
+        return sum;
+    }
+}
