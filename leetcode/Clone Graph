@@ -1,0 +1,26 @@
+    /*
+    step1:clone node
+        HashMap:key:curr node value:copy node
+        root put into map:
+    step 2:clone neighbor
+    */
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if(node == null)
+            return node;
+        Map<UndirectedGraphNode,UndirectedGraphNode> map = new HashMap<UndirectedGraphNode,UndirectedGraphNode>();
+        dfs(map,node);
+        for(UndirectedGraphNode curr : map.keySet()) {
+            for(UndirectedGraphNode currNode : curr.neighbors) {
+                map.get(curr).neighbors.add(map.get(currNode));
+            }
+        }
+        return map.get(node);
+    }
+    public void dfs(Map<UndirectedGraphNode,UndirectedGraphNode> map, UndirectedGraphNode node) {
+        map.put(node, new UndirectedGraphNode(node.label));
+        for(UndirectedGraphNode curr : node.neighbors) {
+            if(!map.containsKey(curr)) {
+                dfs(map,curr);
+            } 
+        }
+    }
