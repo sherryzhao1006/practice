@@ -1,5 +1,5 @@
 //https://leetcode.com/problems/first-missing-positive/
-
+//https://dl.dropboxusercontent.com/u/15824957/Lintcode/First_Missing_Positive.png
     public int firstMissingPositive(int[] A) {
         if (A == null || A.length == 0)
             return 1;
