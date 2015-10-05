@@ -1,0 +1,38 @@
+
+    
+With Memoziation
+================
+
+
+dict= ["a","aa","aaa","aaaa"]
+s = "aaaaaaaaaaaaaaaaaaaaaab"
+     a|aaaaaaaaaaaaaaaaaaaaab
+     aa|aaaaaaaaaaaaaaaaaaaab
+     //so aaaaaaaaaaaaaaaaaaaab is repeatedly searched so it's redundant. that is why we store dp.put(index,false) 
+//no need to store for true memoization since we search once and return true right away
+public boolean wordBreak(String s, Set<String> dict) {
+        if(s == null || s.length() == 0)
+            return true;
+        Map<Integer,Boolean> dp = new HashMap<Integer,Boolean>();
+        return helper(s,dict,0,dp);            
+    }
+    public boolean helper(String s, Set<String> wordDict, int index,Map<Integer,Boolean> dp) {
+
+        if(dp.containsKey(index))
+            return dp.get(index); 
+        for(int i=index; i < s.length(); i++) 
+        {
+            String prefix = s.substring(index,i+1);
+            if(wordDict.contains(prefix)) {
+                if(i == s.length()-1) {
+                    return true;
+                }
+                if(helper(s,wordDict,i+1,dp)) {
+                    return true;              
+                }
+            }
+        }
+        dp.put(index,false);//memoization
+        return false;
+    }
+
