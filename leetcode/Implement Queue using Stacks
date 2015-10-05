@@ -1,0 +1,90 @@
+class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+    public MinStack() {
+         stack = new Stack<Integer>();
+         minStack = new Stack<Integer>();        
+    }
+        
+    public void push(int x) {
+        stack.push(x);
+        if(!minStack.isEmpty()) {
+            if(x > minStack.peek()) {
+                minStack.push(minStack.peek());
+            } else {
+                minStack.push(x);
+            }
+        } else {
+            minStack.push(x);
+        }        
+    }
+
+    public void pop() {
+        stack.pop();
+        minStack.pop();
+    }
+
+    public int top() {
+        if(!stack.isEmpty()) {
+            return stack.peek();
+        }    
+        return -1;
+    }
+
+    public int getMin() {
+        if(!minStack.isEmpty()) {
+            return minStack.peek();
+        }
+        return -1;        
+    }
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
+}
+
+/*
+543123
+Queue : 543123
+
+pushStack : 543 <<
+popStack : 345
+*/
+public class MyQueue {
+    // Push element x to the back of queue.
+    private MinStack pushStack;
+    private MinStack popStack;
+    public MyQueue() {
+        pushStack = new MinStack();
+        popStack = new MinStack();
+    }
+    public void push(int x) {
+        pushStack.push(x);                
+    }
+
+    // Removes the element from in front of queue.
+    public void pop() {
+        if(!empty()) {
+            popStack.pop();
+        }
+                
+    }
+
+    // Get the front element.
+    public int peek() {
+        if(!empty()) {
+            return popStack.top();
+        } 
+        return -1;
+    }
+
+    // Return whether the queue is empty.
+    public boolean empty() {
+        if(popStack.isEmpty()) {
+            while(!pushStack.isEmpty()) {
+                popStack.push(pushStack.top());
+                pushStack.pop();
+            }
+        }
+        return popStack.isEmpty();    
+    }
+}
