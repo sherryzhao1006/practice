@@ -1,0 +1,55 @@
+
+Given a digit string, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below.
+
+Input:Digit string "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+
+/*
+2 = {abc} pos=0
+3 ={def}  pos=1
+
+a 0
+e 1
+return; 2 (digits.length())
+*/
+
+
+    public List<String> letterCombinations(String digits) {
+        List<String> result=new ArrayList<String>();
+        if(digits == null || digits.length() == 0)
+            return result;
+        Map<Character,String> map = new HashMap<Character,String>();
+        buildMap(map);        
+        helper(map,digits,0,new StringBuilder(),result);
+        return result;
+    }
+    public void helper(Map<Character,String> map,String digits,int pos,StringBuilder sb,List<String> result) {
+        
+        if(pos == digits.length()) {
+            result.add(sb.toString());
+            return;
+        }
+        
+        if(map.containsKey(digits.charAt(pos))) {    
+            String currString = map.get(digits.charAt(pos));
+            for(int i=0; i < currString.length(); i++) {
+                sb.append(currString.charAt(i));
+                helper(map,digits,pos+1,sb,result);
+                sb.deleteCharAt(sb.length()-1);
+            }
+        }    
+    }
+    public void buildMap(Map<Character,String> map) {
+        map.put('1',"");
+        map.put('2',"abc");
+        map.put('3',"def");
+        map.put('4',"ghi");
+        map.put('5',"jkl");
+        map.put('6',"mno");
+        map.put('7',"pqrs");
+        map.put('8',"tuv");
+        map.put('9',"wxyz");            
+    }
