@@ -1,0 +1,34 @@
+public class Solution {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+    public Solution() {
+         stack = new Stack<Integer>();
+         minStack = new Stack<Integer>();
+    }
+
+    public void push(int number) {
+        stack.push(number);
+        if(!minStack.isEmpty()) {
+            if(number > minStack.peek()) {
+                minStack.push(minStack.peek());
+            } else {
+                minStack.push(number);
+            }
+        } else {
+            minStack.push(number);
+        }
+    }
+
+    public int pop() {
+        int temp = stack.pop();
+        minStack.pop();
+        return temp;
+    }
+
+    public int min() {
+        if(!minStack.isEmpty()) {
+            return minStack.peek();
+        }
+        return -1;
+    }
+}
