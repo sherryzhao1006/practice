@@ -1,3 +1,6 @@
+//https://briangordon.github.io/2014/08/the-skyline-problem.html
+//http://www.programcreek.com/2011/12/examples-to-demonstrate-comparable-vs-comparator-in-java/
+
 /*
 把每一个building拆成两个edge，一个入一个出。所有的edge加入到一个list中。再对这个list进行排序，排序顺序为：如果两个边的position不一样，那么按pos排，否则根据edge是入还是出来排。
 根据position从前到后扫描每一个edge，将edge根据是入还是出来将当前height加入或者移除heap。再得到当前最高点来决定是否加入最终结果。非常巧妙，值得思考。
