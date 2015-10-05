@@ -1,0 +1,60 @@
+public class Solution {
+    /**
+     * @param board: A list of lists of character
+     * @param words: A list of string
+     * @return: A list of string
+     */
+    public ArrayList<String> wordSearchII(char[][] board, ArrayList<String> words) {
+        ArrayList<String> res = new ArrayList<String>();
+        for(String s : words) {
+            if(exist(board,s)) {
+                res.add(s);
+            }        
+        }   
+        return res;
+    }
+    public boolean exist(char[][] board, String word) {
+    
+        if(board == null || board.length == 0 || board[0] == null)
+            return false;
+        if(word == null)
+            return false;
+        if(word.length() == 0)
+            return true;
+        int n = board.length;
+        int m = board[0].length;
+        boolean[][] visited = new boolean[n][m];
+        for(int i=0; i < n; i++) {
+            for(int j=0; j < m; j++) {
+                if(!visited[i][j]) {
+                    if(helper(board,word,i,j,visited,0))
+                        return true;
+                }
+            }
+        }
+        return false;
+           
+    }
+    public boolean helper(char[][] board, String word,int posX, int posY,boolean[][] visited,int wordPos) {
+        if(wordPos == word.length())
+            return true;
+        if(posX < 0 || posX >= board.length || posY < 0 || posY >=board[0].length || visited[posX][posY] == true)
+            return false;
+
+        if(word.charAt(wordPos) != board[posX][posY])
+            return false;
+        
+        visited[posX][posY] = true;
+        if(helper(board,word,posX+1,posY,visited,wordPos+1))
+            return true;
+        
+        if(helper(board,word,posX-1,posY,visited,wordPos+1))
+            return true; 
+        if(helper(board,word,posX,posY+1,visited,wordPos+1))
+            return true;
+        if(helper(board,word,posX,posY-1,visited,wordPos+1))
+            return true;
+        visited[posX][posY] = false;
+        return false; 
+    } 
+}
