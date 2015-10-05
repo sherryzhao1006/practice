@@ -1,0 +1,26 @@
+        public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        // write your code here
+        int[] num = candidates;
+        List<List<Integer>> result=new ArrayList<List<Integer>>();
+        if(num.length == 0 || num == null){
+            return result;
+        }
+        Arrays.sort(num);
+        List<Integer> sub=new ArrayList<Integer>();
+        helper(result,sub,num,target,0);
+        return result;
+    }
+    public void helper(List<List<Integer>> result, List<Integer> sub, int[] num,int target, int pos){
+        if(target < 0)
+            return;
+        if(target == 0) {
+            result.add(new ArrayList<Integer>(sub));
+            return;
+        }
+        for(int i=pos; i < num.length; i++) {
+            if(i!= pos && num[i]==num[i-1]) continue;//前面那一个重复数已经遍历完所以不用再遍历 i!= pos
+            sub.add(num[i]);
+            helper(result,sub,num,target-num[i],i+1);
+            sub.remove(sub.size()-1);
+        }
+    }    
