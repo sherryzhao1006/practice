@@ -1,1 +1,46 @@
-http://codesniper.blogspot.com/2015/04/179-largest-number-leetcode-java.html
+//http://cherylintcode.blogspot.com/2015/07/largest-number.html
+http://www.lintcode.com/en/problem/largest-number/
+Given [1, 20, 23, 4, 8], the largest formed number is 8423201.
+Approach 1 (sort by increasing order and concat from the back)
+===========
+[1,4,8,20,23]--> 2320841 this approach is wrong
+
+Approach 2
+==========
+take two number and concat from left and right
+[20,8] => concat from left 208
+       => concat from right 820 so 820 is bigger
+//sorted order after using the comparator below
+//84 vs 48 => so 8 is bigger than 4.
+//大到小
+8
+4
+23
+20
+1
+
+    class NumberComparator implements Comparator<String> {
+        @Override
+        public int compare(String p1,String p2) {
+            String leftConcat = p1+p2;
+            String rightConcat = p2+p1;
+            return rightConcat.compareTo(leftConcat);
+        }
+    }
+    public String largestNumber(int[] num) {
+        if(num == null || num.length ==0)
+            return null;
+        String[] stringNum = new String[num.length];
+        for(int i=0; i < num.length; i++) {
+            stringNum[i] = String.valueOf(num[i]);
+        }
+        Arrays.sort(stringNum,new NumberComparator());
+        StringBuilder sb = new StringBuilder();
+        for(String s : stringNum) {
+            sb.append(s);
+        }
+        //to handle case like num[] = {0,0,0,0,0};
+        if(sb.charAt(0) == '0')
+            return "0";
+        return sb.toString();
+    }
