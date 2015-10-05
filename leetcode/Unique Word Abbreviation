@@ -1,0 +1,48 @@
+public class ValidWordAbbr {
+    private Map<String,HashMap<String,Integer>> map = new HashMap<String,HashMap<String,Integer>>();
+    public ValidWordAbbr(String[] dictionary) {
+        for(String s: dictionary) {
+            String code = s.charAt(0) + String.valueOf((s.length()-2)) +s.charAt(s.length()-1);
+            if(!map.containsKey(code)) {
+                map.put(code, new HashMap<String,Integer>());
+                HashMap<String,Integer> temp = map.get(code);
+                if(temp.containsKey(s)){
+                    temp.put(s,temp.get(s)+1);
+                } else {
+                    temp.put(s,1);
+                }
+            } else {
+                HashMap<String,Integer> temp = map.get(code);
+                if(temp.containsKey(s)){
+                    temp.put(s,temp.get(s)+1);
+                } else {
+                    temp.put(s,1);
+                }
+            }
+        }        
+    }
+
+    public boolean isUnique(String word) {
+             String code =word.charAt(0) + String.valueOf((word.length()-2)) +word.charAt(word.length()-1);
+             if(!map.containsKey(code)) {
+                return true;
+            }else{
+
+                HashMap<String,Integer> temp = map.get(code);
+                if(temp.containsKey(word)){
+                    //if(temp.size() != temp.get(word))
+                    if(temp.size() >1)
+                        return false;
+                } else {
+                    return false;
+                }
+            }
+            return true;     
+    }
+}
+
+
+// Your ValidWordAbbr object will be instantiated and called as such:
+// ValidWordAbbr vwa = new ValidWordAbbr(dictionary);
+// vwa.isUnique("Word");
+// vwa.isUnique("anotherWord");
