@@ -1,0 +1,33 @@
+https://leetcode.com/problems/combinations/
+ Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+
+For example,
+If n = 4 and k = 2, a solution is:
+
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> finalResult = new ArrayList<List<Integer>>();
+        helper(new ArrayList<Integer>(),n,k,1,finalResult);
+        return finalResult;
+    }
+    public void helper(List<Integer> result,int n, int k, int index,List<List<Integer>> finalResult) {
+        if( result.size()== k) {//this is bug
+            finalResult.add(new ArrayList<Integer>(result));
+            return;
+        }
+        for(int i=index; i <=n; i++) {
+            result.add(i);
+            helper(result,n,k,i+1,finalResult);
+            result.remove(result.size()-1);    
+        }
+        return;
+    }
