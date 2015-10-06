@@ -1,0 +1,317 @@
+Eugene: http://ideone.com/C7mJXY
+Dropbox-> lintcode-> eugene study
+
+class Test
+{
+	private static int UNKNOWN = -1;//don't make a copy of UNKNOWN
+	
+	public static void main(String[] args)
+	{
+		System.out.println (findBInA("Rabbbit", "Rabbit"));
+		System.out.println (findBInA("abcabbcbc", "abc"));
+		System.out.println (findBInA("aaaaaa", "aaa"));
+	}
+	
+	public static int findBInA(String A,String B) 
+	{
+	    int[][] dp = new int[A.length()][B.length()];
+	    prefillWithUnknowns(dp);//fill with -1
+	    return findBInAHelper(A, B, 0, 0, dp);
+	}
+	
+	private static void prefillWithUnknowns(int[][] dp)
+	{
+	    for (int i=0;i<dp.length; i++)
+	    {
+	        for (int j=0;j<dp[i].length; j++)
+	        {
+	            dp[i][j] = UNKNOWN;
+	        }
+	    }
+	}
+	
+	private static int findBInAHelper(String A, String B, int aIdx, int bIdx, int[][] dp)
+	{
+	    //base case
+	    if (aIdx == A.length() || bIdx == B.length())
+	    {
+	        return (bIdx == B.length()) ? 1 : 0;
+	    }
+	    if (dp[aIdx][bIdx] != UNKNOWN)
+	    {
+	       return dp[aIdx][bIdx];
+	    }
+	    
+	    int retVal;
+	    
+	    if (A.charAt(aIdx) == B.charAt(bIdx))
+	    {
+	        retVal = findBInAHelper(A, B, aIdx + 1, bIdx + 1, dp) + findBInAHelper(A, B, aIdx + 1, bIdx, dp);
+	    }
+	    else
+	    {
+	        retVal = findBInAHelper(A, B, aIdx + 1, bIdx, dp);
+	    }
+	    
+	    dp[aIdx][bIdx] = retVal;
+	    return retVal;
+	}
+}
+
+
+Input:
+StrA= "abb",
+       --
+       - -
+
+StrB = "ab"
+output:
+2
+
+
+StrA : Rabbbit
+       ---- --
+       --- ---
+       -- ----
+StrB : Rabbit
+output : 3
+
+public ArrayList<String> findBInA(String A,String B) {
+
+}
+
+how many we match so far in StrA and how many we match so far in StrB
+DP[i][j] = answer if input A were A.substring(i, end) and B were B.substring(j,end) instead
+
+DP(0,0) = overall answer
+
+private static int UNKNOWN = -1;//don't make a copy of UNKNOWN
+
+public static int findBInA(String A,String B) 
+{
+    dp = new int[A.length()][B.length()];
+    prefillWithUnknowns(dp);//fill with -1
+    return findBInAHelper(A, B, 0, 0, dp);
+}
+
+private static int prefillWithUnknowns(int[][] dp)
+{
+    for (int i=0;i<dp.length; i++)
+    {
+        for (int j=0;j<dp[i].length; j++)
+        {
+            dp[i][j] = UNKNOWN;
+        }
+    }
+}
+
+private static int findBInAHelper(String A, String B, int aIdx, int bIdx, int[][] dp)
+{
+    //base case
+    if (aIdx == A.length() || bIdx == B.length())
+    {
+        return (bIdx == B.length()) ? 1 : 0;
+    }
+    if (dp[aIdx][bIdx] != UNKNOWN)
+    {
+       return dp[aIdx][bIdx];
+    }
+    
+    int retVal;
+    
+    if (A.charAt(aIdx) == B.charAt(bIdx))
+    {
+        retVal = findBInAHelper(A, B, aIdx + 1, bIdx + 1, dp) + findBInAHelper(A, B, aIdx + 1, bIdx, dp);
+    }
+    else
+    {
+        retVal = findBInAHelper(A, B, aIdx + 1, bIdx, dp);
+    }
+    
+    dp[aIdx][bIdx] = retVal;
+    return retVal;
+}
+
+O(n*m) = DP
+
+A^B
+
+A = abc
+B = ab
+    _
+    for first character of B you can have A choices
+    for second character of B you can have A-1 choices
+
+aaaaaa
+aaa
+
+(A choose B) (Tighter bound)
+
+
+C(A,0) + C(A,1) ....+C(A,A) = (2^A)
+
+length of the strA =2^A/(A+1) = # of possible subsequences in A (considered in O(1) backtracking)
+
+
+================================
+F(n) = F(n / 4) + O(1)
+
+n - O(1)
+n/4 - O(1)
+n/16 - O(1)
+....
+c - O(1)
+end
+
+
+
+log(n) * O(1) = O(log n)
+
+
+F(n) = F(n / 4) + n
+
+n - cn
+n/4 - c*(n/4)
+n/16 - c*(n/16)
+....
+c - O(1)
+end
+
+
+cn + c*(n/4) + c*(n/16) ...... c*(1) = O(n)
+
+Eugene: 1 + r + r^2 + ...
+Eugene: cn (1 + r + ,,)
+Eugene: 1 + r + r^2 + ...
+Eugene: x = 1 + r + r^2 + ...
+Eugene: rx = r + r^2 + r^3 +....
+Eugene: x - rx
+Eugene: =
+Eugene: 1
+Eugene: x(1-r) = 1
+Eugene: x = 1/(1-r)
+Eugene: 1/(1-1/4) = 4/3
+
+F(n) = F(n/2) + n
+cn+ c*(n/2) + c*(n/4) .... C*(1) 
+
+1+r+r^2 +...
+
+x = 1/(1-r) = 2  =   O(n)
+================================
+
+F(n) = 2F(n/2) + O(n)
+
+1*n   ----O(n)  -  (n)
+2*n/2 ----O(n/2)    
+4*n/4 ---- O(n/4)
+8*n/8 ------O(n/8)
+
+nlogn
+
+================================
+
+
+F(n) = 2F(n/2) + O(n^2)   (case 2)
+
+1 n -- n^2
+2 n/2 -- n^2/2
+4 n/4 -- n^2 / 4
+
+
+
+================================
+
+F(n) = 3F(n/2) + O(n) 
+                 ---- 
+
+    1*n   ------ n
+   3^1*n/2  ------ 3*n/2
+   3^2*n/4
+   3^3*n/8
+   3^4*n/16
+   n^(~1.59) * 1      ====  because r is less than 1 . O(n^1.59)   (case 1)   
+   ===============
+   3^2*n/4
+   --------- =  1/3*2 = 2/3 = r
+   3^3*n/8
+   
+   3^1*n/2 ,3^2*n/4, 3^3*n/8 
+    2/3
+
+   1/(1-2/3)    
+   
+   3^log2n
+   
+   3 = 2^log_2(3)  
+   3^log_2(n) = (2^log_2(3))^log_2(n) = 2^(log_2(3)*log_2(n)) =(2^log_2(n))^log_2(3) = n ^log_2(3) = n^(~1.59)
+   
+sum of geometrics series and logarithm.
+
+================================
+
+
+================================
+
+Memoization
+abcabbcbc
+-  -- 
+|   |
+
+
+
+
+A = abcabc
+    ---
+       ---
+       
+================================
+
+
+[1,2,3,4]  , target = 5, k= 2
+
+#of subset of size k that sum to 7
+
+//where you are =j
+//how many more element you can pick =k
+//sum so Far = i
+
+dp[i][j][k] = dp[i+arr[j]][j+1][k-1] if i pick the current j's element
+                +
+              dp[i][j+1][k] if i don't pick current j's element
+              
+{1,2,3,4}
+
+
+if(k == 0)
+    return (i == target) ? 1 : 0;
+if(j >= string.length)
+    return 0;
+    
+{1, 5, 4, 2, 7, 3, 0}
+             -
+ ----- ----  
+================================
+
+
+longest acyclie path in cyclic graph
+0---0----0---0
+          \ /
+           0----0   (meomization)
+            \
+             0
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+
+
+
+       
