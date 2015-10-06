@@ -1,0 +1,28 @@
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        ListNode curr = head;
+        while(curr != null) {
+            if(map.containsKey(curr.val)) {
+                
+                map.put(curr.val,map.get(curr.val)+1);
+            } else {
+                map.put(curr.val,1);    
+            }
+            curr = curr.next;
+        }
+        ListNode dummyNode = new ListNode(-1);
+        ListNode prev = dummyNode;
+        curr = head;
+        while(curr != null){
+            if(map.get(curr.val) == 1) {
+                prev.next = curr;
+                prev = curr;
+            }
+            curr = curr.next;
+        }
+        prev.next = null;
+        return dummyNode.next;    
+    }
