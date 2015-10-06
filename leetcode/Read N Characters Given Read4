@@ -1,0 +1,22 @@
+public class Solution extends Reader4 {
+    /**
+     * @param buf Destination buffer
+     * @param n   Maximum number of characters to read
+     * @return    The number of characters read
+     */
+    public int read(char[] buf, int n) {
+        char[] buff = new char[4];
+        int buffStart = 0;
+        boolean eof = false;
+        while(!eof && n >0) {
+            int readByte = read4(buff);
+            if(readByte < 4)
+                eof = true;
+            int copyByte = Math.min(n,readByte);
+            System.arraycopy(buff,0,buf,buffStart,copyByte);
+            buffStart += copyByte;
+            n = n-copyByte;
+        }
+        return buffStart;
+    }
+}
