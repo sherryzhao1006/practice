@@ -1,0 +1,35 @@
+
+
+/* The read4 API is defined in the parent class Reader4.
+      int read4(char[] buf); */
+
+public class Solution extends Reader4 {
+    /**
+     * @param buf Destination buffer
+     * @param n   Maximum number of characters to read
+     * @return    The number of characters read
+     */
+    private char[] m_buffer = new char[4];
+    private int m_inBuffer = 0;
+    private int m_bufferStart=0;
+    public int read(char[] buf, int n) {
+        int readSoFar = 0;
+        while(n >0) {
+            if(m_inBuffer == 0) {
+                m_inBuffer = read4(m_buffer);
+                if(m_inBuffer ==0)
+                    break;
+                m_bufferStart = 0;
+            }
+            int copyByte = Math.min(n,m_inBuffer);
+            
+            System.arraycopy(m_buffer,m_bufferStart,buf,readSoFar,copyByte);
+            
+            n -= copyByte;
+            m_inBuffer -=copyByte;
+            m_bufferStart += copyByte;
+            readSoFar += copyByte;
+        }
+        return readSoFar;
+    }
+}
