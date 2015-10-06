@@ -1,0 +1,31 @@
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        return helper(s,p,s.length(),p.length(),0,0);
+    }
+    public boolean helper(String s, String p, int sLen, int pLen,int sPos,int pPos){
+          if(pPos == pLen) {
+              return sPos == sLen;
+          }
+          if( ((pPos+1) < pLen) && p.charAt(pPos+1) == '*'){
+              //若下个字符为*，当前p的字符也要与s的字符相同或以.取代
+              //匹配掉0个或多个字符    
+              
+              //a|a|aaaa    a*
+              
+              while(sPos < s.length() && s.charAt(sPos) == p.charAt(pPos) || (p.charAt(pPos) == '.' && sPos < s.length()) ) {
+                  //取代的字符个数尝试增加
+                  if(helper(s,p,sLen,pLen,sPos++,pPos+2))
+                      return true;          
+              }
+              //匹配掉0个字符
+              return helper(s,p,sLen,pLen,sPos,pPos+2);
+          } else {
+              //当前的字符要么相等要么以.来取代
+              if(sPos < sLen && s.charAt(sPos) == p.charAt(pPos) || p.charAt(pPos)=='.' && sPos < sLen){
+                  return(helper(s,p,sLen,pLen,sPos+1,pPos+1));
+              } else {
+                  return false;
+              }       
+          }
+    }
+}
