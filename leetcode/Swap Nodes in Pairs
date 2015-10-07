@@ -1,0 +1,42 @@
+https://leetcode.com/problems/swap-nodes-in-pairs/
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+
+    public ListNode swapPairs(ListNode head) {
+         return reverseKGroup(head,2);   
+    }
+    public ListNode reverseKGroup(ListNode head, int k) {
+            ListNode before = head;
+            ListNode nextSeg = head;
+            int cnt = 0;
+    
+            while(nextSeg != null && cnt < k) {
+                before = nextSeg;
+                nextSeg = nextSeg.next;
+                cnt++;
+            }
+            if(cnt < k)
+                return head;
+            //reverse between head and before
+            ListNode curr = head;
+            ListNode prev = null;
+            ListNode next = head;
+            while(curr != nextSeg) {
+                next = next.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }    
+                
+            head.next = reverseKGroup(nextSeg,k);
+            return prev;        
+    }
+}
