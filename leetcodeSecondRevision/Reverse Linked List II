@@ -1,0 +1,40 @@
+
+public class Solution {
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        ListNode root = new ListNode(1);
+        root.next = new ListNode(2);
+        root.next.next = new ListNode(3);
+        root.next.next.next = new ListNode(4);
+        root.next.next.next = new ListNode(5);
+        s.reverseBetween(root,2,4);
+    }
+    public ListNode reverseBetween(ListNode head, int m , int n) {
+        if(head == null || head.next == null)
+            return head;
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        int cnt = 0;
+        ListNode before = dummyNode;
+        ListNode curr =dummyNode;
+        while(cnt < m && curr != null) {
+            before = curr;
+            curr = curr.next;
+            cnt++;
+        }
+        ListNode next = curr;
+        ListNode last = curr;
+        ListNode prev = null;
+        before.next = null;
+        while(curr != null && cnt <=n) {
+            next = next.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            cnt++;
+        }
+        before.next = prev;
+        last.next = curr;
+        return dummyNode.next;
+    }
+}
