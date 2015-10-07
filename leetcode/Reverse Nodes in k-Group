@@ -1,0 +1,39 @@
+https://leetcode.com/problems/reverse-nodes-in-k-group/
+Given this linked list: 1->2->3->4->5
+
+For k = 2, you should return: 2->1->4->3->5
+
+For k = 3, you should return: 3->2->1->4->5
+
+Approach:
+1->2-> | 3->4-> |5->6 |->7->null  k=2
+2->1 ->| 4->3-> |6->5| -> 7->null
+ 
+public class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+            ListNode before = head;
+            ListNode nextSeg = head;
+            int cnt = 0;
+    
+            while(nextSeg != null && cnt < k) {
+                before = nextSeg;
+                nextSeg = nextSeg.next;
+                cnt++;
+            }
+            if(cnt < k)
+                return head;
+            //reverse between head and before
+            ListNode curr = head;
+            ListNode prev = null;
+            ListNode next = head;
+            while(curr != nextSeg) {
+                next = next.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }    
+                
+            head.next = reverseKGroup(nextSeg,k);
+            return prev;        
+    }
+}
