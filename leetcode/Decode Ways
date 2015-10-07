@@ -19,6 +19,46 @@ dp[2]=1,dp[1]=1,dp[0] = “12” + “1|2”
 dp[3]=1, dp[2]=0,dp[1]=0,dp[0]=dp[1]+dp[2]=0
 ==========================================
 */
+
+Recursive and Memoization
+==========================================
+    public int numDecodings(String s) {
+        if(s == null || s.length() ==0)
+            return 0;
+        int[] dp = new int[s.length()];
+        for(int i=0; i < s.length(); i++) {
+            dp[i] = -1;
+        }
+        //return helper(s,dp);
+        return helper2(s,dp,0);
+    }
+    //recursive and memoization 
+
+    public int helper2(String s, int[] dp,int pos) {
+        int sLen = s.length();
+        //found the match
+        if(sLen == pos)
+            return 1;
+        //base case invalid if it starts with 0
+        if(s.charAt(pos) == '0')
+            return 0;
+        if(dp[pos] != -1)
+            return dp[pos];
+        int ways = 0;
+
+        //handle one digit
+        ways += helper2(s,dp,pos+1);
+        if(pos < sLen-1) {
+            int currTwoDigitNumber = Integer.parseInt(s.substring(pos,pos+2));
+            if(currTwoDigitNumber <= 26)
+                ways +=helper2(s,dp,pos+2);
+        }
+        dp[pos] =ways;
+        return ways;
+    }
+
+Bottom-Up Approach
+==========================================
     public int numDecodings(String s) {
         /* if char i is singel one ,it has i+1 ways
         if char i and i+<=26 means it can combine, it has i+1 + i+2 ways*/
@@ -33,35 +73,4 @@ dp[3]=1, dp[2]=0,dp[1]=0,dp[0]=dp[1]+dp[2]=0
         }
         return dp[0];
     }
-//http://www.geeksforgeeks.org/forums/topic/amazon-interview-question-for-software-engineerdeveloper-fresher-about-algorithms-data-structure/
-//http://tianrunhe.wordpress.com/2012/07/14/number-of-ways-decoding-a-message-decode-ways/    
-    /*
-    public int numDecodings(String s) {
-        ArrayList<Integer> solutions = new ArrayList<Integer>();
-        if(s.length() != 0)
-            recursion(s, solutions);
-        return solutions.size();
-    }
-     
-    private void recursion(String s, ArrayList<Integer> solutions) {
-        if(s.length() == 0){
-            solutions.add(1);
-        } else {
-            int value = Character.getNumericValue(s.charAt(0));
-            if(value > 0 && value <= 9) {
-                recursion(s.substring(1), solutions);
-            }
-             
-            if(s.length() >= 2) {
-                int value1 = Character.getNumericValue(s.charAt(0));
-                int value2 = Character.getNumericValue(s.charAt(1));
-                if(value1 == 1 && value2 >= 0 && value2 <= 9) {
-                    recursion(s.substring(2), solutions);
-                } else if(value1 == 2 && value2 >= 0 && value2 <= 6) {
-                    recursion(s.substring(2), solutions);
-                }
-            }
-        }
-    }
-    */
-}
+
