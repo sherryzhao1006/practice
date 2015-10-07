@@ -1,0 +1,81 @@
+https://en.wikipedia.org/wiki/Quadtree#/media/File:Quad_tree_bitmap.svg
+http://www.fgdsb.com/2015/01/25/intersection-of-two-quadtrees/
+
+Matrix 0:
+ones=3
+
+0 1
+1 1
+Matrix 1:
+ones=2
+
+0 0
+1 1
+
+
+int intersections(QuadNode *t0, QuadNode *t1) {
+    function<int(QuadNode*,QuadNode*,int)> solve = [&](QuadNode *tree0, QuadNode* tree1, int sum) {
+        if(!tree0 || !tree1 || !tree0->ones || !tree1->ones)
+            return 0;
+        int ret = sum;
+        if (!tree0->child[0] && !tree1->child[0]) {/////////////////
+            ret += tree0->ones && tree1->ones ? 1 : 0;
+        } else {
+            for(int i = 0; i < 4; ++i)
+                ret += solve(tree0->child[i], tree1->child[i], sum);
+        }
+        return ret;
+    };
+    return solve(t0, t1, 0);//
+}
+
+
+
+struct QuadNode {
+    QuadNode(int num_ones = 0) : ones(num_ones) {}
+    int ones{ 0 };
+    QuadNode* child[4]{ nullptr };
+};
+
+size = 4
+
+
+xxxx
+xxxx
+xxxx
+xxxx
+
+size = 2
+
+01
+11
+
+{0,0} {2,0} {0,2} {2,2}
+00
+20
+02
+22
+
+i=0
+===
+build(2,0,0)
+sub = {0,0} {1,0} {0,1}{1,1}
+
+
+QuadNode* build_tree(const vector<vector<int>>& mat) {
+    if(mat.empty()) return nullptr;
+    function<QuadNode*(int,int,int)> build = [&](int size, int row, int col) { 
+        if (size == 1) return new QuadNode(mat[row][col]);
+        auto root = new QuadNode();
+        size /= 2;
+        int sub_coords[4][2] = {{row, col},{row + size, col}, 
+            {row, col + size},{row + size, col + size}};  <<
+        for(int i = 0; i < 4; ++i) {
+            root->child[i] = build(size, sub_coords[i][0], sub_coords[i][1]);
+            root->ones += root->child[i]->ones;
+        }
+        return root;
+    };
+    
+    return build((int)mat.size(), 0, 0); <<
+}
