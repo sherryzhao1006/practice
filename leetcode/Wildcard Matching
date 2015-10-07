@@ -1,0 +1,62 @@
+public class Solution {
+/*
+s = A B C  D E
+             |
+p = A *      E
+             |
+*/    
+
+    public boolean isMatch(String s, String p) {
+        int sPos = 0;
+        int pPos = 0;
+        int sLen = s.length();
+        int pLen = p.length();
+        int sMatch = 0;
+        int pMatch = -1;//start of *
+        while(sPos < sLen) {
+            if(pPos < pLen && ((s.charAt(sPos) == p.charAt(pPos) ) || (p.charAt(pPos) == '?') ))
+            {
+                pPos++;
+                sPos++;    
+            } else if( pPos < pLen && p.charAt(pPos) == '*' ) {
+                pMatch = pPos;
+                sMatch = sPos;
+                pPos++;               
+            } else if(pMatch != -1) {
+                /*
+                "hi"
+                "*?"
+                */
+                sMatch++;
+                sPos = sMatch;
+                pPos=pMatch+1;//tricky
+                /*
+                Input:
+                "ab"
+                  |
+                "*a"
+                   |
+                Output:
+                true
+                Expected:
+                false
+                
+                如果注释 pPos=pMatch+1;，*可以匹配”ab“。否则，”*“不与任何character匹配
+                */
+            } else {
+                return false;
+            }
+        }    
+        /*s="ab"           
+          p="ab**“   
+        */
+        while(pPos < pLen && p.charAt(pPos) == '*')
+            pPos++;
+        /*  s=ab
+                 |
+            p=ab*** d*
+                    |
+        */
+        return pPos == pLen;         
+    }
+}
