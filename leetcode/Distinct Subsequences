@@ -1,3 +1,43 @@
+Recursive (Top down) with memoization
+================================================
+    public int numDistinct(String s, String t) {
+        int sLen = s.length();
+        int tLen = t.length();
+        int[][] dp = new int[sLen][tLen];
+        for(int i=0; i < sLen; i++) {
+            for(int j=0; j < tLen; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        return helper(s, t, 0, 0,dp);
+    }
+
+    public int helper(String s, String t, int sPos, int tPos,int[][] dp) {
+        if(sPos == s.length()) {
+            return (tPos == t.length() ? 1 :0);
+        }
+        if(tPos == t.length()) {
+            return 1;
+        }
+        if(dp[sPos][tPos] != -1)
+            return dp[sPos][tPos];
+        int ways = 0;
+        if(s.charAt(sPos) == t.charAt(tPos)) {
+            ways += helper(s,t,sPos+1,tPos+1,dp) + helper(s,t,sPos+1,tPos,dp);
+        } else {
+            ways += helper(s,t,sPos+1,tPos,dp);
+        }
+        dp[sPos][tPos] = ways;
+        return dp[sPos][tPos];
+    }
+    
+    
+    
+    DP(Bottom Up)
+====================================================================================
+
+
+
     public int numDistinct(String S, String T) {
         int sl = S.length();
         int tl = T.length();
