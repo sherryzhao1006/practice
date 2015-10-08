@@ -1,5 +1,26 @@
 //https://www.hackerrank.com/contests/magic-lines-july-2015/challenges/run-length-encoding
+My Solution
+===========
+     public static String encode(String source) {
+        StringBuffer dest = new StringBuffer();
+        char prev = source.charAt(0);
+        int cnt = 1;
+        for (int i = 1; i < source.length(); i++) {
+            if(prev == source.charAt(i)) {
+                cnt++;
+            } else {
+                dest.append(prev+""+cnt);
+                cnt=1;
+                prev = source.charAt(i);
+            }
+        }
+        dest.append(prev+""+cnt);
+        return dest.toString();
+    }
 
+
+Good Solution
+=============
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Scanner;
