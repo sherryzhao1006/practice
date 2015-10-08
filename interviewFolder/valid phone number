@@ -1,0 +1,55 @@
+https://gist.github.com/sangramanand/1892516
+
+valid: 18023210361  
+
+The regex code accepts a phone number between 10-25 chars length. The chars can be numbers, parentheses(), hypens, periods & may contain + sign in the beginning and can contain whitespaces in between.
+
+The valid phone numbers with the above regex validations are
+
+1) +33 (0)1 60 72 91 62 - Mary contact number
+2) 1-(802)-321-0361 - General sentiment contact number
+3) 080-41483223 - Indavest land line
+4) 1-(802)-321..0361 - Random contact number
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ *
+ * @author anand
+ */
+public class ValidatePhoneNumber {
+
+    public static void main(String[] argv) {
+
+        String phoneNumber = "1-(80..2)-321-0361";
+        System.out.println(phoneNumber.length());
+        String regex = "^\\+?[0-9. ()-]{10,25}$"; \\+ escape +,以一个+号开头才行 ，只能包含数字0-9， “." " " "()" "-"，且字符串长度为10-25
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(phoneNumber);
+
+        if (matcher.matches()) {
+            System.out.println("Phone Number Valid");
+        } else {
+            System.out.println("Phone Number must be in the form XXX-XXXXXXX");
+        }
+    }
+}
+
+? : The question mark indicates zero or one occurrences of the preceding element. For example, colou?r matches both "color" and "colour".
+^ : Matches the beginning of a line or string.
+Example : phoneNumber = "700", regex = "^8[0-9]{2,4}$"; 八开头才行。所以fail。 phoneNumber="800" is true.
+[^0-9] : 不能match digit
+\\  The backslash character
+＋ ： The plus sign indicates one or more occurrences of the preceding element. For example, ab+c matches "abc", "abbc", "abbbc", and so on, but not "ac".
+
+
+[^abc]  Any character except a, b, or c (negation)
+The regex code accepts a phone number between 10-25 chars length. The chars can be numbers, parentheses(), hypens, periods & may contain + sign in the beginning and can contain whitespaces in between.
+
+The valid phone numbers with the above regex validations are
+
+1) +33 (0)1 60 72 91 62 - Mary contact number
+2) 1-(802)-321-0361 - General sentiment contact number
+3) 080-41483223 - Indavest land line
+4) 1-(802)-321..0361 - Random contact number
