@@ -1,0 +1,32 @@
+/*
+[1,2,3,4]  , target = 5, k= 2
+
+#of subset of size k that sum to 7
+
+//where you are =j
+//how many more element you can pick =k
+//sum so Far = i
+
+dp[i][j][k] = dp[i+arr[j]][j+1][k-1] if i pick the current j's element
+                +
+              dp[i][j+1][k] if i don't pick current j's element
+ */
+
+public class Solution {
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        int[] A = {1,2,3,4};
+        System.out.println(s.kSum(A,2,5));
+    }
+    public int kSum(int A[], int k, int target) {
+        return kSumHelper(A,k,target,0,0);
+    }
+    public int kSumHelper(int A[], int k, int target,int sumSoFar,int pos) {
+        if(k == 0) {
+            return (target == sumSoFar ? 1 : 0);
+        }
+        if(pos >= A.length)
+            return 0;
+        return kSumHelper(A, k - 1, target, sumSoFar + A[pos], pos + 1) + kSumHelper(A,k,target,sumSoFar,pos+1);
+    }
+}
