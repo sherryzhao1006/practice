@@ -1,0 +1,16 @@
+public class Solution {
+    public int sumNumbers(TreeNode root) {
+        if(root == null)
+            return 0;
+        return helper(root,0);        
+    }
+    public int helper(TreeNode root,int passVal) {
+        if(root == null)
+            return 0;
+        if(root.left == null && root.right == null) {
+            return passVal*10+root.val;
+        }
+        passVal = passVal*10+root.val;
+        return helper(root.left,passVal)+helper(root.right,passVal);
+    }
+}
