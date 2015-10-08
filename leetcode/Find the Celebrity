@@ -26,3 +26,27 @@ public class Solution extends Relation {
 Analysis:
 Time O(n^2).
 Space O(n).
+
+
+
+    public int findCelebrity(int n) {
+        int left = 0;
+        int right = n-1;
+        while(left < right) {
+            if(knows(left,right)) {//如果left认识右边，则left不是一个potential celebrity,则left++，即右边有可能是celebrity
+                left++;
+            } else {
+                right--;//    如果left不认识右边,则left是一个potential celebrity,则 right--;
+            }
+        }
+        //either left or right is a potential candidate
+        int candidate = left;
+        for(int i=0; i < n; i++) {
+        //(knows(i,candidate) && !knows(candidate,i))  // i 认识candidate && candidate 不认识i
+            if(candidate != i && (!(knows(i,candidate) && !knows(candidate,i))))
+                return -1;
+        }
+        return candidate;
+    }
+    
+    A O(n) time O(1) Space Solution:
