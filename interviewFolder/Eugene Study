@@ -291,6 +291,20 @@ if(j >= string.length)
 {1, 5, 4, 2, 7, 3, 0}
              -
  ----- ----  
+ 
+ 
+     public int kSum(int A[], int k, int target) {
+        return kSumHelper(A,k,target,0,0);
+    }
+    public int kSumHelper(int A[], int k, int target,int sumSoFar,int pos) {
+        if(k == 0) {
+            return (target == sumSoFar ? 1 : 0);
+        }
+        if(pos >= A.length)
+            return 0;
+        return kSumHelper(A, k - 1, target, sumSoFar + A[pos], pos + 1) + kSumHelper(A,k,target,sumSoFar,pos+1);
+    }
+ 
 ================================
 
 
