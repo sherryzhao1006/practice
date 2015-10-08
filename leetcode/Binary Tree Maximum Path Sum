@@ -1,0 +1,18 @@
+public class Solution {
+    public int maxPathSum(TreeNode root) {
+        int[] globalMax = new int[1];
+        globalMax[0] = Integer.MIN_VALUE;
+        helper(root, globalMax);
+        return globalMax[0];
+    }
+    public int helper(TreeNode root,int[] globalMax) {
+        if(root == null)
+            return 0;
+        int left = Math.max(0,helper(root.left,globalMax));
+        int right = Math.max(0,helper(root.right,globalMax));
+        int across = left+right+root.val;
+        int toReturn = Math.max(left,right) + root.val;
+        globalMax[0] = Math.max(globalMax[0],Math.max(toReturn,across));
+        return toReturn;
+    }
+}
