@@ -1,3 +1,5 @@
+. Reverse a linked list iteratively 
+
     public ListNode reverseList(ListNode head) {
         if(head == null || head.next == null)
             return head;
@@ -12,3 +14,24 @@
         }
         return prev;
     }
+
+
+. Reverse a linked list recursively 
+  1->2->3 ->null        ->4->null      
+     |  |
+3->2
+3->2<->1 
+   |   head
+  last 
+newHead
+   
+public ListNode reverseList(ListNode head) {
+    if(head == null || head.next == null)
+        return head;
+    ListNode lastNode = head.next;
+    ListNode newHead = reverseList(head.next);
+    lastNode.next = head;
+    head.next = null;
+    return newHead; 
+}
+
