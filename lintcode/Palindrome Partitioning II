@@ -6,7 +6,6 @@
         }
         int n = s.length();
         int[] dp = new int[n];
-        //boolean[][] isPal=new boolean[n+1][n+1];
         //dp[i] 指 包括0到i需要 几个cut.
         dp[0] = 0;//如果是只有一个字的话不用咔嚓(cut)
         dp[1] = (s.charAt(0) == s.charAt(1)  ? 0 : 1 );//如果0-1是palindrome不用cut
