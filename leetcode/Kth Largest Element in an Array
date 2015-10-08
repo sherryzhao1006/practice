@@ -1,0 +1,37 @@
+    public int kthLargestElement(int k, ArrayList<Integer> numbers) {
+         if(numbers == null || numbers.size() == 0){
+                return 0;
+            }
+            return helper(k, numbers,0,numbers.size()-1);
+    }
+    public int helper(int k, ArrayList<Integer> numbers, int l, int r) {
+        int lOrigin = l;
+        int rOrigin = r;
+        int pivotIndex = l;
+        int pivot = numbers.get(pivotIndex);
+        while(l <= r) {
+            while(l <= r && numbers.get(l) <= pivot ) {
+                l++;
+            }
+            while(l <= r && numbers.get(r) >= pivot) {
+                r--;
+            }
+            if(l < r) {
+                int temp = numbers.get(l);
+                numbers.set(l,numbers.get(r));
+                numbers.set(r,temp);
+            }
+        }
+        //change with pivot and right index
+        int temp = numbers.get(pivotIndex);
+        numbers.set(pivotIndex,numbers.get(r));
+        numbers.set(r,temp);
+        int n = numbers.size();
+        if( r+1 < n-k+1) {
+            return helper(k,numbers,r+1,rOrigin);    
+        } else if (r+1 > n-k+1) {
+            return helper(k,numbers,lOrigin,r-1);
+        } else {
+            return numbers.get(r);
+        }
+    }
