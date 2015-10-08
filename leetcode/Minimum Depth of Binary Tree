@@ -1,0 +1,28 @@
+public int minDepth(TreeNode root) {
+    if(root == null){
+        return 0;
+    }
+    return getmin(root);
+}
+public int getmin(TreeNode root){
+    if(root == null){
+        return 0;
+    }
+    int left = getmin(root.left);
+    int right = getmin(root.right);
+
+    /*
+     8
+      \
+        9
+        
+        this one should give 2 instead of 1.
+    */
+    if(left ==0){
+        return right+1;
+    }
+    if(right == 0) {
+        return left+1;
+    }    
+    return Math.min(right,left)+1;    
+}
