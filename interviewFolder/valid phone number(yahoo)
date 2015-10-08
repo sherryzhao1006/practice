@@ -1,5 +1,5 @@
 https://gist.github.com/sangramanand/1892516
-
+https://en.wikipedia.org/wiki/Regular_expression
 valid: 18023210361  
 
 The regex code accepts a phone number between 10-25 chars length. The chars can be numbers, parentheses(), hypens, periods & may contain + sign in the beginning and can contain whitespaces in between.
