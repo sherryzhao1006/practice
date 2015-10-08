@@ -1,4 +1,5 @@
-. Reverse a linked list iteratively 
+//http://www.programcreek.com/2014/05/leetcode-reverse-linked-list-java/
+Reverse a linked list iteratively 
 
     public ListNode reverseList(ListNode head) {
         if(head == null || head.next == null)
