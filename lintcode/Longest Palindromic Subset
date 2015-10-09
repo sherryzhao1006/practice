@@ -1,0 +1,51 @@
+https://www.youtube.com/watch?v=Mbav2iuJ7xQ
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=140246&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26sortid%3D311
+
+
+Better Solution 
+
+/*
+idea:
+for i=0->n
+    for j=i->0
+        if(num[i] == num[j]) 1st case
+        else  2nd case
+            
+Two cases:
+
+1st case:
+
+num=[1,2,2,0,1]
+       | |
+         i
+       j
+            s.charAt(j) == s.charAt(i)
+                dp[j+1][i-1]+2;
+
+2nd case:
+num=[1,2,2,0,1]
+     |   |
+         i
+     j     s.charAt(j) != s.charAt(i)
+     | |  <<dp[j][i-1]
+       | |<<dp[j+1][i]
+
+*/
+
+ public static int find(int[] num){
+    int[][] dp=new int[num.length][num.length];
+    for(int i=0;i<num.length;++i){
+      dp[i][i]=1;
+      for(int j=i-1;j>=0;--j){
+        if(num[i]==num[j]){
+          dp[j][i]=(i-j)<2?2:dp[j+1][i-1]+2;
+        }
+        else{
+          dp[j][i]=Math.max(dp[j][i-1],dp[j+1][i]);
+        }
+      }
+    }
+    return dp[0][num.length-1];
+  }      
+
+
