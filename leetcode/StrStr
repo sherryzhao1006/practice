@@ -1,0 +1,33 @@
+    public static int strStr(String haystack,String needle){
+        if(haystack == null || needle == null)
+            return -1;
+        //if(j == needle.length()), we don't need this if
+        /*
+        if(haystack.length() == 0 && needle.length() == 0)
+            return 0;
+        */
+        //if(j == needle.length()), we don't need this if
+        /*
+        if(haystack.length() != 0 && needle.length() == 0)
+            return 0;
+        */
+        //if haystack.length() ==0, return -1; so we don't need this if
+        /*
+        if(haystack.length() == 0 && needle.length() != 0)
+            return -1;
+        */
+        int i=0, j=0;
+        while( i < haystack.length()-needle.length()+1) {
+            j=0;
+            while( j < needle.length()) {
+                if(haystack.charAt(i+j) != needle.charAt(j)) {
+                    break;
+                } 
+                j++;
+            }
+            if(j == needle.length())
+                return i;
+            i++;
+        }
+        return -1;
+    }
