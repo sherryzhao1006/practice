@@ -31,3 +31,33 @@ https://dl.dropboxusercontent.com/u/15824957/Lintcode/Longest_Common_Substring.p
             }
             return max;
     }
+
+
+
+
+
+longest common substring
+ABCBC
+-
+CBCE
+----
+AC,AB,AC,AE
+BC,BB,BC,BE
+O(n^3)
+
+
+while(j<A.length())
+    for i=0-n in string B:
+        if B[i]=A[j]
+            start=i;
+            end=j;
+            count=1;
+            while B[start]=A[end]
+                start++;
+                end++;
+                count++;
+            
+        else continue
+    j++//end for
+    O(n^3)
+dp:dp[i][j]
