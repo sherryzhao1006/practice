@@ -1,33 +1,33 @@
-class Solution {
-    /**
-     * Returns a index to the first occurrence of target in source,
-     * or -1  if target is not part of source.
-     * @param source string to be scanned.
-     * @param target string containing the sequence of characters to match.
-     */
-    public int strStr(String source, String target) {
-        if(source == null || target == null)
+    public static int strStr(String haystack,String needle){
+        if(haystack == null || needle == null)
             return -1;
-        int n = source.length();
-        int k = target.length();
-        
-        for(int i=0; i < (n-k+1); i++) {
-            int j=0;
-            int iPtr = i;
-            for(; j < k; j++) {
-                
-                if(source.charAt(iPtr) == target.charAt(j)) {
-                    iPtr++;
-                    
-                } else {
+        //if(j == needle.length()), we don't need this if
+        /*
+        if(haystack.length() == 0 && needle.length() == 0)
+            return 0;
+        */
+        //if(j == needle.length()), we don't need this if
+        /*
+        if(haystack.length() != 0 && needle.length() == 0)
+            return 0;
+        */
+        //if haystack.length() ==0, return -1; so we don't need this if
+        /*
+        if(haystack.length() == 0 && needle.length() != 0)
+            return -1;
+        */
+        int i=0, j=0;
+        while( i < haystack.length()-needle.length()+1) {
+            j=0;
+            while( j < needle.length()) {
+                if(haystack.charAt(i+j) != needle.charAt(j)) {
                     break;
-                }       
+                } 
+                j++;
             }
-            if(j==k) {
+            if(j == needle.length())
                 return i;
-            }
-        } 
+            i++;
+        }
         return -1;
     }
-
-}
