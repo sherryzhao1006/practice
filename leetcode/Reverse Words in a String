@@ -1,0 +1,23 @@
+
+
+s = "   a(space)(space)b   "; // after split => [a,"","",b]
+String[] str = s.split(" ");
+
+
+public class Solution {
+    public String reverseWords(String s){
+
+        if(s == null || s.length() == 0){
+            return s;
+        }
+        s = s.trim();
+        String[] str = s.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for(int i=str.length-1; i>=0; i--) {
+            if(!str[i].equals(""))
+                sb.append(str[i] + " ");
+        }
+        //sb.deleteCharAt(sb.length()-1);//if s = " " and sb is empty so deleteCharAt(-1) error.so use trim
+        return sb.toString().trim();
+    }
+}
