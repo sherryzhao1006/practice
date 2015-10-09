@@ -1,4 +1,6 @@
 https://dl.dropboxusercontent.com/u/15824957/Lintcode/Longest_Common_Substring.png
+//dp[i+1][j+1]表示前i个字符配上前j个字符的LCS‘的长度(一定以第i个和第j个结尾的LCS’)
+
     public int longestCommonSubstring(String A, String B) {
             // write your code here
             if(A == null || B == null || A.length() == 0 || B.length() == 0){
