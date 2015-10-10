@@ -1,0 +1,22 @@
+    public int findMin(int[] nums) {
+        if(nums == null || nums.length == 0) {
+            return -1;
+        }    
+        int left = 0;
+        int right = nums.length-1;
+        while(left < right) {
+            int m = left + (right-left)/2;
+            if(nums[left] < nums[right]) {
+                right = m;
+            } else if(nums[m] > nums[right]) {
+                left = m+1;
+            } else {
+                right--; // 0 0 1 0
+                         //   |   |
+                         //   m  right
+                         //   can't do right = m-1. you need to decrement one by one
+            }
+        }
+        return nums[right];
+         
+    }
