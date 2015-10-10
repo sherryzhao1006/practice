@@ -1,3 +1,4 @@
+//http://www.1point3acres.com/bbs/thread-137669-1-1.html
 //https://leetcode.com/discuss/58614/java-standard-backtrace-ac-solutoin-short-and-clear
     i)overflow: we use a long type once it is larger than Integer.MAX_VALUE or minimum, we get over it.
     ii)0 sequence: because we can't have numbers with multiple digits started with zero, we have to deal with it too.
