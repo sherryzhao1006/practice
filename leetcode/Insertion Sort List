@@ -1,0 +1,26 @@
+
+public ListNode insertionSortList(ListNode head) {
+    if(head == null) {
+        return head;
+    }
+    ListNode dummyNode = new ListNode(-1);
+    dummyNode.next = head;
+    ListNode curr = head;
+    while(curr != null && curr.next != null) {
+        if(curr.val <= curr.next.val) {
+            curr = curr.next;    
+        }
+        else{
+            ListNode target = curr.next;
+            ListNode p = dummyNode;                  
+            while(p.next != null && p.next.val <= target.val) {
+                p = p.next;
+            }
+            ListNode next = p.next;
+            p.next = target;
+            curr.next = target.next;
+            target.next = next;
+        }        
+    }
+    return dummyNode.next;
+}
