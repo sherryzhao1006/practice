@@ -40,12 +40,13 @@ public class Solution {
             if(curr.next == null) break;
             ListNode target = curr.next;
             ListNode p = dummyNode;
-            while(p.next != null && p.next.val < target.val)
+            while(p.next != null && p.next.val < target.val){
                 p = p.next;
-                ListNode next = p.next;
-                p.next = target;
-                curr.next = target.next; 
-                target.next = next;
+            }
+            ListNode next = p.next;
+            p.next = target;
+            curr.next = target.next; 
+            target.next = next;
         }    
         return dummyNode.next;
     }
