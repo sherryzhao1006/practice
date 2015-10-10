@@ -1,0 +1,121 @@
+//http://www.fgdsb.com/2015/01/25/group-contacts/
+input:
+{
+    { "John", {"john@gmail.com"} },
+    { "Mary", {"mary@gmail.com"} },
+    { "John", {"john@yahoo.com"} },
+    { "John", {"john@gmail.com", "john@yahoo.com", "john@hotmail.com"} },
+    { "Bob",  {"bob@gmail.com"} }
+}
+output:
+[[{ "John", {"john@gmail.com"} },{ "John", {"john@yahoo.com"} },{ "John", {"john@gmail.com", "john@yahoo.com", "john@hotmail.com"} ],[{ "Mary", {"mary@gmail.com"} }],[{ "Bob",  {"bob@gmail.com"} }]]
+
+
+
+
+class Contact {
+    String name;
+    List<String> emails;
+    public Contact(String name, List<String> emails) {
+        this.name = name;
+        this.emails = emails;
+    }
+}
+public class Solution {
+    public static void main(String[] args) {
+        Contact a=new Contact("John",new ArrayList<String>());
+        a.emails.add("john@gmail.com");
+        Contact b=new Contact("Mary",new ArrayList<String>());
+        b.emails.add("mary@gmail.com");
+        Contact c=new Contact("John",new ArrayList<String>());
+        c.emails.add("john@yahoo.com");
+        Contact d=new Contact("John",new ArrayList<String>());
+        d.emails.add("john@gmail.com");
+        d.emails.add("john@yahoo.com");
+        d.emails.add("john@hotmail.com");
+        Contact e=new Contact("Bob",new ArrayList<String>());
+        e.emails.add("bob@gmail.com");
+        ArrayList<Contact> input=new ArrayList<Contact>();
+        input.add(a);
+        input.add(b);
+        input.add(c);
+        input.add(d);
+        input.add(e);
+        groupContacts(input);
+    }
+    public static int findFather(Map<Integer,Integer> fatherMap, int curr) {
+        if(fatherMap.get(curr) != curr) {
+            return findFather(fatherMap,fatherMap.get(curr));
+        }
+        return curr;
+    }
+    public static void union(Map<Integer,Integer> fatherMap, int x, int y) {
+        int xFather = findFather(fatherMap,x);
+        int yFather = findFather(fatherMap,y);
+        if(xFather != yFather) {
+            fatherMap.put(xFather,yFather);
+        }
+    }
+    public static List<List<Contact>> groupContacts(List<Contact> input) {
+        List<List<Contact>> res = new ArrayList<List<Contact>>();
+        //email to contact(contact index)
+        //john@gmail.com : A,D,F
+        //john@yahoo.com : C,D
+        //john@hotmail.com : D
+        //bob@gmail.com : E
+        //F: john@gmail.com
+        Map<String,List<Integer>> addressToContactMap = new HashMap<String,List<Integer>>();
+        for(int i=0; i < input.size(); i++) {
+            for(String currEmail : input.get(i).emails) {
+                if(!addressToContactMap.containsKey(currEmail)) {
+                    List<Integer> temp = new ArrayList<Integer>();
+                    temp.add(i);
+                    addressToContactMap.put(currEmail,temp);
+                }
+                else{
+                    List<Integer> temp = addressToContactMap.get(currEmail);
+                    temp.add(i);
+                }
+            }
+        }
+        Map<Integer,Integer> fatherMap = new HashMap<Integer,Integer>();
+        for(int i=0; i < input.size(); i++) {
+            fatherMap.put(i,i);
+        }
+        //C--> A <---D,  E
+        for( String currName : addressToContactMap.keySet() ){
+            List<Integer> currList = addressToContactMap.get(currName);
+            for(int i=0; i < currList.size()-1; i++) {
+                union(fatherMap,currList.get(i),currList.get(i+1));
+            }
+        }
+        //father1:key:father value:
+        //遍历father: father(key)-->store father1
+        //A:A,C,D 
+        //E:E        
+        Map<Integer,List<Integer>> resMap = new HashMap<Integer,List<Integer>>();
+        for(int curr : fatherMap.keySet()) {
+            int currFather = fatherMap.get(curr);
+            if(!resMap.containsKey(currFather)) {
+                List<Integer> temp = new ArrayList<Integer>();
+                temp.add(curr);
+                resMap.put(currFather,temp);
+            } else {
+                List<Integer> temp = resMap.get(currFather);
+                temp.add(curr);
+            }
+        }
+        convert below to list of list
+        //A:A,C,D 
+        //E:E
+        // to
+        // [[A,C,D],[E]]  
+        for(int curr : resMap.keySet()) {
+            List<Contact> temp = new ArrayList<Contact>();
+            for(int currIndex : resMap.get(curr)) {
+                temp.add(input.get(currIndex));
+            }
+            res.add(temp);
+        }
+        return res;
+    }
