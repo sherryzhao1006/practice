@@ -1,0 +1,132 @@
+//http://www.fgdsb.com/2015/02/09/elevation-matrix/
+输入是一个 N*N的矩阵，代表地势高度。如果下雨水流只能流去比他矮或者一样高的地势。
+矩阵左边和上边是太平洋，右边和下边是大西洋。求出所有的能同时流到两个大洋的点。
+
+For example:
+/*
+Pacific: ~
+Atlantic: *
+~  ~   ~   ~   ~   ~  ~
+~  1   2   2   3  (5) *
+~  3   2   3  (4) (4) *
+~  2   4  (5)  3   1  *
+~ (6) (7)  1   4   5  *
+~ (5)  1   1   2   4  *
+*  *   *   *   *   *  *
+ */
+ 
+ 括号里即为结果：
+[[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]]
+
+
+ 
+import java.util.*;
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+class Point {
+    int x;
+    int y;
+    public Point(int x,int y) {
+        this.x = x;
+        this.y = y;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Point)) {
+            return false;
+        }
+        Point p = (Point) o;
+        if(p.x == x && p.y == y)
+            return true;
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        return 100*x+y;
+    }
+}
+public class Solution {
+
+    public List<Point> flowing_water(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        Set<Point> pSet = new HashSet<Point>();
+        Set<Point> aSet = new HashSet<Point>();
+
+        //放第一行
+        for(int i=0; i < m; i++) {
+            Point currPoint = new Point(0,i);
+            if(pSet.contains(currPoint)) {
+                pSet.add(currPoint);
+                dfs(pSet,currPoint,mat);
+            }
+        }
+        //放第一列
+        for(int i=0; i < n; i++) {
+            Point currPoint = new Point(i,0);
+            if(!pSet.contains(currPoint)){
+                pSet.add(currPoint);
+                dfs(pSet,currPoint,mat);
+            }
+        }
+        //放最后一行
+        for(int i=0; i < m; i++) {
+            Point currPoint = new Point(n-1,i);
+            if(!aSet.contains(currPoint)) {
+                aSet.add(currPoint);
+                dfs(aSet,currPoint,mat);
+            }
+        }
+        //放最后一列
+        for(int i=0; i < n;i++) {
+            Point currPoint = new Point(i,m-1);
+            if(!aSet.contains(currPoint)) {
+                aSet.add(currPoint);
+                dfs(aSet,currPoint,mat);
+            }
+        }
+        //loop through two set and find intersection
+        List<Point> res = new ArrayList<Point>();
+        for(Point pPoint : pSet) {
+            if(aSet.contains(pPoint)) {
+                res.add(pPoint);
+            }
+        }
+        return res;
+    }
+    public void dfs(Set<Point> set,Point currPoint, int[][] mat) {
+        //right,left,top,bottom
+        int[][] dir = {
+                {0,0,-1,1},
+                {1,-1,0,0}
+        };
+        for(int i=0; i < dir[0].length; i++) {
+            int newX = currPoint.x+ dir[0][i];
+            int newY = currPoint.y+ dir[1][i];
+            if(newX >=0 && newX < mat.length && newY >=0 && newY < mat[0].length) {
+                Point nextPoint = new Point(newX,newY);
+                if(set.contains(nextPoint) || mat[currPoint.x][currPoint.y] > mat[nextPoint.x][nextPoint.y] ) {
+                    continue;
+                }
+                set.add(nextPoint);
+                dfs(set,nextPoint,mat);
+            }
+        }
+    }
+    public static void main(String[] args) {
+        int[][] m = {
+                {1,2,2,3,5},
+                {3,2,3,4,4},
+                {2,4,5,3,1},
+                {6,7,1,4,5},
+                {5,1,1,2,4}
+        };
+        Solution s = new Solution();
+        List<Point> res = s.flowing_water(m);
+        System.out.println();
+    }
+}
