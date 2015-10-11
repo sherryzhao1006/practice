@@ -17,6 +17,7 @@
              return helper(lists,0,lists.size()-1);
     }
     public ListNode helper(List<ListNode> lists,int start,int end) {
+            //because [] empty listNode array
         if(start > end)
             return null;
         if(start == end)
