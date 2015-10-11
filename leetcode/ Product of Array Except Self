@@ -1,0 +1,45 @@
+  left[i]:product from 0 to i (dont include i)
+  right[i]:product from i to n-1(dont include i)
+  index i=3
+  A= {2,3,4,5}
+  n = 4
+  左边：0-2 右边：4 - n-1 = 4
+  product index i=3: left[2] * right[4]
+
+  left[0] = 1 (index 0 左边什么都没有所以是1)
+  left[1] = 1*2 = 2 
+  left[2] = left[1] * A[1] = 2*3 = 6
+  left[3] = left[2] * A[2] = 6*4 = 24
+
+  right[3] =1
+  right[2] = right[3] *A[3] = 1*5 = 5
+  right[1] = right[2] * A[2] = 5*4 = 20
+  right[0] = right[1] * A[1] = 20*3 = 60
+    
+  left[0] *right[0] = 60  
+  left[1] *right[1] = 2*20 = 40
+  
+  public class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return nums;
+        }
+        int n = nums.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        left[0] = 1;
+        for(int i=1; i < n; i++) {
+            left[i] = left[i-1]*nums[i-1];
+        }
+        right[n-1] = 1;       
+        for(int i=n-2; i >=0; i--) {
+            right[i] = right[i+1]*nums[i+1];    
+        }
+        int[] res = new int[n];
+        for(int i=0; i < n; i++) {
+            res[i] = left[i]*right[i];        
+        }
+        return res;
+    }
+}
+  
