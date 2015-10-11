@@ -1,56 +1,19 @@
-https://leetcode.com/problems/ugly-number-ii/
-
-import java.util.*;
-import java.io.*;
-
 public class Solution {
-    public static final String INPUT_FILE = "/Users/waung/B-small-practice.in";
-
-    public static void main(String[] args) throws FileNotFoundException {
-        Scanner in = new Scanner(new File(INPUT_FILE));
-        PrintWriter out = new PrintWriter(new File("/Users/waung/B-small-practice.out"));
-        System.out.println(nthUglyNumber(8));
+    public int nthUglyNumber(int n) {
+        PriorityQueue<Long> q = new PriorityQueue();
+        q.add(1l);
+        int cnt = 0;
+        while(!q.isEmpty()) {
+            long curr = q.poll();
+            while(!q.isEmpty() && q.peek() == curr)
+                curr = q.poll();            
+            cnt++;            
+            if(cnt == n)
+                return (int)curr;
+            q.add(curr*2);
+            q.add(curr*3);
+            q.add(curr*5);
+        }        
+        return (int)-1;
     }
-
-    public static int nthUglyNumber(int n) {
-        if ( n == 1)
-            return 1;
-        int count = 1;// since you already find 1st ugly number
-        Queue<Integer> two = new LinkedList<Integer>();
-        Queue<Integer> three = new LinkedList<Integer>();
-        Queue<Integer> five = new LinkedList<Integer>();
-        two.add(2);
-        three.add(3);
-        five.add(5);
-        PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
-        pq.add(two.peek());
-        pq.add(three.peek());
-        pq.add(five.peek());
-        int smallest = 1;
-        while(count < n) {
-            smallest = pq.poll();
-            if(!pq.isEmpty() && pq.peek() == smallest)
-                pq.poll();
-            two.add(smallest*2);
-            three.add(smallest*3);
-            five.add(smallest*5);
-
-            if(smallest == two.peek()) {
-                two.poll();
-                pq.add(two.peek());
-            }
-            if(smallest == three.peek()) {
-                three.poll();
-                pq.add(three.peek());
-            }
-            if(smallest == five.peek()) {
-                five.poll();
-                pq.add(five.peek());
-            }
-            count++;
-        }
-        return smallest;
-    }
-
 }
-
