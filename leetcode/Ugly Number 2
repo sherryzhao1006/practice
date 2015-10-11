@@ -1,3 +1,4 @@
+//http://www.fgdsb.com/2015/01/17/factors-of-product-of-distinct-primes/
 public class Solution {
     public int nthUglyNumber(int n) {
         PriorityQueue<Long> q = new PriorityQueue();
