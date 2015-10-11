@@ -2,8 +2,8 @@ http://www.lintcode.com/en/problem/product-of-array-exclude-itself/
 //http://www.cnblogs.com/EdwardLiu/p/4386031.html
 Given an integers array A.
 
-  left[i]:product from 0 to i (include i)
-  right[i]:product from i to n-1(include i)
+  left[i]:product from 0 to i (dont include i)
+  right[i]:product from i to n-1(dont include i)
   index i=3
   A= {2,3,4,5}
   n = 4
