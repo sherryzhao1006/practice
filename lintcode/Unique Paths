@@ -6,8 +6,13 @@ Bottom-up
 dp[n][n]=dp[n-1][n]+dp[n][n-1] (通过i,j这个点有多少条路径）: example dp[1][1]=dp[1][0]+dp[0][1]
 
 初始化
-dp[0][i]=1 (往右边走 只有一条路）   dp[i][0]=1 （往下边走只有一条路）
-=
+//第一行只有一个方法到达（一直走右）
+for(int j=0; j < n; j++) 
+    dp[0][i]=1 (往右边走 只有一条路）
+    
+//第一列只有一个方法到达（一直走下）
+for(int i=0; i < m; i++) 
+    dp[i][0]=1 （往下边走只有一条路）
 
     public int uniquePaths(int m, int n) {
         int[][] dp = new int[m][n];
