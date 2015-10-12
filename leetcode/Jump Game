@@ -1,0 +1,73 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/JumpGame.png
+dp:
+[2,3,1,1,4]
+dp[i] : 能否从第0个位置到达第i个位置
+
+    public boolean canJump(int[] A) {
+        int n = A.length;
+        boolean[] dp = new boolean[n];
+        dp[0]= true;
+        //dp[0] 是 true是因为永远都能到达。你从第0个位置走啊
+        for(int i=0; i < n; i++) {
+            for(int j=0; j < i; j++) {
+                //dp[i］ 是true 如果 dp[j] 是 true 并且 从j能走到 i
+                dp[i] = dp[j] && (j+A[j] >= i);
+                if(dp[i] == true)
+                    break;
+            }
+        }
+        return dp[n-1];
+    }
+
+
+
+=============================================
+recursive:
+=============================================
+    public boolean canJump(int[] A) {
+        int n = A.length;
+        return helper(A,0,n);    
+    }
+    public boolean helper(int[] A, int currIndex,int n) {
+        if(currIndex >= n) {
+            return false;
+        }
+        if(currIndex == n-1)
+            return true;
+        int numSteps = A[currIndex];
+        boolean canReach = false;
+        while(numSteps > 0) {
+            canReach = canReach | helper(A,currIndex+numSteps,n);
+            if(canReach == true)
+                return true;
+            numSteps--;
+        }
+        return canReach;
+    }
+
+
+
+
+
+=============================================
+Greedy Solution :
+=============================================
+//reach:记录下最大能走到的位置
+//如果i>reach, 则最终达不到n
+/*
+3,2,1,0,4
+      -
+reach=3
+i=3 <= reach
+reach = 3
+i=4 > reach 所以break
+*/
+    public boolean canJump(int[] A) {
+        if(A.length==0) return false;
+        if(A.length==1) return true;
+        int i=0,reach=0;
+        for(;i<A.length && i<=reach;++i){
+            reach=Math.max(reach,i+A[i]);
+        }
+        return i==A.length;
+    }
