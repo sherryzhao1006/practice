@@ -1,0 +1,75 @@
+
+
+public class Solution {
+    /**
+     * @param buildings: A list of lists of integers
+     * @return: Find the outline of those buildings
+     */
+    
+    class Point {
+        int x;
+        int y;
+        
+        boolean isLeft;
+        public Point(int x,int y, boolean isLeft) {
+                this.x = x;
+                this.y = y;
+                this.isLeft = isLeft;
+        }
+    }
+    public ArrayList<ArrayList<Integer>> buildingOutline(int[][] buildings) {
+        List<int[]> res = new ArrayList<int[]>();
+        ArrayList<ArrayList<Integer>> output = new ArrayList<ArrayList<Integer>>();
+        if(buildings == null || buildings.length ==0)
+                return output;
+        int bldgSize = buildings.length;
+        List<Point> criticalPointList = new ArrayList<Point>();
+        for(int i=0; i < bldgSize; i++) {
+                criticalPointList.add(new Point(buildings[i][0],buildings[i][2],true));
+                criticalPointList.add(new Point(buildings[i][1],buildings[i][2],false));
+        }
+         Collections.sort(criticalPointList,new Comparator<Point>() {
+                public int compare(Point p1, Point p2) {
+                        if (p1.x != p2.x)
+                                return Integer.compare(p1.x,p2.x);
+                        else if(p1.isLeft && p2.isLeft)
+                                return Integer.compare(p2.y,p1.y);
+                        else if(!p1.isLeft && !p2.isLeft)
+                                return Integer.compare(p1.y,p2.y);
+                        return p1.isLeft? -1 : 1;
+                        //-1 means p1 is moved after p2 in original order
+                        //compare(p1.x,p2.x)  ascending order
+                        //compare(p2.x,p1.x)  descending order
+                        //Example
+                        //1, 4
+                        //-1
+                        //7, 1
+                        //1                        
+                }
+        });
+        //heap of height
+        PriorityQueue<Integer> heap = new PriorityQueue<Integer>(10,Collections.reverseOrder());
+     
+        for (Point point : criticalPointList){
+            if(point.isLeft) {
+                if(heap.isEmpty() || point.y > heap.peek())
+                    res.add(new int[]{point.x,point.y});
+                heap.add(point.y);
+            } else {
+                heap.remove(point.y);
+                if(heap.isEmpty() || point.y > heap.peek())
+                    res.add(heap.isEmpty() ? new int[]{point.x,0} : new int[]{point.x,heap.peek()});//don't use point.y in place of heap.peek()
+            }
+        }
+        for(int i = 0;i<res.size()-1;i++){
+            ArrayList<Integer> al= new ArrayList<Integer>();
+            al.add(res.get(i)[0]);
+            al.add(res.get(i+1)[0]);
+            al.add(res.get(i)[1]);
+            if(res.get(i)[1] !=0){
+            output.add(al);}
+        }
+        return output;
+    }
+    
+}
