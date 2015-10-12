@@ -1,5 +1,8 @@
 http://www.zhuangjingyang.com/leetcode-jump-game-jump-game-ii/
 http://www.lintcode.com/en/problem/jump-game-ii/
+
+跟jump game 一样原理。
+
 dp[i]=到达第i个点需要的step的最小值
 dp[i]==Max_value//cannot reach
      !=  Math.min(dp[j]+1,dp[i]);
