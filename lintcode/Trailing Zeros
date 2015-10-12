@@ -10,6 +10,21 @@ public long trailingZeros(long n) {
             multipleFive *= 5;
         }
         return result;
-
-
     }
+
+/*
+10！=10*9*8.。。*5*4*3*2
+25! = 5 ..10 ..15 ..20 ..25 + 25
+不难观察到对于n，其trailing zero的个数取决于n, n-1, n-2,…1里有几个（2，5）对，进一步可以发现2总是会有，
+只需要计算有多少个5即可。之前只想到return n/5;后来发现有的数里会包含不止一个5，
+例如25会产生2个5，因此25！有 25/5 ＋ 25/25 个trailing zero，同理125！有125/5 ＋ 125/25 ＋ 125/125个trailing zero。
+
+*/
+Better Version
+==============
+
+public int trailingZeroes(int n) {
+
+    if(n<5) return 0;
+        return n/5+trailingZeroes(n/5);
+}
