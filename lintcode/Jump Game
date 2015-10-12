@@ -21,9 +21,9 @@ dp[i] : 能否从第0个位置到达第i个位置
 
 
 
-=========
+=============================================
 recursive:
-
+=============================================
     public boolean canJump(int[] A) {
         int n = A.length;
         return helper(A,0,n);    
@@ -43,4 +43,31 @@ recursive:
             numSteps--;
         }
         return canReach;
+    }
+
+
+
+
+
+=============================================
+Greedy Solution :
+=============================================
+//reach:记录下最大能走到的位置
+//如果i>reach, 则最终达不到n
+/*
+3,2,1,0,4
+      -
+reach=3
+i=3 <= reach
+reach = 3
+i=4 > reach 所以break
+*/
+    public boolean canJump(int[] A) {
+        if(A.length==0) return false;
+        if(A.length==1) return true;
+        int i=0,reach=0;
+        for(;i<A.length && i<=reach;++i){
+            reach=Math.max(reach,i+A[i]);
+        }
+        return i==A.length;
     }
