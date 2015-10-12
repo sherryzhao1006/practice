@@ -1,0 +1,25 @@
+    public static void sortColors(int[] nums) {
+        if (nums == null || nums.length ==0) {
+            return;
+        }
+        int zero = 0;
+        int two = nums.length-1;
+        int ptr = 0;
+        while( ptr <= two) {
+            if(nums[ptr] == 0) {
+                swap(nums,zero,ptr);
+                zero++;
+                ptr++;
+            } else if(nums[ptr] == 2) {
+                swap(nums,ptr,two);
+                two--;
+            } else {
+                ptr++;
+            }
+        }
+    }
+    public static void swap(int[] nums, int l, int r){
+        int temp = nums[l];
+        nums[l] = nums[r];
+        nums[r] = temp;
+    }
