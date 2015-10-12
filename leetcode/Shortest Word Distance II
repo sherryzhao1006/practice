@@ -1,3 +1,4 @@
+//http://buttercola.blogspot.com/2015/08/leetcode-shortest-word-distance-ii.html
 public class WordDistance {
     private Map<String,List<Integer>> map;
     public WordDistance(String[] words) {
