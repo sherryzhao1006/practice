@@ -1,0 +1,42 @@
+        public int maxPoints(Point[] points) {
+        if(points == null || points.length == 0) {
+            return 0;
+        }
+        int res = 0;
+        Map<Double,Integer> map = new HashMap<Double,Integer>();
+        for(int i=0; i < points.length; i++) {
+            Point currPoint = points[i];
+            map.clear();
+            int duplicate = 1;
+            for(int j=0; j < points.length; j++) {
+                if(i == j)
+                    continue;
+                Point nextPoint = points[j];
+                if(currPoint.x == nextPoint.x && currPoint.y == nextPoint.y) {
+                    duplicate++;
+                    continue;
+                }
+                double slope = 0.0;
+                if(currPoint.x == nextPoint.x)
+                    slope = Integer.MAX_VALUE;
+                else if(currPoint.y == nextPoint.y)
+                    slope = 0;
+                else {
+                    slope = 1.0 * (nextPoint.y - currPoint.y)/(nextPoint.x-currPoint.x);
+                }
+                if(map.containsKey(slope)) {
+                    map.put(slope, map.get(slope)+1);
+                } else {
+                    map.put(slope,1);
+                }
+            }
+            if(map.keySet().size() == 0)
+                res = Math.max(res,duplicate);
+            else {
+                for(Double v : map.keySet()) {
+                    res = Math.max(res,duplicate+map.get(v));
+                }
+            }
+        }
+        return res;
+    }
