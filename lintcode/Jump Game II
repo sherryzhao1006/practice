@@ -22,3 +22,32 @@ dp[i]==Max_value//cannot reach
         return dp[n-1] == Integer.MAX_VALUE ? 0 : dp[n-1] ;
         // write your code here
     }
+
+
+
+
+
+Recursive Solution
+====================
+
+
+    public int jump(int[] A) {
+        return helper(A,A.length,0,0,Integer.MAX_VALUE);   
+    }
+    public static int helper(int[] A, int finalStep,int currPos,int stepCount,int min) {
+
+        if(currPos >= finalStep)
+            return min;
+
+        if(currPos == finalStep-1){
+            if(stepCount < min)
+                min = stepCount;
+            return min;
+        }
+        if(A[currPos] == 0)
+            return min;
+        for(int i=A[currPos]; i >0 ;i--){
+                min = helper(A,finalStep,currPos+i,stepCount+1,min);
+        }
+        return min;
+    } 
