@@ -5,15 +5,15 @@ public class Solution {
         }
         int n = board.length;
         int m = board[0].length;
-        helper(board, 0 ,0,n,m);
+        helper(board, n,m);
     }
-    public boolean helper(char[][] board,int x, int y, int n, int m) {
+    public boolean helper(char[][] board,int n, int m) {
         for(int i=0; i < n; i++) {
             for(int j=0; j < m; j++) {
                 if(board[i][j] == '.') {
                     for(int k=0; k <9; k++) {
                         board[i][j] = (char)('1' + k);
-                        if(checkValid(board,i,j) && helper(board,i,j,n,m)) {
+                        if(checkValid(board,i,j) && helper(board,n,m)) {
                             return true;
                         }
                         board[i][j] = '.';
