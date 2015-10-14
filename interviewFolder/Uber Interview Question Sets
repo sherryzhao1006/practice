@@ -1,0 +1,221 @@
+dp[i] = count of states for substring from 0 to i inclusive
+dp[i] = (str[i] == 0 ? 0 : dp[i-1]) + (0 < str[i-1, i] <= 26 ? dp[i-2] : 0)
+
+dp[-1] = 1
+do[0] = 1 + 0
+dp[1] = 1 + 1
+  12
+   
+
+[1,-1,3,-1,5] =maximum continuous sum
+
+
+{1, 5, -3};  {-2, -3, 4, -1, -2,
+
+sum1[i] = sum from 0 -> i inclusively 
+max1[i] = max sum[j] ; j <= i
+sum2[2] = sum from i -> end inclusive
+
+      1  5  -3  -2  -3  4  -1  -2
+sum1  1  6  3   1   -2  2  1   -1
+max1  1  6  6   6   6   6  6   6
+sum2  -1 -2 -7  -4  -2  1  -3  -2
+max2  1  1  1   1    1  1  -2  -2
+Max      2  7   7    7  7  4   4   
+Max(max1[i-1] + max2[i]) for every i
+
+then compare with dp[i] 
+
+
+
+http://www.geeksforgeeks.org/maximum-contiguous-circular-sum/
+second apporach
+
+	1  5  -3  -2  -3  4  -1  -2
+dp   1  6  3   1   -2  4  3   1  (max = 6)
+
+	-1  -5  3  2  3  -4  1  2
+dp        -1     -5    3     5    8     4      5    7  (max = 8) (   -3  -2  -3  )
+
+	1  5  -3  -2  -3  4  -1  -2
+sum     15
+
+————
+dp[i] = max continous sum for sub array ending at i
+
+dp[i] = Max(arr[i]+dp[i-1],arr[i]);
+max =Math.max(dp[i],max)
+
+
+
+dp[i] = max sum for array[0 -> i inclusively]
+dp[i] = Max(arr[i] + dp[i-2], dp[i-1])//either u rob here u don’t rob here two cases  
+
+
+==
+==
+==
+==
+==
+
+
+3 -> 0 1 2 - 4 5
+0  -> - 1 2 3 4 5
+
+2 3 4 5 5 4 3 2 1
+2 -> 1 - 3 4 5
+3 -> -  2 - 4 5
+4 -> 1 - 3 - 5
+5 -> - 2 - 4 -
+5 -> 1- 3 - -
+4 -> - 2 - - -
+3 -> 1 - - - -
+2 -> - 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=141712&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption[3046][value]%3D22%26searchoption[3046][type]%3Dradio%26sortid%3D311
+
+* insert("k1", "v1", 10)
+* get("k1") // returns "v1"
+* get("k1", 11) // returns "v1"
+* insert("k1", "v2", 20)
+* get("k1", 15) // returns "v1"
+* get("k1", 11) // returns "v1"
+* get("k1", 21).
+
+hashMap<String, HashMap<int, String>>;
+
+
+
+* insert("k1", "v1", 10)
+
+
+k1-> hashmap . put(10, v1)
+
+get(k1,11)
+
+
+timestamp是int
+insert应该比较好理解吧就是直接插入。
+get的话如果给明确的timestamp了，就返回比给定的timestamp小并且latest timestamp对应的value.
+如果没给timestamp就是返回key+latest timestamp的value
+
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=140449&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption[3046][value]%3D22%26searchoption[3046][type]%3Dradio%26sortid%3D311
+
+circular array : http://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/8-List/array-queue2.html
+
+http://www.1point3acres.com/bbs/thread-116171-1-1.html
+n-ary tree serialize/deserialize
+one edit distance
+
+http://www.1point3acres.com/bbs/thread-141808-1-1.html
+implement strStr
+Valid sudoku
+Sudoku solver
+第一轮:
+Weight Random Chooser
+
+2 Word Ladder II
+
+
+http://www.1point3acres.com/bbs/thread-139997-1-1.html
+给定一段英文消息，以及一个固定的长度，要求将消息分割成若干条，每条的最后加上页码如 (2/3)，然后每条总长度不超过给定的固定长度。典型的应用场景就是短信发送长消息。. 涓€浜�-涓夊垎-鍦帮紝鐙鍙戝竷
+经过询问之后得到更多详细要求及假设：（1）消息数量尽可能少，不必凑整句，可以在任意空格处分页；（2）这个固定长度可能非法，比如某个词很长导致一条消息放不下，要判断并抛出异常；（3）假设空格分割，不会出现连着两个空格的情况。
+第二题，感觉就是把每个list都sort一下，然后就是merge N sorted list问题，用一个counter记录找到median就可以了。
+那个Log(N)的median of two sorted array太复杂了，而且你这个又是N个list，有限时间内，应该很难Log(N)写出来。
+
+
+第一轮： Happy number
+第二轮： 罗马数字 -> 阿拉伯数字. 
+
+
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=140665&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption[3046][value]%3D22%26searchoption[3046][type]%3Dradio%26sortid%3D311
+1小时前的uber面，实习。matrix = [
+    [0,  0,    0,  -1,   0],,
+    [0, -1,    0,  'B',  0],
+    [0, -1,   -1,  -1,   0], 
+    [0, 'A',  -1,   0,   0], .
+    [0,  0,   -1,   0,   0], 
+    [0,  0,    0,   0,   0]
+]
+
+
+print bfs(matrix, (3, 1), (1, 3))
+Question: -1 means cannot go to, 0 means can go.
+
+input: starting point, ending point -> find a pass
+output: True or False 
+if true, print the shortest path.
+
+
+
+http://www.1point3acres.com/bbs/thread-141221-1-1.html
+
+不用的，比如第一个meeting是(50,100)，那就把boolean[1440] 的第50到100全变成true，第二个meeting如果是(70,150)那当我尝试把70设成true的时候发现它已经是true，就返回有overlap就好了，大概是：
+public boolean hasOverlap(Meeting[] meetings){
+boolean[] array = new boolean[1440];
+for(Meeting m:meetings){
+    for(int i = m.start; i <=m.end;++i){
+        if(array) return true;
+        else array = true;
+    } 
+}  
+return false;
+}
+
+
+http://www.1point3acres.com/bbs/thread-114707-1-1.html
+1. 给定一个string，判断能否用这个string来组成一个palindrome。e.g. 'uber' --> False, 'aab' --> True, 'carecra' --> True
+2. Follow up: 给出所有能够组成的palindrome，因为时间原因可以不用担心duplicates。（potential follow up就是去重了）
+
+
+valid json object : //http://massivealgorithms.blogspot.com/2015/09/flatten-json-to-list-of-map.html
+//http://www.1point3acres.com/bbs/thread-136248-1-1.html
+
+LRU (done)
+
+clone graph 
+
+heap(median)  - done
+
+decode encode - done
+
+one edit distance
+
+regex/regular expr
+
+
+
+public class EventBus {
+    public void register(String eventName, Listener listener) {}
+    public void unregister(String eventName, Listener listener) {}
+    public void postEvent(String eventName, Object data) {}
+
+    public interface Listener {
+        void onEvent(Object data);
+    }
+}
+
+
+
+
+http://www.1point3acres.com/bbs/thread-143054-1-1.html (task scheduler)
+
+
+https://github.com/cc2011/practice/blob/master/lintcode/uber
+
+https://github.com/cc2011/practice/blob/master/lintcode/linked
+
+http://collabedit.com/wm7ef
