@@ -1,0 +1,94 @@
+Simple Comparator
+===============
+http://buttercola.blogspot.com/2015/08/leetcode-meeting-rooms.html
+    public class IntervalComparator implements Comparator<Interval> {
+        @Override
+        public int compare(Interval a, Interval b) {
+            return a.start - b.start;
+        }
+    }
+Interval[] intervals
+Arrays.sort(intervals, new IntervalComparator());
+
+
+Collections.sort(list ,Collections.reverseOrder());
+for an array
+Arrays.sort(array, Collections.reverseOrder());
+array should be “Integer” array not “int” array
+For Example : 
+Integer[] input = {5,7,7,8,8,10}; Arrays.sort(input,Collections.reverseOrder());
+
+int[] input = {5,7,7,8,8,10};
+Arrays.sort(input,Collections.reverseOrder()); << Error
+
+
+
+List<List<Integer>> lists = new ArrayList<List<Integer>>(); lists.add(Arrays.asList(9, 6, 3));
+
+
+StringBuilder Methods
+=================
+
+delete last char :br.deleteCharAt(index)
+sb.insert(insertOpenParenIndex,"(");
+sb.append("julia");
+
+ArrayList Methods:
+==============
+list.addAll(list);
+list.set(index,value);
+remove last item :list.remove(list.size()-1);
+remove certain obj : list.remove(object);
+
+list.size()
+
+Hashset
+=======
+remove certain obj: set.remove(元素)
+size();
+HashMap
+=======
+remove certain key:map.remove(key)
+size();
+
+Stack
+=====
+push/pop/peek
+
+Queue
+======
+        Queue<Integer> q = new LinkedList<>();
+        q.poll();
+        q.peek();
+        q.add(1);
+
+
+String
+======
+str.charAt(i);
+str.substring(start,end) => [start,end)
+
+
+
+class Point {
+    int x;
+    int y;
+    public Point(int x,int y) {
+        this.x = x;
+        this.y = y;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Point)) {
+            return false;
+        }
+        Point p = (Point) o;
+        if(p.x == x && p.y == y)
+            return true;
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        return 100*x+y;
+    }
+}
