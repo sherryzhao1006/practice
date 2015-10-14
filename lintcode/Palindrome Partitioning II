@@ -1,3 +1,57 @@
+/*
+//cdd
+dp[i] = i-1;
+dp[0] = -1;
+dp[1] = 0;  //c
+dp[2] = 1;  //c|d
+dp[3] = 2;  //c|d|d
+
+i=2
+j=1  (dabad)
+        | |
+       j  i
+       j=1,i=3
+       
+*/
+
+Better Solution
+================================================
+       
+palindrome partition II
+        public int minCut(String s) {
+        if(s.length() == 0 || s == null){
+            return 0;
+        }
+        int n=s.length();
+        int[] dp=new int[n+1];//前i个字符需要cut的最小次数
+        boolean[][] isPalin=new boolean[n][n];//isPal[i][j]代表从i到j是否是回文段
+        for(int i=0;i<=n;++i){
+            dp[i]=i-1;//cut at every character position
+        }
+        //要找dp[i]的值意味着要看前i个字符被cut的最小次数，如果j==i-1,且ispal[j+1][i-2]==true,则dp[j][i-1]为回文段，dp[i]=Math.min(dp[i](i-j<3),dp[j]+1(因为j-i为回文段，则把j以前的最小数+1就好)
+        for(int i=2;i<=n;++i){
+            for(int j=i-1;j>=0;--j){
+                if(s.charAt(i - 1) == s.charAt(j) && 
+                (i - j < 3 || isPalin[j + 1][i - 2])){
+                isPalin[j][i-1] = true;
+                dp[i] = Math.min(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        return dp[n];
+    }
+    
+
+
+
+
+
+
+My Solution
+===========================================================
+
+
+
 //https://dl.dropboxusercontent.com/u/15824957/Lintcode/palindromePartition.png
 
     public int minCut(String s) {
