@@ -1,5 +1,6 @@
 //http://massivealgorithms.blogspot.com/2015/09/flatten-json-to-list-of-map.html
 //http://www.1point3acres.com/bbs/thread-136248-1-1.html
+//http://examples.javacodegeeks.com/core-java/json/java-json-parser-example/
 {
 "uuid": "abc",
 "properties": {
