@@ -1,0 +1,120 @@
+(original que)
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=138550&highlight=uber%2B%D0%C2%CF%CA%C8%C8%BA%F5%B5%C4%C3%E6%BE%AD 
+(link to this solution is from http://www.1point3acres.com/bbs/thread-144153-1-1.html)
+
+circulararray 或者 double end  queue.
+new一个长度为N(request capacity)的数组，用来存放已做过的请求的timestamp，如果数组有空槽就依次放入，反之，若发现要放的槽已经有元素了，就查看一下已存在的这个元素的时间，
+超过x秒(给定的timewindow size)就直接replace，x秒以内的说明请求超限，直接丢弃。
+
+class GoogleMapClient{
+    private int requests_made=0;
+    public GoogleMapClient() {
+        requests_made = 0;
+    }
+    public void make_request(){
+        requests_made++;
+        Date curr = new Date();
+        System.out.println("request_made:" + requests_made + " - " + curr.toString() + "- San Francisco");
+    }
+}
+class RateThrottler {
+    long capacity;
+    long[] queue;
+    int start;
+    GoogleMapClient gmClient;
+    public RateThrottler(long capacity) {
+        this.capacity = capacity;
+        //0 是空的
+        queue = new long[(int)capacity];
+        gmClient = new GoogleMapClient();
+        start = 0;
+    }
+    public  boolean canMakeRequest() {
+        try {
+            Date now = new Date();
+            if(now.getTime()-queue[start] >= 1000) {
+                queue[start++] = now.getTime();
+                start %= (int)capacity;
+            } else {
+                System.out.println("you can't make more than " + capacity + " requests. please wait one sec");
+                Thread.sleep(1000);
+            }
+        } catch (Exception e) {
+            System.out.println("Exception caught");
+        }
+        return true;
+    }
+    public void makeRequest() {
+        if(canMakeRequest()) {
+            gmClient.make_request();
+        }
+    }
+}
+
+
+
+
+
+Python Version
+==============
+
+
+Develop an API Rate-limit Throttling Client
+要求写一个api， 请求第三方api， 如果一秒内的请求太多， 自己的api就直接忽略掉。
+面试小哥给了个框架
+import time
+import datetime
+
+class GoogleMapsClient(object):
+    """3rd party maps client; we CANT EDIT THIS."""
+
+    def __init__(self):
+        self.requests_made = 0
+
+    def make_request(self):
+        self.requests_made += 1
+        now = datetime.datetime.now().time()
+        return "%d - %s - San Francisco" % (self.requests_made, now)
+
+
+刚开始对python time的单位不熟悉，有个bug。后来改了
+class MyRequest(object):
+
+    def __init__(self):
+        self.client = GoogleMapsClient()
+        self.time = time.time()
+        self.request_times = 0
+
+    def make_request(self):
+
+        if (time.time()-self.time)>1:
+            self.time = time.time()
+            self.request_times = 0
+        else:
+            self.request_times += 1
+        if self.request_times>=10: 
+            time.sleep(1)
+        return self.client.make_request()
+
+
+/*import datetime
+print datetime.datetime.now()
+print datetime.datetime.now().time()
+2015-10-13 17:45:26.114066
+17:45:26.114177
+import time
+print time.time()
+time.sleep(1)
+print time.time()
+1444776418.45
+*/
+
+
+
+
+
+
+
+
+
+
