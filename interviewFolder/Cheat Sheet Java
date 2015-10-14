@@ -21,7 +21,8 @@ Integer[] input = {5,7,7,8,8,10}; Arrays.sort(input,Collections.reverseOrder()
 int[] input = {5,7,7,8,8,10};
 Arrays.sort(input,Collections.reverseOrder()); << Error
 
-
+        boolean[] validBoolean = new boolean[9];
+        Arrays.fill(validBoolean,false);
 
 List<List<Integer>> lists = new ArrayList<List<Integer>>(); lists.add(Arrays.asList(9, 6, 3));
 
