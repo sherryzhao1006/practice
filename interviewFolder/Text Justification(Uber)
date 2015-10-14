@@ -1,0 +1,84 @@
+http://www.1point3acres.com/bbs/thread-139997-1-1.html
+给定一段英文消息，以及一个固定的长度，要求将消息分割成若干条，每条的最后加上页码如 (2/3)，然后每条总长度不超过给定的固定长度。典型的应用场景就是短信发送长消息。. 
+经过询问之后得到更多详细要求及假设：（1）消息数量尽可能少，不必凑整句，可以在任意空格处分页；（2）这个固定长度可能非法，比如某个词很长导致一条消息放不下，要判断并抛出异常；（3）假设空格分割，不会出现连着两个空格的情况。
+
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public static void main(String[] args) {
+        String words = "This is good meal. I love it. I want to have it everyday.";
+        Answer ans = new Answer();
+        if (ans.process(words, 10) == -1) {
+            System.out.println("Error");
+        } else {
+            ans.print();
+        }
+    }
+}
+class Answer {
+    List<String> lists;
+    int limit;
+    int remaining;
+    StringBuilder builder;
+
+    public void print() {
+        int size = lists.size();
+        int cnt = 1;
+        for (String line : lists) {
+            System.out.println(line + " (" + cnt + "/" + size + ")");
+            cnt++;
+        }
+    }
+//"This is good meal. I love it. I want to have it everyday."
+f      |
+s  |
+    public int process(String words, int limit) {
+        this.lists = new ArrayList<String>();
+        this.limit = limit;
+        this.remaining = limit;
+        this.builder = new StringBuilder();
+
+        int fast = 0;
+        int slow = 0;
+        // or words.split(" +");
+        while (fast < words.length()) {
+            while (fast < words.length() && Character.isSpaceChar(words.charAt(fast))) {
+                fast++;
+                slow++;
+            }
+            while (fast < words.length() && !Character.isSpaceChar(words.charAt(fast))) {
+                fast++;
+            }
+            if (insert(words.substring(slow, fast)) == -1) return -1;
+            slow = fast;
+        }
+
+        if (builder.length() > 0) {
+            lists.add(builder.toString());
+        }
+        return 0;
+    }
+    public int insert(String word) {
+        if (builder.length() == 0) {
+            if (word.length() > limit) {
+                return -1;
+            } else {
+                builder.append(word);
+                remaining -= word.length();
+            }
+        } else if (1 + word.length() <= remaining) {
+            builder.append(" ").append(word);
+            remaining -= 1+ word.length();
+        } else {
+            lists.add(builder.toString());
+            builder = new StringBuilder();
+            remaining = limit;
+            return insert(word);
+        }
+        return 0;
+    }
+}
