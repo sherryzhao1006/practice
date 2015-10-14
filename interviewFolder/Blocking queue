@@ -1,4 +1,17 @@
+http://n00tc0d3r.blogspot.com/2013/08/implement-bounded-blocking-queue.html?q=queue
+
+
+
 http://tutorials.jenkov.com/java-concurrency/blocking-queues.html
+/*
+There will never be two threads executing inside enqueue() , dequeue() or one in each. 
+If a thread wakes a waiting thread, the awakened thread does not get to execute until the first thread has exited the enqueue() / dequeue() method. 
+An awakened thread needs to get the lock of the BlockingQueue instance after being awakened, and that can only happen if the thread owning the lock leaves the synchronized method that took the lock.
+
+two threads can't execute the two methods simulatneously 
+*/
+
+
 
 public class BlockingQueue{
     private List queue = new LinkedList();
