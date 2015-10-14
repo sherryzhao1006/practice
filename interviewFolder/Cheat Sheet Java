@@ -68,7 +68,8 @@ String
 str.charAt(i);
 str.substring(start,end) => [start,end)
 
-
+Equals and HashCode
+====================
 
 class Point {
     int x;
@@ -92,3 +93,26 @@ class Point {
         return 100*x+y;
     }
 }
+
+
+Iterate through map
+====================
+
+for(Integer i:map.keySet())
+==
+OR
+==
+Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            char key = (char) pair.getKey();
+            int val = (int) pair.getValue();
+            
+Iterator through hashset/list
+===================
+
+        for(int a : hs) {
+            
+        }
+            
+            
