@@ -1,0 +1,28 @@
+如题，get set方法已写好，只是有个follow up小弟一直不知道怎么下手，有高人在地里给解答一下吗，
+感激不尽Follow-up question: In excel, one cell can refer to other cells, if I update one cell, 
+how do you update all the dependent cells？
+若问到存储图片和删除整行整列如何处理。
+public String getValue(int row, int col) {                
+                HashMap<Integer, Cell> colsMap= cellsMap.get(row);
+                if (colsMap == null) {
+                        return "";
+                }
+                Cell cell = colsMap.get(col);
+                if (cell == null) {
+                        return "";
+                }
+                return cell.getValue();
+               
+        }
+       
+        public void setValue(Cell cell) {
+                int row = cell.getRow();
+                int col = cell.getCol();
+               
+                HashMap<Integer, Cell> colsMap = cellsMap.get(row);
+                if (colsMap == null) {
+                        colsMap = new HashMap<Integer, Cell>();
+                        cellsMap.put(row, colsMap); 
+                }
+                colsMap.put(col, cell);
+        }
