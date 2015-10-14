@@ -1,0 +1,4 @@
+1. 给一个string list, 例如：['a', 'b', 'b', 'c', 'c', 'e', 'e', 'e']，返回出次次数是中位数的字符。例如本题，应该返回
+convert array into count array [1,2,2,3] 
+one pass 记下每个string的次数 然后quickselect
+[b, c]
