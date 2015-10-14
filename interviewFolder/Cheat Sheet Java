@@ -1,3 +1,4 @@
+http://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/
 Simple Comparator
 ===============
 http://buttercola.blogspot.com/2015/08/leetcode-meeting-rooms.html
@@ -111,9 +112,11 @@ Iterator it = map.entrySet().iterator();
             
 Iterator through hashset/list
 ===================
-
         for(int a : hs) {
             
         }
             
-            
+PriorityQueue
+==============
+PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(nums.length);
+PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(nums.length, Collections.reverseOrder());
