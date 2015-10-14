@@ -1,0 +1,61 @@
+http://www.1point3acres.com/bbs/thread-140500-1-1.html
+
+class EventListener {
+    private Map<String, List<Event>> map;
+
+    public EventListener() {
+        map = new HashMap<String, List<Event>>();
+    }
+
+    public void register(String eventName, Event event) {
+        if (map.containsKey(eventName)) {
+            map.get(eventName).add(event);
+        } else {
+            List<Event> events = new ArrayList<Event>();
+            events.add(event);
+            map.put(eventName, events);
+        }
+    }
+
+    public void unregister(String eventName, Event event) {
+        if (map.containsKey(eventName)) {
+            map.get(eventName).remove(event);
+        }
+    }
+
+    public void postEvent(String eventName, Object Data) {
+        if(map.containsKey(eventName)) {
+            for(Event e: map.get(eventName)) {
+                e.doEvent(Data);
+            }
+        } else {
+            Event event = new Event();
+            event.doEvent(Data);
+            this.register(eventName,event);
+        }
+    }
+}
+
+class Event {
+    private Object data;
+
+    public void doEvent(Object data) {
+        this.data = data;
+        System.out.println(data.toString());
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) throws InterruptedException  {
+        EventListener eventl = new EventListener();
+        Event e1 = new Event();
+        Event e2 = new Event();
+        eventl.register("hello",e1);
+        eventl.register("hello",e2);
+        eventl.unregister("hello",e1);
+
+
+
+    }
+}
