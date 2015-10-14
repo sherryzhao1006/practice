@@ -1,3 +1,10 @@
+http://www.1point3acres.com/bbs/thread-139997-1-1.html
+
+
+第二题，感觉就是把每个list都sort一下，然后就是merge N sorted list问题，用一个counter记录找到median就可以了。
+那个Log(N)的median of two sorted array太复杂了，而且你这个又是N个list，有限时间内，应该很难Log(N)写出来。
+
+
 input:
 [[2,1,3],[4,3,5],[4]]
 
