@@ -1,0 +1,72 @@
+//http://massivealgorithms.blogspot.com/2015/09/flatten-json-to-list-of-map.html
+//http://www.1point3acres.com/bbs/thread-136248-1-1.html
+{
+"uuid": "abc",
+"properties": {
+"sessionName": "Test session name"
+"waypoints": [
+{"uuid": "def", "properties": {"latitude": 3}}
+]
+}
+}
+
+
+把它转化成List<Map>， map里面uuid是key, properties是value。 所以结果应该像下面
+[
+{“uuid”: “abc”, “properties”: {“sessionName”: “Test session name”, “waypoints”: [“def”]}},
+{“uuid”: “def”, “properties”: {“latitude”: 3}},
+…
+]
+
+
+
+String str = "{'uuid': 'abc','properties': {'sessionName': 'Test session name','waypoints': [{'uuid': 'def', 'properties': {'latitude': 3}}]}}";
+
+
+import org.json.simple.parser.JSONParser; 
+
+    public List<Map<String, Object>> flatternJSON(String jsonString) {
+
+        JSONParser parser = new JSONParser();
+
+        List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
+        try {
+            JSONObject jObj = (JSONObject)parser.parse(jsonString);
+            Map<String, Object> map = new HashMap<String, Object>();
+            String key = (String) jObj.get("uuid");
+            Object value = jObj;
+            map.put(key, jObj);
+            recursiveProcess(jObj, res);
+            return res;
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+     
+    private void recursiveProcess(JSONObject jObj, List<Map<String, Object>>res) {
+        Iterator iter = jObj.keySet().iterator();
+        while(iter.hasNext()) {
+            String key = (String) iter.next();
+            Object obj = jObj.get(key);
+            if (obj instanceof String) {
+                continue;
+            } else if (obj instanceof JSONArray) {
+                JSONArray array = (JSONArray)obj;
+                Iterator arrIter = array.iterator();
+                JSONArray newArray = new JSONArray();
+                while(arrIter.hasNext()) {
+                    JSONObject o = (JSONObject) arrIter.next();
+                    newArray.add(o.get("uuid"));
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put((String) o.get("uuid"), obj);
+                    res.add(map);
+                    recursiveProcess(o, res);
+                }
+                jObj.put(key, newArray);
+            } else {
+                recursiveProcess((JSONObject)obj, res);
+            }
+        }
+    }
