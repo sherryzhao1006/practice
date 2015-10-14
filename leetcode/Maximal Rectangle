@@ -1,0 +1,50 @@
+//https://github.com/jingcmu/leetcode/blob/master/C%2B%2B/Maximal%20Rectangle.cpp
+//http://www.cnblogs.com/lichen782/p/leetcode_maximal_rectangle.html
+public class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        if(matrix == null || matrix.length==0)
+            return 0;
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[][] oneSoFar = new int[n][m];
+        for(int i=0; i < n; i++){
+            int totalConsecutiveOne = 0;
+            for(int j=0; j < m; j++){
+                if(matrix[i][j] == '1')
+                    totalConsecutiveOne++;
+                else
+                    totalConsecutiveOne=0;
+                oneSoFar[i][j] = totalConsecutiveOne;
+            }
+        }
+//        0 0 1 0       
+//        0 0 0 1
+//        0 1 1 1
+//        0 0 1 1
+        
+//        ＝》
+        
+//        0 0 1 0
+//        0 0 0 1
+//        0 1 2 3
+//        0 0 1 2        
+        int maxArea =0;
+        for(int i=0; i < n;i++){
+            for(int j=0; j < m;j++){
+                int width = oneSoFar[i][j];
+                if(width==0)
+                    continue;
+                 //从当前行往上推,一层层算出最大面积
+                 for(int k=i; k>=0;k--){
+                     //如果当前行的width小则更新
+                     width = Math.min(oneSoFar[k][j],width);
+                     if(width ==0)
+                        break;//width为0,则矩阵中断
+                        maxArea = Math.max(maxArea,width*(i-k+1));
+                 }
+            }
+        }
+        return maxArea;
+
+    }
+}
