@@ -1,0 +1,95 @@
+
+
+/**
+* 这道题我加了个变形，reversed的
+* Given a nested list of integers, returns the sum of all integers in the list weighted by their depth
+* For example, given the list {{1,1},2,{1,1}} the function should return 10 (four 1’s at depth 1, one 2 at depth 2)
+* Given the list {1,{4,{6}}} the function should return 27 (one 1 at depth 3, one 4 at depth 2, one 6 at depth 1)
+*/
+/**
+* This is the interface that represents nested lists.
+* You should not implement it, or speculate about its implementation.
+*/
+public interface NestedInteger
+{
+    // Returns true if this NestedInteger holds a single integer, rather than a nested list
+    public boolean isInteger();
+
+    // Returns the single integer that this NestedInteger holds, if it holds a single integer
+    // Returns null if this NestedInteger holds a nested list
+    public Integer getInteger();
+
+    // Returns the nested list that this NestedInteger holds, if it holds a nested list
+    // Returns null if this NestedInteger holds a single integer
+    public List getList();
+}
+
+http://www.1point3acres.com/bbs/thread-120371-1-1.html
+http://blog.csdn.net/craiglin1992/article/details/44760121
+/**. From 1point 3acres bbs
+* Given a nested list of integers, returns the sum of all integers in the list weighted by their depth
+* For example, given the list {{1,1},2,{1,1}} the function should return 10 (four 1's at depth 2, one 2 at depth 1)
+* Given the list {1,{4,{6}}} the function should return 27 (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3). 鍥磋鎴戜滑@1point 3 acres
+*/
+// { {21,{32}, {{43,44}, 35}} ,12}
+public int getSum(List<NestedInteger> input, int level) {
+  if(input == null || input.size() ==0)
+    return 0;
+  int sum = 0;
+  for(NestedInteger currInput : input) {
+    if(currInput.isInteger()){
+      sum += level*currInput.getInteger();  
+    } else{
+      sum += getSum(currInput.getList(),level+1);
+    }
+  }
+  return sum;
+}
+
+http://www.1point3acres.com/bbs/thread-120371-1-1.html
+这句不对，应该找每个{}的最大值。
+{ {21,{32}, {{43,44}, 35}} ,12}
+{32}的level 是1
+{{43,44}, 35} 的是2
+{21,{32}, {{43,44}, 35}} 应该返回3
+最后结果是4
+level 遍历输出。。。跟二叉树的levelOrderOutput一样。
+public int getLevel(List<NestedInteger> input) {
+  int maxLevel = 0;
+  for(NestedInteger currInput : input) {
+    if(!input.isInteger()) {
+      maxLevel = Math.max(maxLevel,getLevel(currInput.getList()));
+    }
+  }
+  return maxLevel+1;
+}
+
+
+Reverse Sum
+=============
+
+int calWeightedSum(MyNestedInteger ni) {
+    if(ni == null) {
+        return 0;
+    }
+    else {
+        if(ni.isInteger()) {
+            return ni.getInteger()
+        } else {
+            int depth = ni.getLevel(ni.getList())；
+            getListSum(ni.getList(), depth);
+        }
+    }
+}
+
+int getListSum(List<MyNestedInteger> li, int curDepth) {
+    int ret = 0;
+    for(MyNestedInteger ni : li) {
+        if(ni.isInteger()) {
+            ret += ni.getInteger() * curDepth;
+        } else {
+            ret += getListSum(ni.getList(), curDepth-1);
+        }
+    }
+    return ret;
+}
