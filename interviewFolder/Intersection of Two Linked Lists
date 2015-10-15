@@ -1,0 +1,120 @@
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/linkedlist_intersection.png
+
+说话很轻很轻的印度小哥~考验听力和耐心的时候啊~
+先来max points on a line~秒杀
+然后来了个linked list找intersection~本来窃以为不要太简单~没想到他居然无数个follow-up~汗~~
+分情况讨论：
+
+    两个没有环，不想交
+    两个没有环，相交
+    两个有环，不想交
+    两个有环，相交
+在第三种情况纠结了很久，然后决定上slow, fast pointer找到两个环的起点，然后固定一个起点，另外一个环走一圈看有没有重复
+之后又扯淡了很久~
+
+see picture: https://dl.dropboxusercontent.com/u/15824957/Lintcode/linkedlist_intersection.png
+http://www.1point3acres.com/bbs/thread-143335-1-1.html
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+ /*
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null)
+            return null;
+        int countA = 1;
+        ListNode temp = headA;
+        while(temp != null){
+            countA++;
+            temp = temp.next;
+        }
+        int countB = 1;
+        temp = headB;
+        while(temp != null){
+            countB++;
+            temp = temp.next;
+        }
+        ListNode p1 = headA;
+        ListNode p2 = headB;
+        if(countA > countB){
+            int diff = countA-countB;
+            while(diff > 0){
+                p1 = p1.next;                
+                diff--;
+            }
+        }else if(countA < countB){
+            int diff = countB-countA;
+            while(diff > 0) {
+                p2 = p2.next;
+                diff--;
+            }
+        }
+        while(p1 != null && p2 !=null){
+            if(p1.val == p2.val){
+                return p1;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        return null;
+    }
+}
+*/
+
+
+//Better Solution
+/*
+Two pointer solution (O(n+m) running time, O(1) memory):
+
+    Maintain two pointers pA and pB initialized at the head of A and B, respectively. Then let them both traverse through the lists, one node at a time.
+    When pA reaches the end of a list, then redirect it to the head of B (yes, B, that's right.); similarly when pB reaches the end of a list, redirect it the head of A.
+    If at any point pA meets pB, then pA/pB is the intersection node.
+    To see why the above trick would work, consider the following two lists: A = {1,3,5,7,9,11} and B = {2,4,9,11}, which are intersected at node '9'. Since B.length (=4) < A.length (=6), pB would reach the end of the merged list first, because pB traverses exactly 2 nodes less than pA does. By redirecting pB to head A, and pA to head B, we now ask pB to travel exactly 2 more nodes than pA would. So in the second iteration, they are guaranteed to reach the intersection node at the same time.
+    If two lists have intersection, then their last nodes must be the same one. So when pA/pB reaches the end of a list, record the last element of A/B respectively. If the two last elements are not the same one, then the two lists have no intersections.
+
+
+*/
+/*
+     2              
+1->2
+    \
+     4->5->6->null
+    /
+  3
+     1              
+*/
+
+public class Solution {
+
+    //https://leetcode.com/problems/intersection-of-two-linked-lists/
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+            if(headA == null || headB == null){
+                return null;
+            }
+            ListNode p1=headA,p2=headB;
+            while(headA!= null && headB!=null && headA != headB){
+                headA=headA.next;
+                headB=headB.next;
+                if(headA == headB){
+                    return headA;
+                }
+                if(headA == null){
+                    headA=p2;
+                }
+                if(headB==null){
+                    headB=p1;
+                }
+            }
+            return headA;
+    }
+}
