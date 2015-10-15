@@ -1,0 +1,247 @@
+You are given a m x n 2D grid initialized with these three possible values.
+-1 - A wall or an obstacle.
+0 - A gate.
+INF - Infinity means an empty room. We use the value 231 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than2147483647.
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+
+For example, given the 2D grid:
+INF  -1  0  INF
+INF INF INF  -1
+INF  -1 INF  -1
+  0  -1 INF INF
+ After running your function, the 2D grid should be:
+  3  -1   0   1
+  2   2   1  -1
+  1  -1   2  -1
+  0  -1   3   4
+An application of BFS. The key is to apply appropriate pruning
+http://buttercola.blogspot.com/2015/09/leetcode-walls-and-gates.html
+It is very classic backtracking problem. We can start from each gate (0 point), and searching for its neighbors. We can either use DFS or BFS solution.
+http://shibaili.blogspot.com/2015/09/day-130-286-expression-add-operators.html
+Interview - What may change, explain and
+Make code readable, extendable.
+Pass a direction array. {-1, 1} etc
+X. BFS
+找出所有的gate，然后同时bfs
+http://buttercola.blogspot.com/2015/09/leetcode-walls-and-gates.html
+
+    public void wallsAndGates(int[][] rooms) {
+
+        if (rooms == null || rooms.length == 0) {
+
+            return;
+
+        }
+
+         
+
+        int m = rooms.length;
+
+        int n = rooms[0].length;
+
+         
+
+        Queue<Integer> queue = new LinkedList<>();
+
+        for (int i = 0; i < m; i++) {
+
+            for (int j = 0; j < n; j++) {
+
+                if (rooms[i][j] == 0) {
+
+                    wallsAndGatesHelper(i, j, 0, rooms, queue);
+
+                }
+
+            }
+
+        }
+
+    }
+
+     
+
+    private void wallsAndGatesHelper(int row, int col, int distance, int[][] rooms, Queue<Integer> queue) {
+
+        fill(row, col, distance, rooms, queue);
+
+         
+
+        int m = rooms.length;
+
+        int n = rooms[0].length;
+
+         
+
+        while (!queue.isEmpty()) {
+
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+
+                int cord = queue.poll();
+
+                int x = cord / n;
+
+                int y = cord % n;
+
+             
+
+                fill(x - 1, y, distance + 1, rooms, queue);
+
+                fill(x + 1, y, distance + 1, rooms, queue);
+
+                fill(x, y - 1, distance + 1, rooms, queue);
+
+                fill(x, y + 1, distance + 1, rooms, queue);
+
+             
+
+            }
+
+            distance++;
+
+        }
+
+    }
+
+     
+
+    private void fill (int row, int col, int distance, int[][] rooms, Queue<Integer> queue) {
+
+        int m = rooms.length;
+
+        int n = rooms[0].length;
+
+         
+
+        if (row < 0 || row >= m || col < 0 || col >= n) {
+
+            return;
+
+        }
+
+         
+
+        if (rooms[row][col] == -1) {
+
+            return;
+
+        }
+
+         
+
+        if (distance > rooms[row][col]) {
+
+            return;
+
+        }
+
+         
+
+        if (distance < rooms[row][col]) {
+
+            rooms[row][col] = distance;
+
+        }
+
+         
+
+        int cord = row * n + col;
+
+        queue.offer(cord);
+
+    }
+
+
+
+
+    void wallsAndGates(vector<vector<int>>& rooms) {
+
+        int m = rooms.size();
+
+        if (m == 0) return;
+
+        int n = rooms[0].size();
+
+        queue<pair<int,int>> que;
+
+         
+
+        for (int i = 0; i < m; i++) {
+
+            for (int j = 0; j < n; j++) {
+
+                if (rooms[i][j] == 0) {
+
+                    que.push(make_pair(i,j));
+
+                }
+
+            }
+
+        }
+
+         
+
+        int size = que.size();
+
+        int dis = 1;
+
+        while (!que.empty()) {
+
+            int row = que.front().first;
+
+            int col = que.front().second;
+
+            size--;
+
+            que.pop();
+
+            
+
+            if (row + 1 < m && rooms[row + 1][col] > dis) {
+
+                rooms[row + 1][col] = dis;
+
+                que.push(make_pair(row + 1,col));
+
+            }
+
+            if (row - 1 >= 0 && rooms[row - 1][col] > dis) {
+
+                rooms[row - 1][col] = dis;
+
+                que.push(make_pair(row - 1,col));
+
+            }
+
+            if (col + 1 < n && rooms[row][col + 1] > dis) {
+
+                rooms[row][col + 1] = dis;
+
+                que.push(make_pair(row,col + 1));
+
+            }
+
+            if (col - 1 >= 0 && rooms[row][col - 1] > dis) {
+
+                rooms[row][col - 1] = dis;
+
+                que.push(make_pair(row,col - 1));
+
+            }
+
+             
+
+            if (size == 0) {
+
+                size = que.size();
+
+                dis++;
+
+            }
+
+        }
+
+    }
