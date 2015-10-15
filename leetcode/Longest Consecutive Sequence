@@ -1,0 +1,41 @@
+http://blog.csdn.net/craiglin1992/article/details/48466005
+
+既然要O(n)算法，排序显然不行，所以自然想到用hash table。将序列中的所有数存到一个unordered_set中。对于序列里任意一个数A[i]，我们可以通过set马上能知道A[i]+1和A[i]-1是否也在序列中。如果在，继续找A[i]+2和A[i]-2，以此类推，直到将整个连续序列找到。为了避免在扫描到A[i]-1时再次重复搜索该序列，在从每次搜索的同时将搜索到的数从set中删除。直到set中为空时，所有连续序列搜索结束。
+
+复杂度：由于每个数字只被插入set一次，并删除一次，所以算法是O(n)的。
+
+public class Solution {
+    public int longestConsecutive(int[] nums) {
+        HashMap<Integer, Integer> hashmap = new HashMap<Integer, Integer>();
+        for(int i = 0; i < nums.length; i++){
+            int num = nums[i];
+            hashmap.put(num, i);
+        }
+        int max = 0;
+        for(int i = 0; i < nums.length; i++){
+
+            int num = nums[i];
+            if(hashmap.containsKey(num)){
+                int cur_length = 1;
+                int before = num-1;
+                while(hashmap.containsKey(before)){
+                    hashmap.remove(before);
+                    before--;
+                    cur_length++;
+                }
+                int after = num+1;
+                while(hashmap.containsKey(after)){
+                    hashmap.remove(after);
+                    after++;
+                    cur_length++;
+                }
+                if(cur_length > max){
+                    max = cur_length;
+                }
+            }
+
+        }
+        return max;
+
+    }
+}
