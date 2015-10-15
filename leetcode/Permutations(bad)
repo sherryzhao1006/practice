@@ -1,0 +1,53 @@
+public class Solution {
+    public List<List<Integer>> permute(int[] num) {
+        ArrayList<Integer> rest = new ArrayList<Integer>();
+        for(int integer: num) {
+            rest.add(integer);
+        }
+        ArrayList<Integer> cur = new ArrayList<Integer>();
+        ArrayList all = new ArrayList();
+        permuteHelper(rest,cur,all);
+        return all;
+    }
+    public void permuteHelper(ArrayList<Integer> rest, List cur, List all) {
+        if(rest.size()==0){
+            all.add(cur);
+            return;
+        }
+        for(Integer integer : rest) {
+            cur.add(new Integer(integer));
+            ArrayList<Integer> temp = new ArrayList<Integer>(rest);
+            temp.remove(integer);
+            permuteHelper(temp, new ArrayList<Integer>(cur), all);
+            cur.remove(integer);
+        }
+    }
+}
+
+
+public class Solution {
+    public List<List<Integer>> permute(int[] num) {
+        ArrayList<Integer> rest = new ArrayList<Integer>();
+        for(int integer: num) {
+            rest.add(integer);
+        }
+        ArrayList<Integer> cur = new ArrayList<Integer>();
+        ArrayList all = new ArrayList();
+        permuteHelper(rest,cur,all);
+        return all;
+    }
+    public void permuteHelper(ArrayList<Integer> rest, List cur, List all) {
+        if(rest.size()==0){
+            all.add(cur);
+            return;
+        }
+        for(Integer integer : rest) {
+            cur.add(new Integer(integer));
+            ArrayList<Integer> temp = new ArrayList<Integer>(rest);
+            temp.remove(integer);
+            permuteHelper(temp, new ArrayList<Integer>(cur), all);
+            cur.remove(integer);
+        }
+    }
+}
+
