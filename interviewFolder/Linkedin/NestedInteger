@@ -106,3 +106,4 @@ public int getLevel(List<NestedInteger> input) {
   }
   return maxLevel+1;
 }
+ 
