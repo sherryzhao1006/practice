@@ -1,0 +1,37 @@
+    127 Word Ladder 19.5%   Medium
+    65  Valid Number    11.6%   Hard
+    170 Two Sum III - Data structure design     24.7%   Easy
+    243 Shortest Word Distance  42.0%   Easy
+    245 Shortest Word Distance III  42.5%   Medium
+    244 Shortest Word Distance II   34.2%   Medium
+    33  Search in Rotated Sorted Array  28.9%   Hard
+    187 Repeated DNA Sequences  21.1%   Medium
+    238 Product of Array Except Self    37.2%   Medium
+    50  Pow(x, n)   27.0%   Medium
+    46  Permutations    32.6%   Medium
+    47  Permutations II 26.1%   Medium
+    256 Paint House     38.7%   Medium
+    76  Minimum Window Substring    19.3%   Hard
+    21  Merge Two Sorted Lists  33.0%   Easy
+    23  Merge k Sorted Lists    21.4%   Hard
+(X) 56  Merge Intervals 23.1%   Hard
+(X) 53  Maximum Subarray    34.9%   Medium
+(X) 152 Maximum Product Subarray    20.2%   Medium
+(X) 149 Max Points on a Line    13.3%   Hard
+(X) 236 Lowest Common Ancestor of a Binary Tree 27.0%   Medium
+    205 Isomorphic Strings  25.8%   Easy
+(X) 57  Insert Interval 22.1%   Hard
+    198 House Robber    30.7%   Easy
+    277 Find the Celebrity  32.4%   Medium
+    254 Factor Combinations     29.2%   Medium
+    150 Evaluate Reverse Polish Notation    21.9%   Medium
+    102 Binary Tree Level Order Traversal   29.8%   Easy
+(X) 173 Binary Search Tree Iterator
+
+To solve : 
+Repeated DNA Sequences
+Valid Number
+Paint House
+Minimum Window Substring
+Factor Combinations
+Zig-Zag Level Order
