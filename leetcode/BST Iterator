@@ -16,6 +16,7 @@ public class BSTIterator {
     /** @return the next smallest number */
     public int next() {
         TreeNode returnVal = null;
+        //if(s.isEmpty()) {//<< this is wrong
         if(curr != null) {
             
             while(curr.left != null) {
