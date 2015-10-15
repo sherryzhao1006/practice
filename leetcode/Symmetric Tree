@@ -23,6 +23,12 @@ public boolean isSymmetric(TreeNode root) {
 }
 =====================
 this is to convert to mirror
+  1         1
+ / \       / \
+2   3  => 3   2
+   /       \
+  4         4
+
 public void invertBinaryTree(TreeNode root) {
    if(root == null)
        return;
