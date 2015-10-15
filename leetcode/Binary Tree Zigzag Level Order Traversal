@@ -1,0 +1,85 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+//http://blog.csdn.net/muscler/article/details/23098359 (solution below)
+//http://leetcode.com/2010/09/printing-binary-tree-in-zig-zag-level_18.html using two stacks
+public class Solution {
+    public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) {
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        if(root == null)
+            return res;
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(root);
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        boolean flag = true;
+        while(!q.isEmpty()){
+            int qSize = q.size();
+            list = new ArrayList<Integer>();
+            for(int i=0; i < qSize;i++){
+                TreeNode currNode = q.poll();
+                list.add(currNode.val);
+                if(currNode.left != null){
+                    q.add(currNode.left);
+                }
+                if(currNode.right != null) {
+                    q.add(currNode.right);
+                }
+            }
+            if(flag){
+                res.add(list);
+            } else{
+                Collections.reverse(list);
+                res.add(list);
+            }
+            flag = !flag;
+        }
+        return res;
+    }
+}
+
+
+
+
+
+
+
+
+public class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result=new ArrayList<List<Integer>>();
+        if(root == null){
+            return result;
+        }
+        Queue<TreeNode> queue=new LinkedList<TreeNode>();
+        queue.add(root);
+        boolean zig=false;
+        while(!queue.isEmpty()){
+            int size=queue.size();
+            List<Integer> sub=new ArrayList<Integer>();
+            for(int i=0;i<size;++i){
+                TreeNode node=queue.poll();
+                if(node.left!=null){
+                    queue.add(node.left);
+                }
+                if(node.right!=null){
+                    queue.add(node.right);
+                }
+                if(zig){
+                    sub.add(0,node.val);
+                }
+                else{
+                    sub.add(node.val);
+                }
+            }
+            zig=!zig;
+            result.add(sub);
+        }
+        return result;
+    }
+}
