@@ -1,4 +1,6 @@
 https://leetcode.com/static/images/solutions/Sieve_of_Eratosthenes_animation.gif
+//http://blog.csdn.net/craiglin1992/article/details/44918505
+
 
 public class Solution {
 
