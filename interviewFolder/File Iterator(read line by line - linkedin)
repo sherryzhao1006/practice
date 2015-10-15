@@ -1,0 +1,115 @@
+Implement a (Java) Iterable object that iterates lines one by one from a text file.. 
+/** A reference to a file. */
+public class TextFile implements Iterable<String>. From 1point 3acres bbs
+{
+  public TextFile(String fileName) { // please implement this
+
+  /** Begin reading the file, line by line. The returned Iterator.next() will return a line. */
+  @Override
+  public Iterator<String> iterator() { // please implement this
+  
+======================================================================
+ANSWER: An implementation of this using bufferedReader:
+//http://www.1point3acres.com/bbs/thread-94989-1-1.html
+//http://blog.csdn.net/craiglin1992/article/details/44778643
+
+
+
+class TextFile implements Iterable<String> {
+    private BufferedReader br;
+    public TextFile(String fileName) throws FileNotFoundException {
+        FileReader fileReader = new FileReader(fileName);
+        br = new BufferedReader(fileReader);
+    }
+    @Override
+    public Iterator<String> iterator() {
+        return new Iterator<String>() {
+            @Override
+            public boolean hasNext() {
+                try {
+                    //read ahead one char
+                    br.mark(1);
+                    //read ahead one char to detect end of file
+                    if (br.read() < 0)  {
+                        return false;
+                    }
+                    //read ahead one char so need to reset to prev char position
+                    br.reset();
+                    return true;
+                } catch (IOException e) {
+                    return false;
+                }
+            }
+            @Override
+            public String next() {
+                try {
+                    return br.readLine();
+                } catch (IOException e) {
+                    return null;
+                }
+            }
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+}
+
+public class Solution {
+  public static void main(String[] args) throws InterruptedException,FileNotFoundException  {
+      TextFile text = new TextFile("/Users/waung/fileiterator.txt");
+      Iterator<String> itr = text.iterator();
+      while(itr.hasNext()) {
+          System.out.println(itr.next());
+      }
+  }
+}
+
+
+
+=========================================================================================================
+//Another implementation using scanner
+
+
+public class TextFile implements Iterable<String> {
+ public TextFile(String fileName) { // please implement this }
+ // Begin reading the file, line by line. The returned Iterator.next() will
+ // return a line.
+ @Override
+ public Iterator<String> iterator() { // please implement this }
+}
+
+public class TextFile implements Iterable<String> {
+
+ Scanner scanner;
+
+ public TextFile(String fileName) {
+   try {
+     scanner = new Scanner(new File(fileName));
+   } catch(Exception e) { }
+ }
+
+ @Override
+ public Iterator<String> iterator() {
+   return new Iterator<String>() {
+     @Override
+     public boolean hasNext() {
+       return scanner.hasNext();
+     }
+     @Override
+     public String next() {
+       if (hasNext()) {
+         return scanner.nextLine();
+       } else {
+         return null;
+       }
+     }
+     @Override
+     public void remove() {
+       throw new UnsupportedOperationException();
+     }
+   };
+ }
+
+}
