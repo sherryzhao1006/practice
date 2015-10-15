@@ -1,0 +1,84 @@
+input: 12
+output:
+
+[
+  [2, 6],
+  [2, 2, 3],
+  [3, 4]
+]
+
+input: 32
+output:
+
+[
+  [2, 16],
+  [2, 2, 8],
+  [2, 2, 2, 4],
+  [2, 2, 2, 2, 2],
+  [2, 4, 4],
+  [4, 8]
+]
+
+
+Code (Java):
+?
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+	
+public class Solution {
+    public List<List<Integer>> getFactors(int n) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (n <= 3) {
+            return result;
+        }
+         
+        List<Integer> curr = new ArrayList<Integer>();
+         
+        getFactorsHelper(n, n, 2, curr, result);
+         
+        return result;
+    }
+     
+    private void getFactorsHelper(int ori, int n, int start, List<Integer> curr, List<List<Integer>> result) {
+        if (n <= 1) {
+            result.add(new ArrayList<Integer>(curr));
+            return;
+        }
+         
+        for (int i = start; i <= n && i < ori; i++) {
+            if (n % i == 0) {
+                curr.add(i);
+                getFactorsHelper(ori, n / i, i, curr, result);
+                curr.remove(curr.size() - 1);
+            }
+        }
+    }
+}
+
