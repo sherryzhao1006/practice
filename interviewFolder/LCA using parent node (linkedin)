@@ -1,0 +1,77 @@
+
+http://www.1point3acres.com/bbs/thread-141841-1-1.html
+第一题是给两个node，找到deepest common ancestor~
+node有parent pointer~
+the question is correct. u r thinking wrong. depth of a tree grows towards its leaves. root is the least deep node in a tree. same as lowest common ancestor
+
+
+Ans : http://articles.leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-tree-part-ii.html
+import java.util.*;
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+class TreeNode {
+    TreeNode parent;
+    TreeNode left;
+    TreeNode right;
+    int val;
+    public TreeNode(int val) {
+        this.val = val;
+    }
+}
+/*
+    3
+  1   5
+    2
+*/
+public class Solution {
+
+    public static void main(String[] args) throws InterruptedException,FileNotFoundException  {
+        TreeNode root = new TreeNode(3);
+        TreeNode left = new TreeNode(1);
+        TreeNode right = new TreeNode(5);
+        TreeNode leftright = new TreeNode(2);
+        root.left = left;
+        left.parent = root;
+        root.right = right;
+        right.parent = root;
+        //======
+        left.right = right;
+        leftright.parent = left;
+        TreeNode ans = LCA(right,leftright,root);
+        System.out.println();
+
+    }
+    public static TreeNode LCA(TreeNode p, TreeNode q, TreeNode root) {
+        int h1 = getHeight(p);
+        int h2 = getHeight(q);
+        if (h1 > h2) {
+            h2 = h1;
+            TreeNode temp = p;
+            p = q;
+            q = temp;
+        }
+        int dh = h2-h1;
+        for(int h = 0; h < dh; h++) {
+            q = q.parent;
+        }
+        while(p != null && q != null) {
+            if (p == q)
+                return p;
+            p = p.parent;
+            q = q.parent;
+        }
+        return null;
+    }
+
+    public static int getHeight(TreeNode root) {
+        int height = 0;
+        while(root != null) {
+            height++;
+            root = root.parent;
+        }
+        return height;
+    }
+}
