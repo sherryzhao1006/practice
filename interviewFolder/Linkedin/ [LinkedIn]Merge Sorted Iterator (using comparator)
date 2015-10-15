@@ -1,0 +1,74 @@
+原帖地址：http://www.mitbbs.com/article_t/JobHunting/32909075.html 自己加了一点注释
+interface是这个 Iterable<Integer> mergeKSortedIterators(Iterators[] iters)
+也就是给每个array的iterator,然后merge.
+
+import java.util.*;
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+public class Solution {
+    public static Iterable<Integer> mergeKSortedIterators(List<Iterator<Integer>> Iters){
+
+        Queue<newIter> minHeap = new PriorityQueue<newIter>();
+        List<Integer> result = new ArrayList<Integer>();
+        for(Iterator<Integer> iter : Iters){
+            if(iter.hasNext()){
+                minHeap.add(new newIter(iter.next(), iter));
+            }
+        }
+
+        while(!minHeap.isEmpty()){
+            newIter newiter = minHeap.poll();
+            result.add(newiter.getValue());
+            if(newiter.hasNext()){
+                minHeap.add(newiter);
+            }
+        }
+        return result;
+    }
+    //这里存的是当前的value，因为直接compare哪个头最小的话，compare一次next()的值就没了，干脆直接用这个class来保存。
+    //push的时候直接用里面的value来比较
+    private static class newIter implements Comparable<newIter>{
+        private Integer value;
+        private Iterator<Integer> iter;
+        public newIter(Integer val, Iterator<Integer> it){
+            this.value = val;
+            this.iter = it;
+        }
+        public Integer getValue(){
+            return this.value;
+        }
+        public boolean hasNext(){
+            if(iter.hasNext()){
+                value = iter.next();
+                return true;
+            }
+            return false;
+        }
+
+        public int compareTo(newIter a){
+            return this.value - a.value;
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException,FileNotFoundException  {
+        List<Iterator<Integer>> Iters=new ArrayList<Iterator<Integer>>();
+        List<Integer> onelist=new ArrayList<Integer>();
+        onelist.add(2);
+        onelist.add(4);
+        onelist.add(6);
+        ListIterator<Integer> one=onelist.listIterator();
+        List<Integer> twolist=new ArrayList<Integer>();
+        twolist.add(3);
+        twolist.add(7);
+        twolist.add(9);
+        ListIterator<Integer> two=twolist.listIterator();
+        Iters.add(one);
+        Iters.add(two);
+        for(int i : mergeKSortedIterators(Iters)){
+            System.out.println(i);
+        }
+    }
+}
