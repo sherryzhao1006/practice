@@ -1,0 +1,25 @@
+http://blog.csdn.net/craiglin1992/article/details/44771405
+
+1) Use two index variables i and j, initial values i = 0, j = 0
+2) If arr1[i] is smaller than arr2[j] then increment i.
+3) If arr1[i] is greater than arr2[j] then increment j.
+4) If both are same then print any of them and increment both i and j.
+
+
+
+
+void intersection(int[] a, int[] b) {
+    if(a.length == 0 || b.length == 0) {
+        return 0;
+    }
+    int i = 0, j = 0;
+    while(i <= a.length && j <= b.length) {
+        if(a[i] < b[j]) {
+            i++;
+        } else if(a[i] > b[j]) {
+            j++;
+        } else {
+            System.out.println(a[i]);
+        }
+    }
+}
