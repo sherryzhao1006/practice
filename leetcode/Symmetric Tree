@@ -1,0 +1,37 @@
+check symmetric tree
+
+Symmetric Tree
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+
+public boolean isSymmetricHelper(TreeNode left,TreeNode right){
+
+   if(left == null) 
+       return right ==null; //right subtree is longer than left subtree
+   if(right == null)
+       return false;// left subtree is not null and right is null so inconsistent
+   return (left.val == right.val) && (isSymmetricHelper(left.left,right.right)&& isSymmetricHelper(left.right,right.left));
+}
+
+public boolean isSymmetric(TreeNode root) {
+    if ( root == null) 
+        return true; // null tree
+    return isSymmetricHelper(root.left,root.right); 
+}
+=====================
+this is to convert to mirror
+public void invertBinaryTree(TreeNode root) {
+   if(root == null)
+       return;
+   
+   invertBinaryTree(root.left);
+   invertBinaryTree(root.right);
+   TreeNode temp = root.left;
+   root.left = root.right;
+   root.right = temp;
+   
+   return;
+}
