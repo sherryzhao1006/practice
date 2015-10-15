@@ -1,0 +1,17 @@
+public class Solution {
+    public boolean isNumber(String s) {
+        try {
+        s = s.trim();
+        int n = s.length();
+                        //. can't be at the last index. E can't be at the last index
+        if ( n == 0 || (s.charAt(n-1) != '.' && (s.charAt(n-1) - '0' < 0 || s.charAt(n-1) - '0' > 9 )) ) {
+            return false;
+        }
+        double i = Double.parseDouble(s);
+        return true;
+    }
+    catch (NumberFormatException e) {
+        return false;
+    }
+    }
+}
