@@ -1,0 +1,25 @@
+http://blog.csdn.net/craiglin1992/article/details/44918655
+
+//This is for smallest
+//for largest, use min heap
+ int[] getTopK (int[] input, int k) {
+      if (k <= input.length) return input;
+
+      PriorityQueue<Integer>  q = new PriorityQueue<>(k, new Comparator() { //max heap
+             @override
+             int compare (Integer k1, Integer k2) {
+                    return 0-Integer.compare(k1, k2);
+             }
+          });
+
+      for (int i = 0; i < k; i++) {
+               q.add(input[i]);  // first stuff k elements in there
+      }
+      for (int i = k; i < input.length; i++) {
+                if (input[i] < q.peek()) {  // if it's bigger than the biggest element in the priorityqueue
+                        q.poll();
+                        q.add(input[i]);  
+                }
+      }
+      return q.toArray();
+}
