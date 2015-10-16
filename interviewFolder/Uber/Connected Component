@@ -1,0 +1,22 @@
+http://www.1point3acres.com/bbs/thread-144457-1-1.html
+struct S {
+  int a;
+  int b;
+  bool is_left; //true: /  false: \
+}
+  
+  
+  / 
+  
+  s.is_left = true;
+  
+  s.a 可以往上 往左
+  s.b 可以往下 往右
+  
+  \ 
+  s.is_left = false;
+  s.a 可以往下 往左
+  s.b 可以往上 往右
+  
+  
+  https://dl.dropboxusercontent.com/u/15824957/Lintcode/uber1.png
