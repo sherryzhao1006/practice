@@ -1,5 +1,4 @@
 
-
 N=5,  5 
 
 
@@ -16,4 +15,11 @@ N=5,  5
 
 n^2 logn
 
-nlogn （（内排序复杂度））  * n（有n个） = n^2 logn +  n^2(合并复杂度）
+nlogn （（内排序复杂度））  * n（有n个） = n^2 logn + n^2 logn(合并的复杂度 － 每层有n^2数有logn层） = 2*n^2logn = n^2log(n^2)
+
+
+n段 
+
+n^2log(n^2)
+
+n^2logn
