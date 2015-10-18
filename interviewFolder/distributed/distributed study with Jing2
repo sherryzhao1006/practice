@@ -1,0 +1,19 @@
+
+
+N=5,  5 
+
+
+5 => nlogn
+            \        
+              2n 
+5 => nlogn  /     \
+                    4n    (n^2) log(n^2)
+5 => nlogn  \
+              2n  /
+5 => nlogn  /
+
+5 => nlogn  /
+
+n^2 logn
+
+nlogn （（内排序复杂度））  * n（有n个） = n^2 logn +  n^2(合并复杂度）
