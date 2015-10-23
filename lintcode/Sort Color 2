@@ -1,0 +1,65 @@
+
+/*
+one = everything except zero and two
+        zero = 1
+        two = 4 = k
+*/
+
+// [1,1,3,3,2,3,3,2,2,4,4]
+//      |
+//     zero
+//                  |
+//                 two
+//                    |
+//                   one
+
+/*
+one = everything except zero and two
+        zero = 2
+        two = 3 = k
+*/
+
+
+// [1,1,2,2,2,3,3,3,3,4,4]
+//            |
+//           zero
+//          |
+//         two
+//            |
+//           one
+
+
+    public  void sortColors2(int[] colors, int k) {
+        int firstColor = 1;
+        int lastColor = k;
+        int start = 0;
+        int end = colors.length-1;
+        while(firstColor < lastColor) {
+            int one = start;
+            int zero = start;
+            int two = end;
+
+            while(one <= two) {
+                if(colors[one] == firstColor) {
+                    swap(colors, one, zero);
+                    one++;
+                    zero++;
+                } else if(colors[one] == lastColor) {
+                    swap(colors,one,two);
+                    two--;
+                } else {
+                    one++;
+                }
+            }
+            start = zero;
+            end = two;
+            firstColor++;
+            lastColor--;
+        }
+
+    }
+    public  void swap(int[] colors, int left, int right) {
+        int temp = colors[left];
+        colors[left] = colors[right];
+        colors[right] = temp;
+    }
