@@ -1,3 +1,45 @@
+Longest Consecutive Sequence (Better Solution)
+
+public class Solution {
+    public int longestConsecutive(int[] nums) {
+        if(nums == null || nums.length == 0) {
+            return 0;
+        }   
+        Set<Integer> hs = new HashSet<Integer>();
+        for(int i=0; i < nums.length; i++) {
+            hs.add(nums[i]);  
+        }
+        int globalMax = 1;
+        for(int i=0; i < nums.length; i++) {
+            int curr = nums[i];
+            int prev = curr-1;
+            while(hs.contains(prev)) {
+                hs.remove(prev);
+                prev--;
+            }
+            
+            //0 1 2 3 4 5 prev=-1, next=6
+            int next = curr+1;
+            while(hs.contains(next)) {
+                hs.remove(next);
+                next++;
+            }
+            globalMax = Math.max(globalMax,next-prev-1);
+        }
+        return globalMax;
+    }
+}
+
+
+
+
+
+
+
+=======================
+Old solution
+=======================
+
 http://blog.csdn.net/craiglin1992/article/details/48466005
 
 既然要O(n)算法，排序显然不行，所以自然想到用hash table。将序列中的所有数存到一个unordered_set中。对于序列里任意一个数A[i]，我们可以通过set马上能知道A[i]+1和A[i]-1是否也在序列中。如果在，继续找A[i]+2和A[i]-2，以此类推，直到将整个连续序列找到。为了避免在扫描到A[i]-1时再次重复搜索该序列，在从每次搜索的同时将搜索到的数从set中删除。直到set中为空时，所有连续序列搜索结束。
