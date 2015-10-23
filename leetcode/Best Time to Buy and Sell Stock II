@@ -1,3 +1,5 @@
+
+
     public int maxProfit(int[] prices) {
         if(prices == null || prices.length == 0) {
             return 0;
@@ -11,8 +13,15 @@
         return maxProfit;
     }
 stock II leetcode原题。another follow up: what if there are some transition fee for each transition?
+/*
+price 2 10 12
+tran  4 1  2
+      
 
-
+buy : 2+4=6, sell :10-1=9
+if(sell > buy)
+    maxProfit += sell-buy;
+*/
 
 public int maxProfit(int[] prices, int[] transFee) {
     if(prices == null || prices.length == 0) {
