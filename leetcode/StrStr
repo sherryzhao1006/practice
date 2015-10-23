@@ -31,3 +31,30 @@
         }
         return -1;
     }
+
+
+
+============================
+Better Solution
+============================
+
+public class Solution {
+    public int strStr(String haystack, String needle) {
+        if(haystack == null || needle == null)
+            return -1;
+        int h=0;
+        int n=0;
+        //abc  abc
+        //  
+        while(h <= haystack.length()-needle.length()) {
+            n=0;
+            while(n < needle.length() && haystack.charAt(h+n) == needle.charAt(n)) {
+                n++;
+            }
+            if(n == needle.length()) 
+                return h;        
+            h++;   
+        } 
+        return -1;
+    }
+}
