@@ -12,6 +12,8 @@ for each index i,  a = val of pair (i, v_in_A), b= val of pair (i, v_in_B)
 dot_product(A,B) = sum_of ( a * b )  
 A dot product B = 3*2 + 4*8 = 38
 
+我是用的binary search，可以从O(max(m,n))降低到O(n*log(m)), where m = max(m,n)
+
 (2) stock leetcode原题。
 follow up：stock II leetcode原题。another follow up: what if there are some transition fee for each transition?
 
