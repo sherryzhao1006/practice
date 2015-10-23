@@ -55,3 +55,16 @@ public int maxProfit(int[] prices, int[] transFee) {
     }    
     return maxProfit;
 }
+
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+1.stock 
+2. getprofit(int[] price)
+   showprofit()
+getprofit(price) -->max profit 
+13 14 10 (use different price array to get each profit)
+showprofit-->display recently max profit
+14 13 10
+stack
