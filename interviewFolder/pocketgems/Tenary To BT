@@ -16,6 +16,15 @@ I came across this problem that has Ternary expression (a?b:c) and needs the ter
   / \
  c   d
 
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    public TreeNode(int val) {
+        this.val = val;
+    }
+}
+
 public class Solution {
     public static void main(String[] args) throws InterruptedException,FileNotFoundException  {
         char[] arr = {'a','?','b','?','c',':','d',':','e'};
