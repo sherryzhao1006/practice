@@ -1,0 +1,47 @@
+http://yuanhsh.iteye.com/blog/2206191
+
+I came across this problem that has Ternary expression (a?b:c) and needs the ternary expression to be converted into a Binary tree structure.
+
+     a?b:c  => ? means next level. nodes after ? means the child nodes of a
+
+       a
+      / \
+     b   c
+
+  a?b?c:d:e => : means sibling
+
+     a
+    / \
+   b   e
+  / \
+ c   d
+
+public class Solution {
+    public static void main(String[] args) throws InterruptedException,FileNotFoundException  {
+        char[] arr = {'a','?','b','?','c',':','d',':','e'};
+        TreeNode root = convertToBT(arr);
+    }
+    public static TreeNode convertToBT(char[] arr){
+        if(arr == null || arr.length == 0)
+            return null;
+        TreeNode root = new TreeNode(arr[0]);
+        TreeNode curr = root;
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        for(int i=1; i < arr.length; i+=2) {
+            if(arr[i] == '?') {
+                curr.left = new TreeNode(arr[i+1]);
+                s.push(curr);
+                curr = curr.left;
+            } else if(arr[i] == ':') {
+                curr = s.pop();
+                while(curr.right != null) {
+                    curr = s.pop();
+                }
+                curr.right = new TreeNode(arr[i+1]);
+                s.push(curr);
+                curr = curr.right;
+            }
+        }
+        return root;
+    }
+}
