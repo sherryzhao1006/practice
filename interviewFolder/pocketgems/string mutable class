@@ -1,0 +1,32 @@
+1. 写一个mutable string。 里面有三个methods, charAt(int i), substring(int beginIndex, int endIndex), setcharAt(int i, char c); 只能是O（1） space complexity
+
+
+第三问写的很辛苦，因为看过有人面过这道题，没记错的话当时楼主提出了自己的想法，用的是ArrayList of hashmap，所以我一开始也就朝这个方向在想，相差了。后来蹉跎了好久，突然发现用tree的结构更好。
+然后面试官，终于说OK了。 因为没时间，所以就是在白板上画了图解释了一下子。
+最后还跟HR聊了一下子，说SDE这个职位，目前他们还没有名额限制，所以录不录取，不受candidate影响。还有他们会连同phone interview的feedback一起考虑进来，所以phone interview还是要好好面。
+HR说下周一给消息，不过回家以后收到邮件说，他们大概调查了一下子，感觉今天feedback不错， 让我发references 名单给他们。因为个人感觉每轮都还是答得没有那么好，真不知道这个是不是走流程还是真的有点戏。
+求offe！！！！！
+
+
+
+// mutable string  
+public char charAt(int index) {  
+    if ((index < 0) || (index >= count)) {  
+        throw new StringIndexOutOfBoundsException(index);  
+    }  
+    return value[index + offset];  
+}  
+  
+public String substring(int beginIndex, int endIndex) {  
+    if (beginIndex < 0) {  
+        throw new StringIndexOutOfBoundsException(beginIndex);  
+    }  
+    if (endIndex > count) {  
+        throw new StringIndexOutOfBoundsException(endIndex);  
+    }  
+    if (beginIndex > endIndex) {  
+        throw new StringIndexOutOfBoundsException(endIndex - beginIndex);  
+    }  
+    return ((beginIndex == 0) && (endIndex == count)) ? this :  
+        new String(offset + beginIndex, endIndex - beginIndex, value);  
+}
