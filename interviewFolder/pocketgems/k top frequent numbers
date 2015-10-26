@@ -1,0 +1,58 @@
+//http://www.1point3acres.com/bbs/thread-131752-1-1.html
+
+import java.util.*;
+import java.util.AbstractMap.*;
+import java.util.Map.Entry;
+import java.io.*;
+
+
+
+
+public class Solution {
+
+
+    public static void main(String[] args) throws InterruptedException,FileNotFoundException {
+        int[] arr = {1,1,1,1,3,2,3,2,3};
+        List<Integer> res = kMostRepeating(arr,2);
+    }
+    public static List<Integer> kMostRepeating(int[] arr, int k) {
+        List<Integer> res = new ArrayList<Integer>();
+        if(arr == null || arr.length == 0) {
+            return res;
+        }
+
+        Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>();
+        for(int i=0; i < arr.length; i++) {
+            if(table.containsKey(arr[i])) {
+                table.put(arr[i],table.get(arr[i])+1);
+            } else {
+                table.put(arr[i],1);
+            }
+        }
+        Comparator<Entry<Integer,Integer>> sortComp = new Comparator<Entry<Integer,Integer>>() {
+            public int compare(Entry<Integer,Integer> e1, Entry<Integer,Integer> e2) {
+                return e1.getValue()-e2.getValue();
+            }
+        };
+        Queue<Entry<Integer,Integer>> q = new PriorityQueue<Entry<Integer,Integer>>(k,sortComp);
+        Set<Integer> ks = table.keySet();
+        Iterator<Integer> it = ks.iterator();
+        while(it.hasNext()) {
+            int key = it.next();
+            int value = table.get(key);
+            Entry<Integer,Integer> en = new SimpleEntry<Integer,Integer>(key,value);
+            if(q.size() < k) {
+                q.add(en);
+            } else {
+                if(q.peek().getValue() < value) {
+                    q.poll();
+                    q.add(en);
+                }
+            }
+        }
+        while(!q.isEmpty()) {
+            res.add(q.poll().getKey());
+        }
+        return res;
+    }
+}
