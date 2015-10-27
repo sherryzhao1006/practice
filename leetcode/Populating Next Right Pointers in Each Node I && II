@@ -1,3 +1,27 @@
+Populating Next Right Pointers in Each Node I
+==============================================
+    public void connect(TreeLinkNode root){
+        if(root == null){
+            return;
+        }
+        root.next=null;
+        Queue<TreeLinkNode> q=new LinkedList<TreeLinkNode>();
+        q.add(root);
+        while(!q.isEmpty()){
+            TreeLinkNode node=q.poll();
+            if(node.left != null){
+               node.left.next=node.right;
+               q.add(node.left);
+            }
+            if(node.right != null){
+             node.right.next=node.next == null?null:node.next.left;
+            q.add(node.right);
+            }
+        }
+    }
+Populating Next Right Pointers in Each Node II
+================================================
+
 public class Solution {
     public void connect(TreeLinkNode root) {
         if(root == null){
