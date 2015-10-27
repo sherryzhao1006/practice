@@ -1,3 +1,5 @@
+https://github.com/cc2011/practice/blob/master/leetcode/Populating%20Next%20Right%20Pointers%20in%20Each%20Node%20I%20&&%20II
+
 https://leetcode.com/problems/populating-next-right-pointers-in-each-node/ extension
 instead of the last node of the first level pointing to null, 
 the last node of the first level should point to first node of the second level;
