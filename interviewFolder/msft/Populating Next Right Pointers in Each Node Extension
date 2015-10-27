@@ -1,0 +1,25 @@
+https://leetcode.com/problems/populating-next-right-pointers-in-each-node/ extension
+instead of the last node of the first level pointing to null, 
+the last node of the first level should point to first node of the second level;
+
+    public void connect(TreeLinkNode root) {
+        if(root == null){
+            return;
+        }
+        Queue<TreeLinkNode> q = new LinkedList<TreeLinkNode>();
+        q.add(root);
+        while(!q.isEmpty()) {
+            TreeLinkNode curr = q.poll(); 
+                if(curr.left != null) {
+                    q.add(curr.left);
+                }           
+                if(curr.right != null) {
+                    q.add(curr.right);
+                }
+            if(!q.isEmpty()){
+                curr.next=q.peek();
+            }else{
+                curr.next=null;
+            }
+        }//end while   
+    }
