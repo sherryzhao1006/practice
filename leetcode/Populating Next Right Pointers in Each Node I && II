@@ -49,3 +49,51 @@ public class Solution {
         }           
     }
 }
+
+
+
+
+https://siddontang.gitbooks.io/leetcode-solution/content/tree/populating_next_right_pointers_in_each_node.html
+https://dl.dropboxusercontent.com/u/15824957/Lintcode/populateNextRightPointer.png
+
+Without using Queue
+===================
+
+    public void connect(TreeLinkNode root) {
+        if(root == null){
+            return;
+        }
+        TreeLinkNode curr=root;
+        TreeLinkNode first = null;
+        TreeLinkNode prev = null;
+        while(curr != null){
+            if(first == null) {
+                if(curr.left != null) {
+                    first = curr.left;
+                } else if(curr.right != null) {
+                    first = curr.right;
+                }
+            }        
+            if(curr.left != null) {
+                if(prev != null) {
+                    prev.next = curr.left;
+                }
+                prev = curr.left;
+            }
+            if(curr.right != null) {
+                if(prev != null) {
+                    prev.next = curr.right;
+                }
+                prev = curr.right;
+            }
+            if(curr.next != null) {
+                curr = curr.next;
+            } else {
+                curr = first;
+                first = null;
+                prev = null;
+            }
+        }       
+    }
+
+
