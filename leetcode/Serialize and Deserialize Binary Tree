@@ -1,0 +1,41 @@
+
+    1
+   / \
+  2   3
+     / \
+    4   5
+
+1,2,null,null,3,4,null,null,5,null,null (preorder)
+
+
+
+public class Codec {
+
+    public String serialize(TreeNode root) {
+        if(root == null){
+            return "null,";
+        }    
+        String curr = root.val + ",";
+        curr += serialize(root.left);
+        curr += serialize(root.right);
+        return curr;
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] sp = data.split(",");
+        int[] count = {0};
+        return helper(sp,count);
+    }
+    public TreeNode helper(String[] data,int[] count) {
+        if(data[count[0]].equals("null")) {
+            count[0]++;//don't forget this
+            return null;
+        }        
+        TreeNode root = new TreeNode(Integer.parseInt(data[count[0]]));
+        count[0]++;
+        root.left = helper(data,count);
+        root.right = helper(data,count);
+        return root;
+    }
+}
