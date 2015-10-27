@@ -53,3 +53,47 @@ public class Codec {
         return root;
     }
 }
+
+
+
+
+
+Using StringBuilder
+===================
+
+
+public class Codec {
+
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        helper(sb,root);
+        return sb.toString();
+    }
+    public void helper(StringBuilder sb, TreeNode root) {
+        if(root == null) {
+            sb.append("null,");
+            return;
+        }        
+        sb.append(root.val + ",");
+        helper(sb,root.left);
+        helper(sb,root.right);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] sp = data.split(",");
+        int[] count = {0};
+        return helper(sp,count);
+    }
+    public TreeNode helper(String[] data,int[] count) {
+        if(data[count[0]].equals("null")) {
+            count[0]++;//don't forget this
+            return null;
+        }        
+        TreeNode root = new TreeNode(Integer.parseInt(data[count[0]]));
+        count[0]++;
+        root.left = helper(data,count);
+        root.right = helper(data,count);
+        return root;
+    }
+}
