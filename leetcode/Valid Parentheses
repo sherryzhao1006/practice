@@ -1,0 +1,30 @@
+public class Solution {
+    public boolean isValid(String s) {
+        if(s == null || s.length() == 0 ){
+            return true;
+        }
+        if(s.length()%2 != 0){
+            return false;
+        }
+        Map<Character,Character> map=new HashMap<Character,Character>();
+        map.put('(',')');
+        map.put('[',']');
+        map.put('{','}');
+        Stack<Character> stack=new Stack<Character>();
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(map.containsKey(c)) {
+                stack.push(c);
+            } else {
+                
+                if(!stack.isEmpty() && c == map.get(stack.peek())) {
+                    stack.pop();
+                } else {
+                    return false;
+                }   
+            }
+       }
+       
+       return stack.isEmpty();
+    }
+}
