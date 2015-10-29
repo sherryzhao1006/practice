@@ -1,3 +1,6 @@
+//double precision = 0.001;//means equal to real sqrt to decimal 3 digits
+low = 2.999997138977051, high = 3.0000057220458984
+so we return end
     public int sqrt(int x){
         double start = 0;
         double end = x;
