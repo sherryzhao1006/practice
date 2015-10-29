@@ -1,0 +1,39 @@
+public class Solution {
+    public String convert(String s, int numRows) {
+        if(s == null || s.length() == 0){
+            return "";
+        }
+        if(numRows == 1 || numRows == s.length()){
+            return s;
+        }    
+        StringBuilder[] list = new StringBuilder[numRows];
+        for(int i=0; i < list.length; i++) {
+            list[i] = new StringBuilder();
+        }
+        boolean down = true;
+        int cnt = 0;
+        for(int i=0; i < s.length(); i++) {
+            if(cnt == -1) {
+                down = true;
+                cnt = cnt + 2;
+            } else if(cnt == numRows) {
+                down = false;
+                cnt = numRows-2;
+            }
+    
+            list[cnt].append(s.charAt(i));
+    
+    
+            if(down == true) {
+                cnt++;
+            } else {
+                cnt--;
+            }
+        }  
+        StringBuilder res = new StringBuilder();    
+        for(int i=0; i < list.length; i++) {
+            res.append(list[i].toString());
+        }                  
+        return res.toString();
+    }
+}
