@@ -21,11 +21,36 @@ Optimized Solution ( https://leetcode.com/discuss/42290/accepted-java-solution-e
         return res;
     }
     
+My Current Solution
+
+    public List<String> summaryRanges(int[] nums) {
+        List<String> result=new ArrayList<String>();
+        if(nums == null || nums.length == 0){
+            return result;
+        }
+        int prev = 0;
+        int curr=1;
+        while(curr < nums.length) {
+            if(nums[curr]-nums[curr-1] != 1) {
+                if(curr-1 == prev) {
+                    result.add(nums[prev]+"");
+                } else {
+                    result.add(nums[prev] + "->" + nums[curr-1]);
+                }
+                prev = curr;                
+            }
+            curr++;
+        }
+        if(prev == nums.length-1) {
+            result.add(nums[prev]+"");
+        } else {
+            result.add(nums[prev]+"->"+nums[nums.length-1]);
+        }
+        return result;
+    }
     
     
-    
-    
-My Solution    
+My Old Solution    
     /*
     public static List<String> summaryRanges(int[] nums) {
         List<String> res = new ArrayList<String>();
