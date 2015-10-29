@@ -1,0 +1,23 @@
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<String>();
+        StringBuilder sb = new StringBuilder();
+        helper(sb,0,0,res,n);
+        return res;
+    }
+    public void helper(StringBuilder sb, int left, int right, List<String> res, int n) {
+
+        if(left == n && right == n) {
+            res.add(sb.toString());
+            return;
+        }
+        if(left < n) {
+            sb.append("(");
+            helper(sb, left+1,right,res,n);
+            sb.deleteCharAt(sb.length()-1);
+        } 
+        if(right < left && right < n) {
+            sb.append(")");
+            helper(sb,left,right+1,res,n);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
