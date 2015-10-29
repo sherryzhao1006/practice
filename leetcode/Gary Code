@@ -1,3 +1,26 @@
+Better solution (without two arraylist)
+
+public List<Integer> grayCode(int n) {
+        List<Integer> result=new ArrayList<Integer>();
+        if(n == 0){
+            result.add(n);
+            return result;
+        }
+        int count=1;
+        result.add(0);
+        result.add(1);
+        while(count<n){
+            int num=1<<count;
+            for(int i=result.size()-1;i>=0;--i){
+                result.add(result.get(i)+num);
+            }
+            count++;
+        }
+        return result;
+    }
+
+
+
 n=2
 0|00
 0|01
