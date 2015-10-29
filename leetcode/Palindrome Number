@@ -1,0 +1,21 @@
+    public boolean isPalindrome(int x) {
+        boolean isNeg = false;
+        if(x < 0) {
+            return false;
+        }
+        int div = 1;
+        while(div <= x/10) {
+            div = div*10;
+        }
+        while(x > 0) {
+             
+             int first = x/div;
+             int second = x%10;
+             if(first != second)
+                 return false; 
+             x = x % div;
+             x = x /10;
+             div = div/100;
+        }
+        return true;
+    }
