@@ -34,7 +34,7 @@ StringBuilder Methods
 delete last char :br.deleteCharAt(index)
 sb.insert(insertOpenParenIndex,"(");
 sb.append("julia");
-
+sb.length();
 ArrayList Methods:
 ==============
 list.addAll(list);
