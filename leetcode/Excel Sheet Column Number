@@ -1,0 +1,11 @@
+ex. "AB"-->26^0 *2 = 2 + 26^1 * 1 (从后往前）
+
+    public int titleToNumber(String s) {
+        int count = 0;
+        int sum = 0;
+        for(int i = s.length()-1; i >=0; i--) {
+            sum += (s.charAt(i) - 'A' +1)*Math.pow(26,count);
+            count++;
+        }   
+        return sum;
+    }
