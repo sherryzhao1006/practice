@@ -1,33 +1,24 @@
 My Solution :
     public boolean isHappy(int n) {
-        
-        Set<Integer> set = new HashSet<Integer>();
-        set.add(n);
+        if(n == 1)
+            return true;
+        Set<Integer> map = new HashSet<Integer>();
         while(n != 1) {
-            n = getSum(getDigits(n));
-            if(set.contains(n))
+            if(map.contains(n))
                 return false;
-            set.add(n);
+            map.add(n);
+            n = helper(n,map);
         }
         return true;
     }
-    public int getSum(int[] arr) {
+    public int helper(int n, Set<Integer> map) {
         int sum = 0;
-        for(int i=0; i < arr.length; i++) {
-            sum += Math.pow(arr[i],2);
+        String s = String.valueOf(n);
+        for(int i=0; i < s.length(); i++) {
+            int curr = (int)(s.charAt(i)-'0');
+            sum += Math.pow(curr,2);
         }
         return sum;
-        
-    }
-    public int[] getDigits(int n) {
-        String currNum = String.valueOf(n);
-        int[] res = new int[currNum.length()];
-        int cnt = 0;
-        while(n > 0) {
-            res[cnt++] = n%10;
-            n = n/10;
-        }
-        return res;
     }
     
     
