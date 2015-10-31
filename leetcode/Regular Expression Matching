@@ -29,3 +29,30 @@ public class Solution {
           }
     }
 }
+
+
+bcddddddddda  bcdd*dd*da  
+     
+
+bool match(const char s, const char r) {
+  return s==r || (s && r=='.');
+}
+ 
+bool is_match(const char * s, const char * r,int sPos,int rPos) {
+  if (!*r) {
+    return !*s;
+  }
+  if(dp[s][r] != -1) {
+      return dp[s][r]==1 ? true : false;
+  }
+  // Malformed regex handling here:
+  // ASSERT(*r != ‘*’);
+  boolean flag = true;
+  if (*(r+1) == '*') {
+    flag = is_match(s, r+2,sPos,rPos+2) || (match(*s, *r) && is_match(s+1, r));
+  } else {
+    flag = match(*s, *r) && is_match(s+1, r+1);
+  }
+  dp[s][r] = 1;
+}
+
