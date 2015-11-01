@@ -30,7 +30,7 @@ With HashMap Version
         return map.get(head);
     }
     
-Without HashMap O(1) space
+Without HashMap O(1) space https://dl.dropboxusercontent.com/u/15824957/Lintcode/Copy%20With%20Random%20Pointer.png
 ===========================
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
