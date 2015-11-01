@@ -30,8 +30,49 @@ With HashMap Version
         return map.get(head);
     }
     
-    
-    
+Without HashMap O(1) space
+===========================
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if(head == null) {
+            return head;
+        }        
+        copyNext(head);
+        copyRandom(head);
+        return split(head);
+    }
+    public void copyNext(RandomListNode head) {
+        while(head != null) {
+            RandomListNode newNode = new RandomListNode(head.label);
+            newNode.next = head.next;
+            head.next = newNode;
+            head= head.next.next;
+        }
+    }
+    public void copyRandom(RandomListNode head) {
+        while(head != null) {
+            if(head.random == null) {
+                head.next.random = null;
+            } else {
+                head.next.random = head.random.next;                
+            }
+            head = head.next.next;
+        }    
+    }
+    public static RandomListNode split(RandomListNode head) {
+        RandomListNode newHead = head.next;
+        RandomListNode newCurr = newHead;
+        RandomListNode curr = head;
+        while(curr != null) {
+            curr.next = newCurr.next;
+            if(newCurr.next != null) {
+                newCurr.next = newCurr.next.next;
+                newCurr = newCurr.next;
+            }
+            curr = curr.next;
+        }
+        return newHead;
+    }
     
 Without HashMap Version
 =======================
