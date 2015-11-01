@@ -1,0 +1,37 @@
+With HashMap Version
+====================
+
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if(head == null) {
+            return head;
+        }        
+        Map<RandomListNode,RandomListNode> map = new HashMap<RandomListNode,RandomListNode>();
+        RandomListNode curr = head;
+        while(curr != null) {
+            RandomListNode newNode = new RandomListNode(curr.label);
+            map.put(curr,newNode);            
+            curr = curr.next;
+        }
+        curr = head;
+        while(curr != null) {
+            RandomListNode currNode = map.get(curr);
+            if(curr.next != null) {
+                if(map.containsKey(curr.next)) {
+                    currNode.next = map.get(curr.next);
+                }
+            }
+            if(curr.random != null) {
+                if(map.containsKey(curr.random)) {
+                    currNode.random = map.get(curr.random);
+                }
+            }
+            curr = curr.next;
+        }
+        return map.get(head);
+    }
+    
+    
+    
+    
+Without HashMap Version
+=======================
