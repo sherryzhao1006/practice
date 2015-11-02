@@ -13,29 +13,25 @@ public class Solution {
      * @param s: a string
      * @return: an integer 
      */
-    public int lengthOfLongestSubstring(String s) {
-        int count = 0;
-        int max = Integer.MIN_VALUE;
-        HashSet<Character> hs = new HashSet<Character>();
-        int leftPointer = 0;
-        
-        for(int i=0; i < s.length();) {
-            if(hs.contains(s.charAt(i))) {
-            //if hashset contains the char which is equal to current char you can just keep popping from leftPointer until the curr char has no duplicate char in hashset
-                hs.remove(s.charAt(leftPointer));
-                leftPointer++;
-                count--;        
-            } else {
-            //count: max count without repeat until now if hashset doesn't contain duplicate char
-
-                hs.add(s.charAt(i));
-                count++;
-                max = Math.max(max,count);
-                i++;
+    public  int lengthOfLongestSubstring(String s) {
+        if(s == null || s.length() == 0)
+            return 0;
+        Set<Character> set = new HashSet<Character>();
+        int max = 1;
+        int prev = 0;
+        for(int i=0; i < s.length(); i++) {
+            char curr = s.charAt(i);
+            if(set.contains(curr)) {               
+                max = Math.max(max, i - prev);
+                while(set.contains(curr)) {
+                    set.remove(s.charAt(prev++));
+                }
             }
+            set.add(curr);
         }
-        return max ==Integer.MIN_VALUE ? 0 : max;
-    }
+        max = Math.max(s.length()-prev,max);
+        return max;
+    }       
 
 }
 
