@@ -1,4 +1,6 @@
     public String intToRoman(int num) {
+        //IV->4 非顺序性添加字符，IIII!=4，而VI->6顺序性添加字符
+    //所以不用6
         int[] nums = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
         String[] str = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
         int cnt = 0;
