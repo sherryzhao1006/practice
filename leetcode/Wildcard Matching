@@ -71,7 +71,15 @@ p = A *      E
 
 
 http://collabedit.com/q5vmj
-bool match(const char s, const char r) {
+
+
+
+#include <stdio.h>
+
+// To execute C, please define "int main()"
+
+
+int match(const char s, const char r) {
   return s==r || (s && r=='?');
 }
 
@@ -93,8 +101,8 @@ void removeStar(char* r) {
   r[slow] = '\0';
 }
 
-bool isMatch(char * s, char * r) {
-  //removeStar(r);
+int isMatch(char * s, char * r) {
+  removeStar(r);
   if (*r == '\0') return *s == '\0';
   if (*s == '\0') return *r == '\0' || (*r == '*' && *(r+1) == '\0');
   if (*r == '*') {
@@ -102,4 +110,15 @@ bool isMatch(char * s, char * r) {
   } else {
     return match(*s, *r) && isMatch(s+1, r+1);
   }
+}
+
+int main() {
+  char s[] = "babbbbaabababaabbababaababaabbaabababbaaababbababaaaaaabbabaaaabababbabbababbbaaaababbbabbbbbbbbbbaabbb";
+  char r[] = "b*bb*a*bba*b*a*bbb*aba*babbb*aa*aabb*bbb*a";
+  if (isMatch(s, r)) {
+    printf("True. \n");
+  } else {
+    printf("False. \n");
+  } 
+  return 0;
 }
