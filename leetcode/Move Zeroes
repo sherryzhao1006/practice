@@ -1,3 +1,22 @@
+//better solution without second while loop in the solution
+
+    public void moveZeroes(int[] nums) {
+        int prev = -1;
+        int curr = 0;
+        while(curr < nums.length) {
+            if(nums[curr] != 0) {
+                swap(nums,curr,++prev);//don't use prev++, it will pass old value to function
+            }
+            curr++;
+        }
+    }
+    public void swap(int[] nums,int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+    }    
+
+
 //maintain original order of non-zero elements.
 public class Solution {
     public void moveZeroes(int[] nums) {
