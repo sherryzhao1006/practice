@@ -1,3 +1,35 @@
+=========================
+String Version
+=========================
+public class Solution {
+    public int sumNumbers(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        int[] sum = new int[1];
+        StringBuilder sb = new StringBuilder(); 
+        helper(sb,sum,root);
+        return sum[0];
+    }
+    public void helper(StringBuilder sb, int[] sum, TreeNode root) {
+        if(root == null) {
+            return;
+        }
+        int size = sb.length();
+        sb.append(root.val);
+        if(root.left == null && root.right == null) {
+            sum[0] +=Integer.valueOf(sb.toString());
+        } else {
+            helper(sb,sum,root.left);
+            helper(sb,sum,root.right);
+        }
+        sb.delete(size,sb.length());
+    }
+}
+=========================
+Integer Version
+=========================
+
 public class Solution {
     public int sumNumbers(TreeNode root) {
         if(root == null)
@@ -14,3 +46,6 @@ public class Solution {
         return helper(root.left,passVal)+helper(root.right,passVal);
     }
 }
+
+
+=================
