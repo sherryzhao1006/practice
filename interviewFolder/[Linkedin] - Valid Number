@@ -1,0 +1,48 @@
+easy version of valid number.Valid Number 不用考虑e.  但是不考虑exponential和空格的情况
+https://github.com/cc2011/practice/blob/master/leetcode/Valid%20Number
+
+public class Solution {
+  public static boolean isNumber(String s) {
+    //1) remove space 
+    s = s.trim();
+    if(s == null || s.length() == 0)
+        return false;//空的没数字所以false
+    boolean dotFlag = false;
+    boolean eFlag = false;
+    int n = s.length();
+    for(int i=0; i < n; i++) {
+        switch(s.charAt(i)) {
+         case '.':
+            // +. is false
+            // +.7 is true
+            if(dotFlag || ((i==0 || !(s.charAt(i-1) >='0' && s.charAt(i-1) <='9')) && (i==n-1 || !(s.charAt(i+1) >='0' && s.charAt(i+1) <='9'))))  
+                  return false;
+            dotFlag = true;
+            break;
+          case '+' :
+          case '-' :
+            // + : false
+            // +- : false at +
+            if( i > 0 || (i == n-1 || !(s.charAt(i+1) >= '0' && s.charAt(i+1) <= '9' || s.charAt(i+1) == '.')))
+                return false;
+
+            break;
+          case '0':
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
+          case '7':
+          case '8':
+          case '9':
+              break;
+            //其他char return false
+          default : 
+              return false;
+        }
+    } 
+    return true;
+  }
+}
