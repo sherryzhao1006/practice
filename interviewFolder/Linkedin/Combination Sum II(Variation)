@@ -1,0 +1,34 @@
+http://www.1point3acres.com/bbs/thread-145426-1-1.html
+Given a target and an array, return the number of combinations from the array that can add to the given number 写了之后他说array里可以有负数
+就是只有sum==target才终结递归不会无限的
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(candidates == null || candidates.length ==0)
+            return res;
+        if(candidates == null || candidates.length == 0)
+            return res;
+        helper(res,new ArrayList<Integer>(),0,target,0,candidates);
+        return res;
+    }
+    public void helper(List<List<Integer>> res, List<Integer> currRes, int index, int target, int sumSoFar,int[] candidates) {
+        /*
+        //don't need this condition if the array elements have neg value. 
+        //For example : -2,-1,0,1,2, target = -3
+        //if you have sumSoFar > target => u will miss -2,-1.
+        if(sumSoFar > target) {
+            return;
+        }
+        */
+        if(sumSoFar == target) {
+            res.add(new ArrayList<Integer>(currRes));
+        } else {
+            for(int i=index; i < candidates.length; i++) {
+                if(i != index && candidates[i] == candidates[i-1])
+                    continue;
+                currRes.add(candidates[i]);
+                helper(res,currRes,i+1,target,sumSoFar+candidates[i],candidates);
+                currRes.remove(currRes.size()-1);
+            }
+        }
+    }
