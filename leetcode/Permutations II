@@ -10,7 +10,7 @@
             res.add(new ArrayList<Integer>(currRes));
         } else {
             for(int i=0; i < nums.length; i++) {
-            //to detect duplicate
+            //to detect duplicate (only this line is different from Permutations I)
                 if(i != 0 && nums[i] == nums[i-1] && visited[i-1] == false)
                     continue;
                 if(visited[i] == false) {
