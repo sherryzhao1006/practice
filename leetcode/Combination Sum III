@@ -1,0 +1,20 @@
+public class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        helper(res, new ArrayList<Integer>(),n,k,1,0);
+        return res;
+    }
+    public void helper(List<List<Integer>> res, List<Integer> currRes, int n, int k, int curr, int index) {
+        if(index == k) {
+            if(n == 0) {
+                res.add(new ArrayList<Integer>(currRes));
+            }
+        } else {
+            for(int i=curr; i <= 9; i++) {
+                currRes.add(i);
+                helper(res,currRes,n-i,k,i+1,index+1);
+                currRes.remove(currRes.size()-1);
+            }
+        }
+    }
+}
