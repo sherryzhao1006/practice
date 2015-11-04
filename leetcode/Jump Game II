@@ -34,27 +34,60 @@ Recursive Solution
 ====================
 
 
+
     public int jump(int[] A) {
-        return helper(A,A.length,0,0,Integer.MAX_VALUE);   
+        int n = A.length;
+        int[] min = new int[1];
+        min[0] = Integer.MAX_VALUE;
+        helper(A,n,0,0,min);
+        return min[0];
     }
-    public static int helper(int[] A, int finalStep,int currPos,int stepCount,int min) {
-
-        if(currPos >= finalStep)
-            return min;
-
-        if(currPos == finalStep-1){
-            if(stepCount < min)
-                min = stepCount;
-            return min;
+    public void helper(int[] A, int n, int index,int step,int[] min) {
+        if(index >= n) {
+            return;
         }
-        if(A[currPos] == 0)
-            return min;
-        for(int i=A[currPos]; i >0 ;i--){
-                min = helper(A,finalStep,currPos+i,stepCount+1,min);
+        if(index == n-1) {
+            min[0] = Math.min(min[0],step);
+        } else {
+            int remStep = A[index];
+            while(remStep > 0) {
+                helper(A,n,index+remStep,step+1,min);
+                remStep--;
+            }
         }
-        return min;
-    } 
-
+    }
+    
+    With Memoization
+    =================
+    public int jump(int[] A) {
+        int n = A.length;
+        int[] min = new int[1];
+        int[] dp = new int[A.length];
+        for(int i=0; i < dp.length; i++) {
+            dp[i] = -1;
+        }
+        return helper(A,n,0,dp);
+    }
+    public int helper(int[] A, int n, int index,int[] dp) {
+        if(index >= n) {
+            return Integer.MAX_VALUE;
+        }
+        if(dp[index] != -1)
+            return dp[index];
+        int min =Integer.MAX_VALUE;            
+        if(index == n-1) {
+            return 0;
+        } else {
+            int remStep = A[index];
+            
+            while(remStep > 0) {
+                min = Math.min(min,helper(A,n,index+remStep,dp));
+                remStep--;
+            }
+        }
+        dp[index] = (min == Integer.MAX_VALUE ? Integer.MAX_VALUE : min+1);
+        return dp[index];
+    }    
 
 Greedy Solution
 ====================
