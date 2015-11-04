@@ -1,3 +1,78 @@
+Latest Version
+===============
+public class Solution {
+    public String minWindow(String s, String t) {
+        if(s == null || s.length() == 0) {
+            return "";
+        }
+        if(t == null || t.length() == 0) {
+            return "";
+        }
+        Map<Character,Integer> tMap = new HashMap<Character,Integer>();
+        Map<Character,Integer> sMap = new HashMap<Character,Integer>();
+        //to optimize by checking whether s 包括 t
+        for(int i=0; i < s.length() ; i++) {
+            char currChar = s.charAt(i);
+            if(sMap.containsKey(currChar)) {
+                sMap.put(currChar,sMap.get(currChar)+1);
+            } else {
+                sMap.put(currChar,1);
+            }
+        }
+        for(int i=0; i < t.length(); i++) {
+            char currChar = t.charAt(i);
+            if(tMap.containsKey(currChar)) {
+                tMap.put(currChar,tMap.get(currChar)+1);
+            } else {
+                tMap.put(currChar,1);
+            }            
+        }
+        if(!isValid(tMap,sMap)) {
+            return "";
+        }
+        Map<Character,Integer> cMap = new HashMap<Character,Integer>();
+        int head = 0;
+        int minHead = 0;
+        int min = s.length();
+        for(int i=0; i < s.length(); i++ ) {
+            char curr = s.charAt(i);
+            if(cMap.containsKey(curr)) {
+                cMap.put(curr,cMap.get(curr)+1);
+            } else {
+                cMap.put(curr,1);
+            }            
+            while(isValid(tMap,cMap)) {
+                if(min > (i-head+1)) {
+                    minHead = head;
+                    min = i-head+1;                
+                }
+                char remove = s.charAt(head++);
+                if(cMap.get(remove) == 1) {
+                    cMap.remove(remove);
+                } else {
+                    cMap.put(remove,cMap.get(remove)-1);
+                }
+            } 
+        }
+        return s.substring(minHead,minHead+min);
+    }
+    public boolean isValid(Map<Character,Integer> t, Map<Character,Integer> s) {
+        for(char curr : t.keySet()) {
+            if(!s.containsKey(curr)) {
+                return false;
+            } else {
+                if(s.get(curr) < t.get(curr))
+                    return false;
+            }
+        }    
+        return true;
+    }
+}
+
+
+
+
+
 //这题展示了怎么样即简单又易懂的写出一个好的算法来，
 //把独立的功能用函数封装出去，这样问题规模就会缩小
 import java.util.Comparator;
