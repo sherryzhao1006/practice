@@ -1,3 +1,71 @@
+
+
+http://blog.csdn.net/linhuanmars/article/details/23809661
+
+public class Solution {
+  public static boolean isNumber(String s) {
+    //1) remove space 
+    s = s.trim();
+    if(s == null || s.length() == 0)
+        return false;//空的没数字所以false
+    boolean dotFlag = false;
+    boolean eFlag = false;
+    int n = s.length();
+    for(int i=0; i < n; i++) {
+        switch(s.charAt(i)) {
+         case '.':
+            //dotFlag = 3.2.5 （不能有两个点）
+            //eFlag = E3.2 (点前面不能有e)
+            // ((i==0 || !(s.charAt(i-1) >='0' && s.charAt(i-1) <='9')) && (i==n-1 || !(s.charAt(i+1) >='0' && s.charAt(i+1) <='9')))
+            // i==0 && i==n-1 : 只有一个点 ： return false;
+            // i==0 && (s.charAt(i+1) >='0' && s.charAt(i+1) <='9') : 点在第一位，它后面一定是数字 : .9 => true
+            // i==n-1 && (s.charAt(i-1) >='0' && s.charAt(i-1) <='9') : 点在最后一位，它前面是数字: 9. => true
+            if(dotFlag || eFlag || ((i==0 || !(s.charAt(i-1) >='0' && s.charAt(i-1) <='9')) && (i==n-1 || !(s.charAt(i+1) >='0' && s.charAt(i+1) <='9'))))  
+                  return false;
+            dotFlag = true;
+            break;
+          case 'e':
+          case 'E':
+            //eFlag : e不能出现两次
+            //i==0 || i==n-1 : e不能在第一位和最后一位
+            if(eFlag || i==0 || i== n-1) {
+              return false;
+            }
+            eFlag = true;
+            break;
+          case '+' :
+          case '-' :
+            // 如果只有一个+号直接return false;
+            // i> 0 && s.charAt(i-1) != 'e' && s.charAt(i-1) != 'E' : 如果+,-不在第一位, +,- 前面应该有 e,E  => 30e+10
+            
+            //(i == n-1 || !(s.charAt(i+1) >= '0' && s.charAt(i+1) <= '9' || s.charAt(i+1) == '.')  : 如果+,- 不在最后一位 +,- 后面应该跟数字或则点, i==n-1为了不要越界 ＝》 +.8 or +8
+            if( (i > 0 && (s.charAt(i-1) != 'e' && s.charAt(i-1) != 'E')) || (i == n-1 || !(s.charAt(i+1) >= '0' && s.charAt(i+1) <= '9' || s.charAt(i+1) == '.')))
+                return false;
+
+            break;
+          case '0':
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
+          case '7':
+          case '8':
+          case '9':
+              break;
+            //其他char return false
+          default : 
+              return false;
+        }
+    } 
+    return true;
+  }
+}
+==================================================
+
+bad solution
+============
 public class Solution {
     public boolean isNumber(String s) {
         try {
@@ -19,84 +87,3 @@ public class Solution {
 
 
 
-
-
-
-
-public class ValidNumber {
-    public boolean isNumber(String s) {
-         if (s==null ){
-             return false;
-         } 
-         // trim off head and tail zeros which not affect result depend on question
-         s=s.trim();
-         if(s.length()==0){
-             return false;
-         } 
-        boolean hasNum=false;
-        
-        boolean canSign=true;
-       
-        boolean canDot=true;
-       
-        boolean canE=false;
-        boolean hasE=false;
-        
-        int i=0;
-        while(i<s.length()){
-            char c=s.charAt(i++);
-            //can't have space between numbers
-            if (c==' '){
-               return false;                
-            }
-            //you can have sign in the first place of a valid number. if you see it again it's not a valid number
-            if (c=='+' ||c=='-'){
-                if (!canSign){
-                    return false;
-                }
-                canSign=false;
-                
-                continue;
-            }
-            if (c=='.'){
-                if (!canDot){
-                    return false;
-                }
-                canDot=false;
-                canSign=false;
-                continue;
-            }
-            if (c=='e'){
-            //canE 用来标注第一个数不能是e后面的可以
-            //hasE 用来标注是否已经出现过e
-                if (!canE||hasE){
-                    return false;
-                }
-                canE=false;
-                hasE=true;
-                //初始化hasNum因为e后面一定要有0-9
-                hasNum=false;
-                canDot=false;
-                canSign=true;
-                
-                continue;
-            }
-            if (c>='0' && c<='9'){
-                hasNum=true;
-                
-                if (!canE&&!hasE){
-                    canE=true;
-                }
-                
-                canSign=false;
-            }
-            else{
-                return false;
-            }
-            
-            
-        }
-        
-        return hasNum;
-    }
-}
