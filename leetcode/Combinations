@@ -15,19 +15,18 @@ If n = 4 and k = 2, a solution is:
 
 
     public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> finalResult = new ArrayList<List<Integer>>();
-        helper(new ArrayList<Integer>(),n,k,1,finalResult);
-        return finalResult;
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        helper(res, new ArrayList<Integer>(),n,k,1,0);
+        return res;
     }
-    public void helper(List<Integer> result,int n, int k, int index,List<List<Integer>> finalResult) {
-        if( result.size()== k) {//this is bug
-            finalResult.add(new ArrayList<Integer>(result));
-            return;
+    public void helper(List<List<Integer>> res, List<Integer> currRes, int n, int k, int curr,int index) {
+        if(index == k) {
+            res.add(new ArrayList<Integer>(currRes));    
+        } else {
+            for(int i=curr; i <= n; i++) {
+                currRes.add(i);
+                helper(res,currRes,n,k,i+1,index+1);
+                currRes.remove(currRes.size()-1);
+            }
         }
-        for(int i=index; i <=n; i++) {
-            result.add(i);
-            helper(result,n,k,i+1,finalResult);
-            result.remove(result.size()-1);    
-        }
-        return;
     }
