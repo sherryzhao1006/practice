@@ -1,0 +1,22 @@
+random number generator:
+rand5->rand7
+思路：
+[1,2,3,4,5
+ 6,7,1,2,3
+ 4,5,6,7,1
+ 2,3,4,5,6
+ 7,0,0,0,0]
+
+希望取到的数的概率都是1/7，call两次rand5，取得坐标，如果左边>21,则舍弃，否则取数。方法两种：%7 or/3
+每个数被抽到的概率是3/21，因为有三个组，每个数字重复3次
+public int rand7(){
+    int num=5*rand5()+rand5();
+    if(num<21){
+        return num%7 (or num/3);
+    }
+}
+同理rand6->rand9
+public int rand9(){
+    int num=6*rand6()+rand6();
+    return num%9 (or num/4);
+}
