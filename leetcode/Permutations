@@ -1,0 +1,21 @@
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        boolean[] visited = new boolean[nums.length];
+        helper(res,new ArrayList<Integer>(),nums,visited);
+        return res;
+    }
+    public void helper(List<List<Integer>> res, List<Integer> currRes,int[] nums,boolean[] visited) {
+        if(currRes.size() == nums.length) {
+            res.add(new ArrayList<Integer>(currRes));
+        } else {
+            for(int i=0; i < nums.length; i++) {
+                if(visited[i] == false) {
+                    visited[i] = true;
+                    currRes.add(nums[i]);
+                    helper(res,currRes,nums,visited);
+                    visited[i] = false;
+                    currRes.remove(currRes.size()-1);
+                }
+            }
+        }
+    }
