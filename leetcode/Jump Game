@@ -26,23 +26,20 @@ recursive:
 =============================================
     public boolean canJump(int[] A) {
         int n = A.length;
-        return helper(A,0,n);    
+        return helper(A,n,0);
     }
-    public boolean helper(int[] A, int currIndex,int n) {
-        if(currIndex >= n) {
+    public boolean helper(int[] A, int n, int index) {
+        if(index >= n)
             return false;
-        }
-        if(currIndex == n-1)
+        if(index == n-1)
             return true;
-        int numSteps = A[currIndex];
-        boolean canReach = false;
-        while(numSteps > 0) {
-            canReach = canReach | helper(A,currIndex+numSteps,n);
-            if(canReach == true)
+        int step = A[index];
+        while(step >0) {
+            if(helper(A,n,index+step))
                 return true;
-            numSteps--;
+            step--;
         }
-        return canReach;
+        return false;
     }
 
 
