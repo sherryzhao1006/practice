@@ -1,0 +1,39 @@
+//http://www.programcreek.com/2014/05/leetcode-divide-two-integers-java/
+
+
+    public static int divide(int dividend, int divisor) {
+        if(divisor == 0) {
+            return dividend <0 ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+        }
+        //to handle overflow. 
+        //when -min/-1 = overflow so return max value 
+        if(divisor == -1 && dividend == Integer.MIN_VALUE){
+            return Integer.MAX_VALUE;
+        }
+        if(dividend == 0) {
+            return 0;
+        }
+        boolean isNeg = false;
+        if(dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0) {
+            isNeg = true;
+        }
+        long dividendP = Math.abs((long)dividend);
+        long divisorP = Math.abs((long)divisor);
+
+        int times = 0;
+        while(dividendP >= divisorP) {
+            long value = divisorP;
+            int cnt = 1;
+            //cnt << divisorP != divisorP << cnt;
+            //otherwise divisorP << cnt is correct. otherwise loop around and time off. max overflow becomes min
+            while((divisorP<<cnt) <= dividendP) {
+                cnt++;
+            }
+            dividendP = dividendP -  (divisorP << (cnt-1));
+            times += 1 <<(cnt-1);
+        }
+        if(isNeg) {
+            return -times;
+        }
+        return times;
+    }
