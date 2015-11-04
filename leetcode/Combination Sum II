@@ -1,26 +1,33 @@
-        public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        // write your code here
-        int[] num = candidates;
-        List<List<Integer>> result=new ArrayList<List<Integer>>();
-        if(num.length == 0 || num == null){
-            return result;
-        }
-        Arrays.sort(num);
-        List<Integer> sub=new ArrayList<Integer>();
-        helper(result,sub,num,target,0);
-        return result;
+//assuming no neg value and target is not neg value like
+
+-2,-1,0,1,2  &  target = -3
+-2,-1 will not be obtained with method below. 
+Similar : https://github.com/cc2011/practice/blob/master/interviewFolder/Linkedin/Combination%20Sum%20II%28Variation%29
+
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(candidates == null || candidates.length ==0)
+            return res;
+        Arrays.sort(candidates);
+        if(candidates == null || candidates.length == 0)
+            return res;
+        helper(res,new ArrayList<Integer>(),0,target,0,candidates);
+        return res;
     }
-    public void helper(List<List<Integer>> result, List<Integer> sub, int[] num,int target, int pos){
-        if(target < 0)
-            return;
-        if(target == 0) {
-            result.add(new ArrayList<Integer>(sub));
+    public void helper(List<List<Integer>> res, List<Integer> currRes, int index, int target, int sumSoFar,int[] candidates) {
+        if(sumSoFar > target) {
             return;
         }
-        for(int i=pos; i < num.length; i++) {
-            if(i!= pos && num[i]==num[i-1]) continue;//前面那一个重复数已经遍历完所以不用再遍历 i!= pos
-            sub.add(num[i]);
-            helper(result,sub,num,target-num[i],i+1);
-            sub.remove(sub.size()-1);
+        if(sumSoFar == target) {
+            res.add(new ArrayList<Integer>(currRes));
+        } else {
+            for(int i=index; i < candidates.length; i++) {
+                if(i != index && candidates[i] == candidates[i-1])
+                    continue;
+                currRes.add(candidates[i]);
+                helper(res,currRes,i+1,target,sumSoFar+candidates[i],candidates);
+                currRes.remove(currRes.size()-1);
+            }
         }
-    }    
+    }
