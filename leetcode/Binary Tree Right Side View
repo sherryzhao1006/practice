@@ -1,3 +1,6 @@
+Queue
+=====
+
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
         
@@ -22,3 +25,30 @@
         }
         return res;
     }
+
+
+Recursive
+=========
+ //http://www.geeksforgeeks.org/print-right-view-binary-tree-2/
+public class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result=new ArrayList<Integer>();
+        if(root == null){
+            return result;
+        }
+        int[] max={0};
+        helper(root,1,max,result);
+        return result;
+    }
+    public void helper(TreeNode root,int level,int[] max,List<Integer> result){
+        if(root == null){
+            return;
+        }
+        if(max[0]<level){
+            result.add(root.val);
+            max[0] = level;
+        }
+        helper(root.right,level+1,max,result);
+        helper(root.left,level+1,max,result);
+    }
+}
