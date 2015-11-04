@@ -1,0 +1,24 @@
+        int i =  Integer.MIN_VALUE;
+        System.out.println(Integer.toBinaryString(i));
+        i = i >> 1;
+        System.out.println(Integer.toBinaryString(i));
+        i = i >>>1;
+        System.out.println(Integer.toBinaryString(i));
+10000000000000000000000000000000
+11000000000000000000000000000000
+1100000000000000000000000000000
+
+
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int cnt = 0;
+        while(n > 0) {
+            if( (n & 1) == 1) {
+                cnt++;
+            }
+            n = n >>> 1;
+        }    
+        return cnt;
+    }
+}
