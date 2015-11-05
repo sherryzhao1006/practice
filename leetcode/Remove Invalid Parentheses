@@ -1,0 +1,44 @@
+    public List<String> removeInvalidParentheses(String s) {
+        List<String> result=new ArrayList<String>();
+        if(s == null || s.length() == 0){
+            result.add("");
+            return result;
+        }
+        Queue<String> q=new LinkedList<String>();
+        Set<String> set=new HashSet<String>();
+        q.add(s);
+        set.add(s);
+        boolean found=false;
+        while(!q.isEmpty()){
+            s=q.poll();
+            if(isValid(s)){
+                result.add(s);
+                found=true;
+            }
+            if(found) continue;
+            for(int i=0;i<s.length();++i){
+                if(s.charAt(i)=='(' || s.charAt(i)==')'){
+                    String sub=s.substring(0,i)+s.substring(i+1);
+                    if(!set.contains(sub)){
+                        set.add(sub);
+                        q.add(sub);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    public boolean isValid(String str){
+        int count=0;
+        for(int i=0;i<str.length();++i){
+            if(str.charAt(i)=='('){
+                count++;
+            }
+            if(str.charAt(i)==')' && count-- ==0){
+                return false;
+            }
+        }
+        return count==0;
+    }
+    
+    
