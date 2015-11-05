@@ -1,3 +1,57 @@
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        if(nums == null || nums.length == 0){
+            return -1;
+        }
+        int n = nums.length;
+        return helper(nums,k,0,n-1);
+    }
+    public int helper(int[] nums, int k, int start,int end){
+        int left = start;
+        int right = end;
+        int pivotIndex=start;
+        int pivot=nums[pivotIndex];
+        int n = nums.length;
+        //we need left <= right because of -1,2,0 case
+        //-1,2 ,0
+        //pivot
+        //L,   ,R
+        //  L/R (if you exit when left == right) then u swap R and pivot => 2,-1,0 (wrong)
+        //
+        while(left <= right) {
+            //if left value is greater than pivot value, stop!
+            while(left <= right && nums[left] <= pivot) {
+                left++;//1
+            }
+            while(left <= right && nums[right] > pivot) {
+                right--;
+            }
+            if(left < right) {
+                swap(nums,left,right);
+            }
+        }
+        swap(nums,right,pivotIndex);
+        if(right == n-k){
+            return nums[right];
+        } else if(right > n-k) {
+            return helper(nums,k,start,right-1);
+        } else {
+            return helper(nums,k,right+1,end);
+        }
+    }
+    public void swap(int[] nums,int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+    }
+}
+
+
+
+==========================================================
+
+
+
     public int kthLargestElement(int k, ArrayList<Integer> numbers) {
          if(numbers == null || numbers.size() == 0){
                 return 0;
