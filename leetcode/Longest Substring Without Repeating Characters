@@ -1,23 +1,26 @@
 hashset contains java complexity = O(1) 
-    public  int lengthOfLongestSubstring(String s) {
+ 
+
+    public int lengthOfLongestSubstring(String s) {
         if(s == null || s.length() == 0)
             return 0;
-        Set<Character> set = new HashSet<Character>();
-        int max = 1;
-        int prev = 0;
-        for(int i=0; i < s.length(); i++) {
-            char curr = s.charAt(i);
-            if(set.contains(curr)) {               
-                max = Math.max(max, i - prev);
-                while(set.contains(curr)) {
-                    set.remove(s.charAt(prev++));
-                }
+        Set<Character> map = new HashSet<Character>();
+        int max = 0;
+        int start = 0;
+        int i=0;
+        while(i < s.length()) {
+            if(map.contains(s.charAt(i))) {
+                max = Math.max(max, i-start);
+                map.remove(s.charAt(start));
+                start++;
+            } else {
+                map.add(s.charAt(i));
+                i++;
             }
-            set.add(curr);
         }
-        max = Math.max(s.length()-prev,max);
+        max = Math.max(max,i-start);
         return max;
-    }       
+    }
     
     =============
     Old Solution
