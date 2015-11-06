@@ -1,0 +1,48 @@
+public class Solution {
+    public String shortestPalindrome(String s) {
+        if(s == null || s.length() == 0)
+            return s;
+        if(s.length() ==1)
+            return s;
+        int n = s.length()-1;
+        int mid = n/2;
+        StringBuilder sb = new StringBuilder(s);
+        sb.reverse();
+        while(mid >=0) {
+            String ret = null;
+            if(s.charAt(mid) == s.charAt(mid+1)) {
+                ret = check(s,mid,mid+1);
+                if(ret != null) {
+                    return ret;
+                }
+            }
+            ret = check(s,mid,mid);
+            if(ret != null) {
+                    return ret;
+            }            
+            mid--;
+        }
+        return null;
+    }
+    public String check(String s,int left,int right) {
+        while(left >=0 && right < s.length()) {
+            if(s.charAt(left) == s.charAt(right)) {
+                left--;
+                right++;
+            } else {
+                break;
+            }
+        }    
+        if(left >=0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        if(right < s.length()) {
+            sb.append(s.substring(right));
+            sb = sb.reverse();
+            return sb.toString()+s;
+        }
+        return s;
+        
+    }
+}
