@@ -1,25 +1,27 @@
-    public static void sortColors(int[] nums) {
-        if (nums == null || nums.length ==0) {
+public class Solution {
+    public void sortColors(int[] nums) {
+        if(nums == null || nums.length == 0)
             return;
-        }
+        int n = nums.length;
         int zero = 0;
+        int one = 0;
         int two = nums.length-1;
-        int ptr = 0;
-        while( ptr <= two) {
-            if(nums[ptr] == 0) {
-                swap(nums,zero,ptr);
+        while(one <= two) {//[1,0] => without equal sign it will return [1,0]
+            if(nums[one] == 0) {
+                swap(nums,zero,one);
+                one++;
                 zero++;
-                ptr++;
-            } else if(nums[ptr] == 2) {
-                swap(nums,ptr,two);
+            } else if(nums[one] == 1) {
+                one++;
+            } else if(nums[one] == 2) {
+                swap(nums,one,two);
                 two--;
-            } else {
-                ptr++;
             }
         }
     }
-    public static void swap(int[] nums, int l, int r){
-        int temp = nums[l];
-        nums[l] = nums[r];
-        nums[r] = temp;
+    public void swap(int[] nums, int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
     }
+}
