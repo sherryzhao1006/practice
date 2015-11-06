@@ -1,0 +1,104 @@
+class Solution {
+    /**
+     * @param colors: A list of integer
+     * @param k: An integer
+     * @return: nothing
+     */
+     public void sortColors2(int[] colors, int k) {
+        if(colors == null || colors.length == 0){
+            return;
+        }
+        helper(colors,1,k,0,colors.length-1);
+     }
+     public void helper(int[] colors,int colorSt,int colorEnd, int start,int end) {
+         while(colorSt < colorEnd) {
+             int zero = start;
+             int one = start;
+             int two = end;
+             while(one <= two) {
+                 if(colors[one] == colorSt) {
+                     swap(colors,zero,one);
+                     zero++;
+                     one++;
+                 } else if(colors[one] == colorEnd) {
+                     swap(colors,one,two);
+                     two--;
+                 } else {
+                     one++;
+                 }
+             }
+             start = zero;
+             end = two;
+             colorSt++;
+             colorEnd--;
+         }
+     }
+     public void swap(int[] colors,int left, int right) {
+         int temp = colors[left];
+         colors[left] = colors[right];
+         colors[right] = temp;
+     }
+     /*
+    public void sortColors2(int[] colors, int k) {
+        // write your code here
+        if(colors == null || colors.length == 0){
+            return;
+        }
+        //helper(colors,0,k,0,colors.length-1);
+        quicksort(colors,0,colors.length-1);
+    }
+    public void quicksort(int[] colors,int left,int right){
+        if(left>=right){
+            return;
+        }
+        int start=left, end=right;
+        int pivot=colors[left];
+        int index=left;
+        while(start<=end){
+            while(start<=end && colors[start]<=pivot){
+                start++;
+            }
+            while(start<=end && colors[end]>pivot){
+                end--;
+            }
+            if(start>end){
+                break;
+            }
+            int tmp=colors[start];
+            colors[start]=colors[end];
+            colors[end]=tmp;
+        }
+        int tmp=colors[index];
+        colors[index]=colors[end];
+        colors[end]=tmp;
+        quicksort(colors,left,end-1);
+        quicksort(colors,end+1,right);
+    }
+    public void helper(int[] colors,int left,int right,int start,int end){
+        int zero=start,two=end;
+        int i=zero;
+        while(i<=two){
+            if(colors[i]==left){
+                swap(colors,zero,i);
+                zero++;
+                i++;
+            }
+            else if(colors[i]==right){
+                swap(colors,two,i);
+                two--;
+            }else{
+                i++;
+            }
+        }
+        if(zero<two){
+            helper(colors,left+1,right-1,zero,two);
+        }
+        return;
+    }
+    public void swap(int[] colors,int start,int end){
+        int tmp=colors[start];
+        colors[start]=colors[end];
+        colors[end]=tmp;
+    }
+    */
+}
