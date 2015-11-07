@@ -1,3 +1,31 @@
+//https://leetcode.com/discuss/52351/c-o-n-time-o-1-space-9-line-solution-with-detail-explanation
+public class Solution {
+    public int[] singleNumber(int[] nums) {
+        int[] output = {0,0};
+        if(nums == null || nums.length == 0) {
+            return output;
+        }
+        //find xor of 2 numbers that are not duplicates
+        int diff = 0;
+        for(int i=0; i < nums.length; i++) {
+            diff ^= nums[i];
+        }
+        diff &= -diff;//if diff =101 => -diff= 011 , 101 & 011 = 001
+        for(int curr : nums) {
+            if((curr & diff) != 0) {
+                output[0] ^= curr;
+            } else {
+                output[1] ^= curr;
+            }
+        }
+        return output;
+    }
+}
+
+============================================================================================================
+
+
+
 //http://www.cnblogs.com/EdwardLiu/p/4391455.html
 public class Solution {
     /**
